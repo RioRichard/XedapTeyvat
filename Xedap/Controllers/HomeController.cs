@@ -14,10 +14,15 @@ namespace Xedap.Controllers
         {
             //1 = Duong Pho
             //2 = Dua
-            //4 = Phu Nu
+            //6 = Tre em
             ViewBag.DuongPho = Context.Products.Where(p => p.Category.IDCategory == 1).Take(4);
             ViewBag.Dua = Context.Products.Where(p => p.Category.IDCategory == 2).Take(4);
-            return View(Context.Products.Where(p=>p.Category.IDCategory == 4).Take(4));
+            return View(Context.Products.Where(p=>p.Category.IDCategory == 6).Take(4));
+        }
+        [ChildActionOnly]
+        public ActionResult Category()
+        {
+            return PartialView(Context.Categories.ToList());
         }
 
         public ActionResult About()

@@ -4,57 +4,71 @@
     ViewBag.Title = "Home Page";
 }
 
-<h3>Xe đạp đường phố</h3>
-<div class="row">
-    @foreach (var item in ViewBag.DuongPho)
-    {
-        <div class="col-3">
-            <div class="card">
-                <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@item.Name">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
+<div style="border: 5px solid blue; border-radius:20px; padding:5px;margin:10px 0" >
+    <h3 class="text-center">Xe đạp đường phố</h3>
 
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    <a href="#" class="btn btn-outline-danger">Go somewhere</a>
+    <div class="row">
+        @foreach (var item in ViewBag.DuongPho)
+        {
+            <div class="col-3">
+                <div class="card border-0 menu-item" style="min-height:450px;max-height:450px;">
+                    <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(@item.Name)">
+                    <div class="card-body">
+                        <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
 
+                        <a href="#" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-cart-shopping"></i></a>
+
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
-<h3>Xe đạp đường phố</h3>
-<div class="row">
-    @foreach (var item in ViewBag.DuongPho)
-    {
-        <div class="col-3">
-            <div class="card">
-                <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@item.Name">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
+<div style="border: 5px solid red; border-radius:20px; padding:5px; margin:10px 0">
+    <h3 class="text-center">Xe đạp đua</h3>
 
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    <a href="#" class="btn btn-outline-danger">Go somewhere</a>
 
+    <div class="row">
+        @foreach (var item in ViewBag.Dua)
+        {
+            <div class="col-3">
+                <div class="card border-0 menu-item" style="min-height:450px;max-height:450px;">
+                    <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(@item.Name)">
+                    <div class="card-body">
+                        <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
+
+                        <a href="#" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-cart-shopping"></i></a>
+
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
-<h3>Xe đạp đường phố</h3>
-<div class="row">
-    @foreach (var item in ViewBag.DuongPho)
-    {
-        <div class="col-3">
-            <div class="card">
-                <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@item.Name">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
 
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    <a href="#" class="btn btn-outline-danger">Go somewhere</a>
+<div style="border: 5px solid yellow; border-radius:20px; padding:5px;margin:10px 0" >
+    <h3 class="text-center">Xe đạp trẻ em</h3>
 
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                <div class="card border-0 menu-item" style="min-height:450px;max-height:450px;">
+                    <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(@item.Name)">
+                    <div class="card-body">
+                        <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
+
+                        <a href="#" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-cart-shopping"></i></a>
+
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
+
