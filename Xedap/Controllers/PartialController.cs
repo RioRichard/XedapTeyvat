@@ -14,5 +14,9 @@ namespace Xedap.Controllers
         {
             return PartialView(Context.Categories.ToList());
         }
+        public ActionResult SubNav()
+        {
+            return PartialView(Context.Categories.ToList());
+        }
     }
 }
