@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Xedap.Models.Product>
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    //int total = ViewBag.total;
+    //int current = ViewBag.page;
+    //int pageredered;
+    //if (current - total <= 3)
+    //{
+    //    pageredered = total;
+
+    //}
+
+    //else if (current < 3)
+    //{
+    //    pageredered = 3;
+    //}
+    //else if(current > total - 2)
+    //{
+    //    pageredered = total;
+    //}
+
+
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark text-center">
+        <tr>
+            <td>Tên sản phẩm</td>
+            <td>Giá bán</td>
+            <td>Hàng tồn</td>
+            <td>Ảnh</td>
+            <td>Chỉnh sửa</td>
+            <td>Xóa</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.Raw(item.Name)</td>
+                <td>@string.Format("{0:#.00}",item.Price) VNĐ</td>
+                <td>@item.Stock</td>
+                <td><img src="~/Content/Image/@item.ImageURL" alt="@item.Name" width="200"/></td>
+                <td>Edit</td>
+                <td>Delete</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<nav class="d-flex justify-content-center" >
+    <ul class="pagination">
+        <li class="page-item "><a class="page-link" href="@(ViewBag.page - 1)">Previous</a></li>
+        @for (int i = 1; i <= ViewBag.count; i++)
+        {
+
+            if (i == ViewBag.page)
+            {
+                <li class="page-item active"><a class="page-link" href="/Admin/Product/@i">@i</a></li>
+
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="/Admin/Product/@i">@i</a></li>
+
+            }
+
+
+        }
+        <li class="page-item"><a class="page-link" href="/Admin/Product/@(ViewBag.page + 1)">Next</a></li>
+
+
+    </ul>
+</nav>
+
+
