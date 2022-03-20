@@ -9,11 +9,11 @@ namespace Xedap.Controllers
 {
     public class HomeController : Controller
     {
-        DataContext Context = new DataContext();
+        DataContext context = new DataContext();
         public ActionResult Index()
         {
 
-            ViewBag.DuongPho = Context.            
+                   
             return View();
         }
 
