@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="border: 5px solid blue; border-radius:20px; padding:5px;margin:10px 0" >
+<div style="border: 5px solid blue; border-radius:20px; padding:5px;margin:10px 0">
     <h3 class="text-center">Xe đạp đường phố</h3>
-
     <div class="row">
         @foreach (var item in ViewBag.DuongPho)
         {
@@ -51,8 +50,6 @@
 
 <div style="border: 5px solid yellow; border-radius:20px; padding:5px;margin:10px 0" >
     <h3 class="text-center">Xe đạp trẻ em</h3>
-
-
     <div class="row">
         @foreach (var item in Model)
         {
