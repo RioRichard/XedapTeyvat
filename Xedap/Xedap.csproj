@@ -223,6 +223,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Image\12.jpg" />
     <Content Include="Content\Image\16-inches-blue-600x600.jpg" />
     <Content Include="Content\Image\2100204223-Xe-Đạp-Đường-Phố-TOURING-LIV-FLOURISH-4-BÁNH-700C-2021-Pale-Mauve-XS-1427kg_11619_4-600x600.jpg" />
     <Content Include="Content\Image\2105001124-Xe-Đạp-Đường-Phố-TOURING-MOMENTUM-INEED-STREET-BÁNH-700C-2021-Dark-Red_12211_4-600x600.jpg" />
@@ -233,6 +234,10 @@
     <Content Include="Content\Image\alight-2-dd-disc-eucalyptus-my22-850-3-600x600.jpg" />
     <Content Include="Content\Image\alight-3-dd-disc-pistachio-2022-850-600x600.jpg" />
     <Content Include="Content\Image\ATX-2021-Vibrant-Blue-1-600x600.jpg" />
+    <Content Include="Content\Image\banner.jpg" />
+    <Content Include="Content\Image\bg-xedap.jpg" />
+    <Content Include="Content\Image\bg-xedap1.jpg" />
+    <Content Include="Content\Image\Bike.jpg" />
     <Content Include="Content\Image\Contend-1-2021-White-1-600x600.jpg" />
     <Content Include="Content\Image\contend-2-2022-black-600x600.jpg" />
     <Content Include="Content\Image\contend-3-cold-iron-2022-600x600.jpg" />
@@ -245,6 +250,7 @@
     <Content Include="Content\Image\fd-806-blue-fix-1-600x600.jpg" />
     <Content Include="Content\Image\FORBCB26-7036-climber-xam-vang-850-600x600.jpg" />
     <Content Include="Content\Image\FORX26-7036-FORNIX-X26-XÁM-VÀNG-1-600x600.jpg" />
+    <Content Include="Content\Image\Free_Sample_By_Wix.jpg" />
     <Content Include="Content\Image\latte-26-2022-green-600x600.jpg" />
     <Content Include="Content\Image\MARWEA2633-5017-850-1.jpg" />
     <Content Include="Content\Image\propel-advanced-sl-1-disc-my22-limited-edition-850jpg-600x600.jpg" />
@@ -328,18 +334,23 @@
     <Content Include="Views\Admin\Product.cshtml" />
     <Content Include="Views\Partial\SubNav.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
+    <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Address.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\Cart.cshtml" />
+    <Content Include="Views\Account\Invoice.cshtml" />
     <Content Include="Views\Account\EmailConfirmCompleted.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\SendMailAgain.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Admin\Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\js\" />
-    <Folder Include="Views\Base\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

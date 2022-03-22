@@ -7,9 +7,10 @@ using Xedap.Models;
 
 namespace Xedap.Controllers
 {
-    public class AccountController : Controller
+    
+    public class AccountController : BaseController
     {
-        DataContext DataContext = new DataContext();
+        
         // GET: Account
        
         
@@ -52,32 +53,51 @@ namespace Xedap.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(Account _user)
         {
-            if (ModelState.IsValid)
-            {
-                var check = DataContext.Accounts.FirstOrDefault(s => s.IDAccount == _user.IDAccount);
-                if (check == null)
-                {
-                    
-                    DataContext.Configuration.ValidateOnSaveEnabled = false;
-                    DataContext.Accounts.Add(_user);
-                    DataContext.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.error = "Email already exists";
-                    return View();
-                }
+            //if (ModelState.IsValid)
+            //{
+            //    var check = DataContext.Accounts.FirstOrDefault(s => s.IDAccount == _user.IDAccount);
+            //    if (check == null)
+            //    {
+
+            //        DataContext.Configuration.ValidateOnSaveEnabled = false;
+            //        DataContext.Accounts.Add(_user);
+            //        DataContext.SaveChanges();
+            //        return RedirectToAction("Index");
+            //    }
+            //    else
+            //    {
+            //        ViewBag.error = "Email already exists";
+            //        return View();
+            //    }
 
 
-            }
+            //}
             return View();
 
 
         }
+        public ActionResult Address()
+        {
+            return View(DataContext.Addresses);
+        }
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
 
         //create a string MD5
        
+        public ActionResult Cart()
+        {
+            //var address = AddressRepo.GetAddressByUser(context, userId);
+            //ViewBag.Address = address;
+            //ViewBag.AddressCount = address.Count;
+            return View(DataContext.Carts);
+        }
+        public ActionResult Invoice()
+        {
+            return View(DataContext.Invoices);
+        }
         public ActionResult Login()
         {
             return View();
@@ -88,23 +108,23 @@ namespace Xedap.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string email, string password)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
 
 
                
-                var data = DataContext.Accounts.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
-                if (data.Count() > 0)
-                {                
-                    Session["IDAccount"] = data.FirstOrDefault().IDAccount;
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.error = "Login failed";
-                    return RedirectToAction("Login");
-                }
-            }
+            //    var data = DataContext.Accounts.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
+            //    if (data.Count() > 0)
+            //    {                
+            //        Session["IDAccount"] = data.FirstOrDefault().IDAccount;
+            //        return RedirectToAction("Index");
+            //    }
+            //    else
+            //    {
+            //        ViewBag.error = "Login failed";
+            //        return RedirectToAction("Login");
+            //    }
+            //}
             return View();
         }
 
