@@ -232,7 +232,9 @@
     <Content Include="Content\Image\alight-3-dd-disc-pistachio-2022-850-600x600.jpg" />
     <Content Include="Content\Image\ATX-2021-Vibrant-Blue-1-600x600.jpg" />
     <Content Include="Content\Image\banner.jpg" />
-    <Content Include="Content\Image\bg-laptop.jpg" />
+    <Content Include="Content\Image\bg-xedap.jpg" />
+    <Content Include="Content\Image\bg-xedap1.jpg" />
+    <Content Include="Content\Image\Bike.jpg" />
     <Content Include="Content\Image\Contend-1-2021-White-1-600x600.jpg" />
     <Content Include="Content\Image\contend-2-2022-black-600x600.jpg" />
     <Content Include="Content\Image\contend-3-cold-iron-2022-600x600.jpg" />
@@ -329,9 +331,7 @@
     <Content Include="Views\Admin\Product.cshtml" />
     <Content Include="Views\Partial\SubNav.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Address.cshtml" />
@@ -340,10 +340,10 @@
     <Content Include="Views\Account\Invoice.cshtml" />
     <Content Include="Views\Account\EmailConfirmCompleted.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\SendMailAgain.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
