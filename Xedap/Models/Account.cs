@@ -23,7 +23,7 @@ namespace Xedap.Models
         [StringLength(32)]
         public string UserName { get; set; }
 
-        [MaxLength(32)]
+        [MaxLength(64)]
         public byte[] Password { get; set; }
 
         [StringLength(64)]

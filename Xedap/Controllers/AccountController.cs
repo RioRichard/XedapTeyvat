@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Xedap.Helper;
 using Xedap.Models;
 
 namespace Xedap.Controllers
@@ -12,8 +14,14 @@ namespace Xedap.Controllers
     {
         
         // GET: Account
-       
-        
+        [UserAuthorize]
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+        [UserAuthorize]
+
         public ActionResult ForgotPassword()
         {
             return View();
@@ -40,45 +48,40 @@ namespace Xedap.Controllers
             return View();
         }
 
-        //GET: Register
 
-        public ActionResult Register()
-        {
-            return View();
+        
+        //public ActionResult Register(string UserName, string Pass, string Email)
+        //{
+        //    var result = AuthRepo.AddAccount(UserName, Pass, Email);
+        //    return Json(result);
 
-        }
+        //}
 
         //POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Account _user)
+        public ActionResult Register(FormCollection collection)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var check = DataContext.Accounts.FirstOrDefault(s => s.IDAccount == _user.IDAccount);
-            //    if (check == null)
-            //    {
 
-            //        DataContext.Configuration.ValidateOnSaveEnabled = false;
-            //        DataContext.Accounts.Add(_user);
-            //        DataContext.SaveChanges();
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        ViewBag.error = "Email already exists";
-            //        return View();
-            //    }
+            if (ModelState.IsValid)
+            {
+                var result = AuthRepo.AddAccount(collection["UserName"], collection["Pass"], collection["Email"]);
+                return Json(result);
 
+            }
+            else
+            {
+                var result = new { stringUrl = "/Account/Register", message = "Có lỗi đã xảy ra. Thử lại sau" };
+                return Json(result);
 
-            //}
-            return View();
+            }
+
 
 
         }
         public ActionResult Address()
         {
-            return View(DataContext.Addresses);
+            return View(Context.Addresses);
         }
         public ActionResult ChangePassword()
         {
@@ -92,12 +95,13 @@ namespace Xedap.Controllers
             //var address = AddressRepo.GetAddressByUser(context, userId);
             //ViewBag.Address = address;
             //ViewBag.AddressCount = address.Count;
-            return View(DataContext.Carts);
+            return View(Context.Carts);
         }
         public ActionResult Invoice()
         {
-            return View(DataContext.Invoices);
+            return View(Context.Invoices);
         }
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
@@ -105,6 +109,7 @@ namespace Xedap.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(string email, string password)
         {
@@ -128,6 +133,7 @@ namespace Xedap.Controllers
             return View();
         }
 
+        [UserAuthorize]
 
         //Logout
         public ActionResult Logout()
@@ -135,5 +141,6 @@ namespace Xedap.Controllers
             Session.Clear();//remove session
             return RedirectToAction("Login");
         }
+        
     }
 }

@@ -18,10 +18,7 @@ namespace Xedap.Models
         [Column(Order = 1)]
         [StringLength(64)]
         public string IDAccount { get; set; }
-        [NotMapped]
-        public string PhoneNumber { get; set; }
-        [NotMapped]
-        public string Reciever { get; set; }
+
         public bool? IsDefault { get; set; }
 
         public virtual Account Account { get; set; }

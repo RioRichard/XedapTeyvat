@@ -115,10 +115,6 @@ namespace Xedap.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Product>()
-                .Property(e => e.ImageURL)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Product>()
                 .HasMany(e => e.ProductAttributes)
                 .WithRequired(e => e.Product)
                 .WillCascadeOnDelete(false);

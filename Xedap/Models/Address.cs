@@ -19,6 +19,10 @@ namespace Xedap.Models
         [Key]
         public int IDAddress { get; set; }
 
+        [Column("Address")]
+        [StringLength(64)]
+        public string Address1 { get; set; }
+
         [StringLength(12)]
         public string Phone { get; set; }
 

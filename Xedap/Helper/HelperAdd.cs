@@ -16,7 +16,7 @@ using Xedap.Models;
 
 namespace Xedap.Helper
 {
-    public class Helper
+    public class HelperAdd
     {
         
         public static byte[] Hash(string plainText)
@@ -56,7 +56,7 @@ namespace Xedap.Helper
             SmtpClient client = new SmtpClient(section["host"], Convert.ToInt32(section["port"]))
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(section["address"], Helper.DecryptString("058ef654da951060eb6307d980548a86", section["password"])),
+                Credentials = new NetworkCredential(section["address"], HelperAdd.DecryptString("058ef654da951060eb6307d980548a86", section["password"])),
                 EnableSsl = true
             };
             MailAddress addressFrom = new MailAddress(section["address"]);
@@ -114,8 +114,8 @@ namespace Xedap.Helper
         }
         public static string GenerateToken(string IdAccount)
         {
-            var ConfirmToken = IdAccount + Helper.RandomString(32);
-            var HashToken = Helper.HashToken(ConfirmToken);
+            var ConfirmToken = IdAccount + HelperAdd.RandomString(32);
+            var HashToken = HelperAdd.HashToken(ConfirmToken);
             return HashToken;
         }
         public static string GerenerateIdAccount(DataContext context)
@@ -124,7 +124,7 @@ namespace Xedap.Helper
             bool checkSame = false;
             do
             {
-                IDAccount = Helper.RandomString(64);
+                IDAccount = HelperAdd.RandomString(64);
                 checkSame = context.Accounts.FirstOrDefault(p => p.IDAccount == IDAccount) == null;
             } while (!checkSame);
             return IDAccount;
@@ -135,7 +135,7 @@ namespace Xedap.Helper
             bool checkSame = false;
             do
             {
-                IDAccount = Helper.RandomString(64);
+                IDAccount = HelperAdd.RandomString(64);
                 checkSame = context.AccountStaffs.FirstOrDefault(p => p.IDStaff == IDAccount) == null;
             } while (!checkSame);
             return IDAccount;
