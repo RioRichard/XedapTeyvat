@@ -207,8 +207,11 @@
     <Compile Include="Models\ProductCart.cs" />
     <Compile Include="Models\Repo\AccountRepo.cs" />
     <Compile Include="Models\Repo\AuthModel.cs" />
+    <Compile Include="Models\Repo\CartRepo.cs" />
+    <Compile Include="Models\Repo\InvoiceRepo.cs" />
     <Compile Include="Models\Repo\AuthRepo.cs" />
     <Compile Include="Models\Repo\ProductRepo.cs" />
+    <Compile Include="Models\Repo\UploadFile.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\StaffRole.cs" />
     <Compile Include="Models\Status.cs" />
@@ -346,6 +349,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\SendMailAgain.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Admin\Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
