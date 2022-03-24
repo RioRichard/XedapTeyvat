@@ -10,7 +10,7 @@ namespace Xedap.Controllers
     
     public class AccountController : BaseController
     {
-        DataContext DataContext = new DataContext();
+        
         // GET: Account
        
         
@@ -53,25 +53,25 @@ namespace Xedap.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(Account _user)
         {
-            if (ModelState.IsValid)
-            {
-                var check = DataContext.Accounts.FirstOrDefault(s => s.IDAccount == _user.IDAccount);
-                if (check == null)
-                {
-                    
-                    DataContext.Configuration.ValidateOnSaveEnabled = false;
-                    DataContext.Accounts.Add(_user);
-                    DataContext.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.error = "Email already exists";
-                    return View();
-                }
+            //if (ModelState.IsValid)
+            //{
+            //    var check = DataContext.Accounts.FirstOrDefault(s => s.IDAccount == _user.IDAccount);
+            //    if (check == null)
+            //    {
+
+            //        DataContext.Configuration.ValidateOnSaveEnabled = false;
+            //        DataContext.Accounts.Add(_user);
+            //        DataContext.SaveChanges();
+            //        return RedirectToAction("Index");
+            //    }
+            //    else
+            //    {
+            //        ViewBag.error = "Email already exists";
+            //        return View();
+            //    }
 
 
-            }
+            //}
             return View();
 
 
@@ -108,23 +108,23 @@ namespace Xedap.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string email, string password)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
 
 
                
-                var data = DataContext.Accounts.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
-                if (data.Count() > 0)
-                {                
-                    Session["IDAccount"] = data.FirstOrDefault().IDAccount;
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.error = "Login failed";
-                    return RedirectToAction("Login");
-                }
-            }
+            //    var data = DataContext.Accounts.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
+            //    if (data.Count() > 0)
+            //    {                
+            //        Session["IDAccount"] = data.FirstOrDefault().IDAccount;
+            //        return RedirectToAction("Index");
+            //    }
+            //    else
+            //    {
+            //        ViewBag.error = "Login failed";
+            //        return RedirectToAction("Login");
+            //    }
+            //}
             return View();
         }
 
