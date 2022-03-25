@@ -25,5 +25,8 @@ namespace Xedap.Models
         public virtual Attribute Attribute { get; set; }
 
         public virtual Product Product { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        public string AttributeName { get; set; }
     }
 }
