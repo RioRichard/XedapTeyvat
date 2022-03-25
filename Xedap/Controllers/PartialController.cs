@@ -10,22 +10,22 @@ namespace Xedap.Controllers
 {
     public class PartialController : BaseController
     {
-       
+        DataContext context = new DataContext();
         public ActionResult Category()
         {
-            return PartialView(DataContext.Categories.ToList());
+            return PartialView(context.Categories.ToList());
         }
         public ActionResult SubNav()
         {
-            return PartialView(DataContext.Categories.ToList());
+            return PartialView(context.Categories.ToList());
         }
         public ActionResult getProductForm(int id)
         {
-            var result = ProductRepo.GetProductForm(DataContext, id);
-            ViewBag.Categories = DataContext.Categories.ToList();
-            ViewBag.ValueAttributes = ProductRepo.GetAttribute(DataContext, id);
-            ViewBag.ValueCategories = DataContext.Products.FirstOrDefault(p => p.IDProduct == id);
-            ViewBag.Attributes = DataContext.Attributes.ToList();
+            var result = ProductRepo.GetProductForm(context, id);
+            ViewBag.Categories = context.Categories.ToList();
+            ViewBag.ValueAttributes = ProductRepo.GetAttribute(context, id);
+            ViewBag.ValueCategories = context.Products.FirstOrDefault(p => p.IDProduct == id);
+            ViewBag.Attributes = context.Attributes.ToList();
             return PartialView(result);
              
         }

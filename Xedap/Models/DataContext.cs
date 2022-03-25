@@ -17,7 +17,7 @@ namespace Xedap.Models
         public virtual DbSet<AccountStaff> AccountStaffs { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Attribute> Attributes { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartRepo> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -95,16 +95,16 @@ namespace Xedap.Models
                 .WithRequired(e => e.Attribute)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Cart>()
+            modelBuilder.Entity<CartRepo>()
                 .Property(e => e.IDAccount)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Cart>()
+            modelBuilder.Entity<CartRepo>()
                 .HasMany(e => e.Invoices)
                 .WithRequired(e => e.Cart)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Cart>()
+            modelBuilder.Entity<CartRepo>()
                 .HasMany(e => e.ProductCarts)
                 .WithRequired(e => e.Cart)
                 .WillCascadeOnDelete(false);
@@ -113,10 +113,6 @@ namespace Xedap.Models
                 .HasMany(e => e.Products)
                 .WithRequired(e => e.Category)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Product>()
-                .Property(e => e.ImageURL)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Product>()
                 .HasMany(e => e.ProductAttributes)

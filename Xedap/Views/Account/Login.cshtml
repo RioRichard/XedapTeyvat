@@ -1,98 +1,159 @@
 ﻿
+
+
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAuthen.cshtml";
 }
-<div class="row">
-    <div class="col-md-6 mx-auto p-0">
-        <div class="card">
-            <div class="login-box">
-                <div class="login-snip">
-                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                    <div class="login-space">
-                        <div class="login">
-                            <div class="group">  <label for="user" class="label">Username</label>  <input id="user" type="text" class="input" placeholder="Enter your username" name="UserName" asp-for="UserName"> </div>
-                            <div class="group">  <label for="pass" class="label">Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password" name="Pass" asp-for="Pass"> </div>
-                            <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
-                            <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
-                            <div class="hr"></div>
-                            <div class="foot"> <a href="#">Forgot Password?</a> </div>
-                        </div>
-                        <div class="sign-up-form">
-                            <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Create your Username"> </div>
-                            <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Create your password"> </div>
-                            <div class="group"> <label for="pass" class="label">Repeat Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div>
-                            <div class="group"> <label for="pass" class="label">Email Address</label> <input id="pass" type="text" class="input" placeholder="Enter your email address"> </div>
-                            <div class="group"> <input type="submit" class="button" value="Sign Up"> </div>
-                            <div class="hr"></div>
-                            <div class="foot"> <label for="tab-1">Already Member?</label> </div>
-                        </div>
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+
+<div class="login-box ">
+    <div class="login-snip">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+        <label for="tab-1" class="tab">Đăng nhập</label> 
+        <input id="tab-2" type="radio" name="tab" class="sign-up">
+        <label for="tab-2" class="tab">Đăng kí</label>
+        <div class="login-space">
+            <form action="/" method="post" id="login">
+                @Html.AntiForgeryToken()
+                <div class="login">
+                    <div class="group">
+                        <label for="user" class="label">Tên tài khoản</label>
+                        <input id="user" type="text" class="input" placeholder="Nhập tên tài khoản của bạn" name="UserName">
                     </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass" type="password" class="input" data-type="password" placeholder="Nhập mật khẩu" name="Pass">
+                    </div>
+                    <div class="group">
+                        <input id="check" type="checkbox" class="check" checked> <label for="check">
+                            <span class="icon"></span> Keep me Signed in
+                        </label>
+                    </div>
+                    <div class="group">
+                        <button class="button">Đăng nhập</button>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="foot"> <a href="#">Quên mật khẩu</a> </div>
+                    <div class="foot"><a href="#">Về trang chủ</a></div>
+
                 </div>
-            </div>
+            </form>
+            <form  id="Register">
+                @Html.AntiForgeryToken()
+
+                <div class="sign-up-form">
+                    <div class="group">
+                        <label for="userSignIn" class="label">Tên tài khoản</label>
+                        <input id="userSignIn" type="text" class="input" name="UserName" placeholder="Nhập tên tài khoản của bạn">
+                    </div>
+                    <div class="group">
+                        <label for="passSignIn" class="label">Password</label>
+                        <input id="passSignIn" type="password" class="input" name="Pass" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="group">
+                        <label for="rePassSignIn" class="label">Repeat Password</label>
+                        <input id="rePassSignIn" type="password" name="RePass" class="input" placeholder="Nhập lại mật khẩu">
+                    </div>
+                    <div class="group">
+                        <label for="emailSignIn" class="label">Nhập email của bạn</label>
+                        <input id="emailSignIn" type="text" name="Email" class="input" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="group">
+                        <button class="button">Đăng ký</button>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="foot"><a href="#">Đã có tài khoản?</a></div>
+                    <div class="foot"><a href="#">Về trang chủ</a></div>
+
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-@section Scripts{
-    <link href="~/Content/StyleSheet.css" rel="stylesheet" />
+@section scripts{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
     <script>
         jQuery.validator.addMethod("userRegEx", function (value, element) {
             var regex = /^[a-zA-Z0-9]{1,}$/g.test(value);
             return this.optional(element) || regex
-        })
+        });
+        jQuery.validator.addMethod("domainEmail", function (value, element) {
+            var filter = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])*(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(.)+$/.test(value);
+            return this.optional(element) || filter
+        });
         $().ready(function () {
-            $("#login-box").validate({
-                rules: {
-                    UserName: {
-                        required: true,
-                        userRegEx: true,
-                        maxlength: 32,
-                        minlength: 6,
-                    },
-                    Pass: {
-                        required: true,
-                        minlength: 6,
-                        maxlength: 24,
-                    },
-                },
-                messages: {
-                    UserName: {
-                        required: "Bắt buộc nhập username",
-                        userRegEx: "Bắt đầu bằng chữ hoặc số và không có kí tự đặc biệt",
-                        maxlength: "Hãy nhập tối đa 32 ký tự",
-                        minlength: "Hãy nhập tối thiểu 6 ký tự"
-                    },
-                    Pass: {
-                        required: "Bắt buộc nhập password",
-                        minlength: "Hãy nhập ít nhất 6 ký tự",
-                        maxlength: "Hãy nhập ít nhất 24 ký tự",
-                    },
-                },
-                submitHandler: function (form) {
-                    $.post('~/Views/Home/login', $(form).serialize(), (r) => {
-                        switch (r) {
-                            case true:
-                                alert('Tài khoản của bạn chưa được kích hoạt. Đã gửi lại đường dẫn xác thực tài khoản vào email bạn.');
-
-                                break;
-                            case false:
-                                alert('Tài khoản của bạn chưa được kích hoạt. Email xác thực vừa mới được gửi, vui lòng chờ 5 phút để gửi lại');
-                                break;
-                            case 1:
-                                alert('Đăng nhập thành công. Bạn sẽ được chuyển về trang admin.');
-                                window.location.href = "/admin";
-                                break;
-                            case -1:
-                                alert('Đăng nhập không thành công. Sai tên đăng nhập hoặc mật khẩu.');
-                                break;
-                            default:
-                                alert('Đăng nhập không thành công. Bạn đã bị banned. Hãy liên hệ admin để biết thêm chi tiết.');
-                                break;
+            $("form").each(function () {
+                
+                var id = $(this).attr('id');
+                $(this).validate({
+                    rules: {
+                        UserName: {
+                            required: true,
+                            userRegEx: true,
+                            maxlength: 32,
+                            minlength: 6,
+                        },
+                        Pass: {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 24,
+                        },
+                        RePass: {
+                            required: true,
+                            equalTo: '#passSignIn',
+                            minlength: 6,
+                            maxlength: 24,
+                        },
+                        Email: {
+                            required: true,
+                            email: true,
+                            domainEmail: true,
+                            minlength: 10,
+                            maxlength: 64,
                         }
-                    })
-                }
-            });
+                    },
+                    messages: {
+                        UserName: {
+                            required: "Bắt buộc nhập username",
+                            userRegEx: "Bắt đầu bằng chữ hoặc số và không có kí tự đặc biệt",
+                            maxlength: "Hãy nhập tối đa 32 ký tự",
+                            minlength: "Hãy nhập tối thiểu 6 ký tự"
+                        },
+                        Pass: {
+                            required: "Bắt buộc nhập password",
+                            minlength: "Hãy nhập ít nhất 6 ký tự",
+                            maxlength: "Hãy nhập ít nhất 24 ký tự",
+                        },
+                        RePass: {
+                            required: "Bắt buộc nhập lại password",
+                            equalTo: "Hai password phải giống nhau",
+                            minlength: "Hãy nhập ít nhất 6 ký tự",
+                            maxlength: "Hãy nhập ít nhất 24 ký tự",
+                        },
+                        Email: {
+                            required: "Hãy nhập email",
+                            domainEmail: "Hãy nhập đúng định dạng email",
+                            email: "Hãy nhập đúng định dạng email",
+                            maxlength: "Hãy nhập tối đa 64 ký tự",
+                            minlength: "Hãy nhập tối thiểu 10 ký tự"
+                        }
+                    },
+                    submitHandler: function (form) {
+
+                        $.post('/Account/' + id, $(form).serialize(), (r) => {
+                            console.log(r);
+
+                            alert(r.message);
+                            window.location.href = r.stringUrl;
+                            
+                            
+                        })
+                    }
+                });
+            })
         });
     </script>
 }

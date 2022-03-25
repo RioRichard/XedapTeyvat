@@ -13,7 +13,7 @@ namespace Xedap.Models
         public Account()
         {
             AccountAddresses = new HashSet<AccountAddress>();
-            Carts = new HashSet<Cart>();
+            Carts = new HashSet<CartRepo>();
         }
 
         [Key]
@@ -23,7 +23,7 @@ namespace Xedap.Models
         [StringLength(32)]
         public string UserName { get; set; }
 
-        [MaxLength(32)]
+        [MaxLength(64)]
         public byte[] Password { get; set; }
 
         [StringLength(64)]
@@ -42,11 +42,13 @@ namespace Xedap.Models
         public string FullName { get; set; }
 
         public bool? Gender { get; set; }
+        [NotMapped]
+        public int? TotalBought { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountAddress> AccountAddresses { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<CartRepo> Carts { get; set; }
     }
 }
