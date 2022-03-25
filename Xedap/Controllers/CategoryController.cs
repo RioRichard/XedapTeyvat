@@ -31,7 +31,7 @@ namespace Xedap.Controllers
             int pageNumber = (page ?? 1);
 
 
-            return View(links.ToPagedList(pageNumber, pageSize));
+            return View(links.ToPagedList(pageNumber, pageSize) );
         }
        
     }

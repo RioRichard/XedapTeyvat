@@ -12,9 +12,17 @@ namespace Xedap.Controllers
         DataContext context = new DataContext();
         public ActionResult Index()
         {
-
-                   
-            return View();
+            //1 = Duong Pho
+            //2 = Dua
+            //6 = Tre em
+            ViewBag.DuongPho = context.Products.Where(p => p.Category.IDCategory == 1).Take(4);
+            ViewBag.Dua = context.Products.Where(p => p.Category.IDCategory == 2).Take(4);
+            return View(context.Products.Where(p=>p.Category.IDCategory == 6).Take(4));
+        }
+        [ChildActionOnly]
+        public ActionResult Category()
+        {
+            return PartialView(context.Categories.ToList());
         }
 
         public ActionResult About()

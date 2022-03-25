@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -46,23 +46,145 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.AWT.WinForms, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.AWT.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Beans, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Beans.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Charsets, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Charsets.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Cldrdata, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Cldrdata.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Corba, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Corba.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Jdbc, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Jdbc.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Localedata, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Localedata.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Management, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Media, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Media.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Misc, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Misc.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Naming, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Naming.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Nashorn, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Nashorn.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Remoting, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Remoting.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Security, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.SwingAWT, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.SwingAWT.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Text, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Tools, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.API.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Bind, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Bind.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Crypto, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Parse, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Parse.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Transform, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Transform.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.WebServices, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.XPath, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.Runtime.JNI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=5.0.15.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.5.0.15\lib\net461\Microsoft.AspNetCore.Http.Features.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.6.0.2\lib\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -113,9 +235,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -126,16 +245,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -152,17 +270,21 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductAttribute.cs" />
     <Compile Include="Models\ProductCart.cs" />
-    <Compile Include="Models\ProductRepo.cs" />
+    <Compile Include="Models\Repo\ProductRepo.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\StaffRole.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\admincss.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Image\12.jpg" />
     <Content Include="Content\Image\16-inches-blue-600x600.jpg" />
     <Content Include="Content\Image\2100204223-Xe-Đạp-Đường-Phố-TOURING-LIV-FLOURISH-4-BÁNH-700C-2021-Pale-Mauve-XS-1427kg_11619_4-600x600.jpg" />
     <Content Include="Content\Image\2105001124-Xe-Đạp-Đường-Phố-TOURING-MOMENTUM-INEED-STREET-BÁNH-700C-2021-Dark-Red_12211_4-600x600.jpg" />
@@ -173,6 +295,8 @@
     <Content Include="Content\Image\alight-2-dd-disc-eucalyptus-my22-850-3-600x600.jpg" />
     <Content Include="Content\Image\alight-3-dd-disc-pistachio-2022-850-600x600.jpg" />
     <Content Include="Content\Image\ATX-2021-Vibrant-Blue-1-600x600.jpg" />
+    <Content Include="Content\Image\banner.jpg" />
+    <Content Include="Content\Image\bg-laptop.jpg" />
     <Content Include="Content\Image\Contend-1-2021-White-1-600x600.jpg" />
     <Content Include="Content\Image\contend-2-2022-black-600x600.jpg" />
     <Content Include="Content\Image\contend-3-cold-iron-2022-600x600.jpg" />
@@ -185,6 +309,7 @@
     <Content Include="Content\Image\fd-806-blue-fix-1-600x600.jpg" />
     <Content Include="Content\Image\FORBCB26-7036-climber-xam-vang-850-600x600.jpg" />
     <Content Include="Content\Image\FORX26-7036-FORNIX-X26-XÁM-VÀNG-1-600x600.jpg" />
+    <Content Include="Content\Image\Free_Sample_By_Wix.jpg" />
     <Content Include="Content\Image\latte-26-2022-green-600x600.jpg" />
     <Content Include="Content\Image\MARWEA2633-5017-850-1.jpg" />
     <Content Include="Content\Image\propel-advanced-sl-1-disc-my22-limited-edition-850jpg-600x600.jpg" />
@@ -220,13 +345,25 @@
     <Content Include="Content\Image\YB0476514-850-600x600.jpg" />
     <Content Include="Content\Image\YB0517281-850.jpg" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\StyleSheet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -251,22 +388,32 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Partial\Category.cshtml" />
+    <Content Include="Views\Admin\Product.cshtml" />
+    <Content Include="Views\Partial\SubNav.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Product\Cantfound404.cshtml" />
     <Content Include="Views\Product\ProductDetail.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Admin\Category.cshtml" />
+    <Content Include="Views\Admin\Attribute.cshtml" />
+    <Content Include="Views\Admin\DeletedAttribute.cshtml" />
+    <Content Include="Views\Admin\DeletedCategory.cshtml" />
+    <Content Include="Views\Admin\DeletedProduct.cshtml" />
+    <Content Include="Views\Partial\getProductForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\js\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
@@ -303,8 +450,10 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Attribute";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4">THUỘC TÍNH</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Trang quản lí</a></li>
+
+        <li class="breadcrumb-item active">THUỘC TÍNH</li>
+    </ol>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="bg-dark" style="color:white">
+                <tr>
+
+                    <td>Tên Thuộc Tính</td>
+                    <td>Sửa Thuộc Tính</td>
+                    <td>Xóa Thuộc Tính</td>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <td>
+                            <p><h5 class="Attribute-name" style="color:black; ">@item.AttributeName</h5></p>
+                        </td>
+                        <td>
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
+                                <button class="btn btn-primary btn-editattribute" href="#">
+                                    SỬA
+                                </button>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
+                                <button class="btn btn-primary" attrID="@item.IDAttribute" name="delete">XÓA</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                <button class="btn btn-primary btn-addattribute" href="#">Thêm thuộc tính</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script>
+        $("button[name='delete']").click(function () {
+            var attrID = $(this).attr("attrID");
+            $.ajax({
+                type: "POST",
+                url: "/admin/deleteattribute",
+                data: { attrID: attrID },
+                dataType: "json",
+
+                success: function (response) {
+                    if (response == false) {
+                        alert("Xóa thuộc tính không thành công");
+                    }
+                    else {
+                        alert("Xóa thuộc tính thành công.");
+                        window.location.href = window.location.href;
+                    }
+                }
+            });
+        })
+    </script>
+}

@@ -1,5 +1,6 @@
 namespace Xedap.Models
 {
+   
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -36,12 +37,17 @@ namespace Xedap.Models
         [StringLength(4000)]
         public string Description { get; set; }
 
+        
         public virtual Category Category { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+       
         public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<ProductCart> ProductCarts { get; set; }
+
+        
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Xedap.Models;
+using Xedap.Models.Repo;
 
 namespace Xedap.Controllers
 {
