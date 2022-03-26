@@ -359,6 +359,7 @@
                         maxlength: "Số lượng không thế lớn hơn 9999",
                         digits: "Vui lòng nhập số",
                     },
+                   
                     imgUp: {
                         required: "Vui lòng chọn ảnh"
                     }
@@ -408,9 +409,14 @@
 
 
                 success: function (response) {
-                    $('select[name=cttr]').val('5');
+                    
                     $('#editform').html(response);
-                    console.log(response);
+                    $('#editform').submit(function (e) {
+                        e.preventDefault();
+                        
+                    })
+                    
+                   
                     //var pName = response.Name;
                     //var pPrice = response.Price;
                     //var pStock = response.Stock;
@@ -430,79 +436,9 @@
                 }
 
             });
-
+           
             modal.classList.add('open')
-            $('#editform').validate({
-                rules: {
-                    productName: {
-                        required: true,
-                        minlength: 6,
-                        maxlength: 256,
-                    },
-                    productPrice: {
-                        required: true,
-                        minlength: 4,
-                        maxlength: 12,
-                        digits: true,
-                    },
-                    productStock: {
-                        required: true,
-                        minlength: 0,
-                        maxlength: 9999,
-                        digits: true,
-                    },
-                    //attribute: {
-                    //    required: true,
-                    //    minlength: 1,
-                    //    maxlength: 256,
-                    //},
-                },
-                messages: {
-                    productName: {
-                        required: "Vui lòng nhập tên sản phẩm",
-                        minlength: "Ít nhất nhập 6 kí tự",
-                        maxlength: "Nhập nhiều nhất 256 kí tự",
-                    },
-                    productPrice: {
-                        required: "Vui lòng nhập giá sản phẩm",
-                        minlength: "Giá không thể bé hơn đơn vị nghàn",
-                        maxlength: "Giá không thể hơn nghìn tỷ",
-                        digits: "Vui lòng nhập số",
-                    },
-                    productStock: {
-                        required: "Vui lòng nhập số lượng sản phẩm",
-                        minlength: "Số lượng không thể bé hơn 0",
-                        maxlength: "Số lượng không thế lớn hơn 9999",
-                        digits: "Vui lòng nhập số",
-                    },
-                    //attribute: {
-                    //    required: "Vui lòng nhập đầy đủ thuộc tính",
-                    //    minlength: "Số ký tự phải lớn hơn 1",
-                    //    maxlength: "Số ký tự phải bé hơn 256",
-                    //},
-                },
-                submitHandler: function (form) {
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/admin/editproduct",
-                        data: new FormData(form),
-                        dataType: "json",
-                        contentType: false,
-                        processData: false,
-                        success: function (response) {
-                            if (response == false) {
-                                alert("Sửa sản phẩm không thành công");
-                            }
-                            else {
-                                alert("Sửa sản phẩm thành công.");
-                                window.location.href = window.location.href;
-                            }
-                        }
-                    });
-                },
-
-            })
+           
         }
         function closeEdit() {
             modal.classList.remove('open')
@@ -531,6 +467,80 @@
                     }
                 }
             });
+        })
+        $('#editform').validate({
+            rules: {
+                productName: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 256,
+                },
+                productPrice: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 12,
+                    digits: true,
+                },
+                productStock: {
+                    required: true,
+                    minlength: 0,
+                    maxlength: 9999,
+                    digits: true,
+                },
+                cttr: {
+                    required: true,
+                }
+                //attribute: {
+                //    required: true,
+                //    minlength: 1,
+                //    maxlength: 256,
+                //},
+            },
+            messages: {
+                productName: {
+                    required: "Vui lòng nhập tên sản phẩm",
+                    minlength: "Ít nhất nhập 6 kí tự",
+                    maxlength: "Nhập nhiều nhất 256 kí tự",
+                },
+                productPrice: {
+                    required: "Vui lòng nhập giá sản phẩm",
+                    minlength: "Giá không thể bé hơn đơn vị nghàn",
+                    maxlength: "Giá không thể hơn nghìn tỷ",
+                    digits: "Vui lòng nhập số",
+                },
+                productStock: {
+                    required: "Vui lòng nhập số lượng sản phẩm",
+                    minlength: "Số lượng không thể bé hơn 0",
+                    maxlength: "Số lượng không thế lớn hơn 9999",
+                    digits: "Vui lòng nhập số",
+                },
+                //attribute: {
+                //    required: "Vui lòng nhập đầy đủ thuộc tính",
+                //    minlength: "Số ký tự phải lớn hơn 1",
+                //    maxlength: "Số ký tự phải bé hơn 256",
+                //},
+            },
+            submitHandler: function (form) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/editproduct",
+                    data: new FormData(form),
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response == false) {
+                            alert("Sửa sản phẩm không thành công");
+                        }
+                        else {
+                            alert("Sửa sản phẩm thành công.");
+                            window.location.href = window.location.href;
+                        }
+                    }
+                });
+            },
+
         })
     </script>
 }
