@@ -37,10 +37,10 @@ namespace Xedap.Controllers
         }
         public ActionResult Chart()
         {
-            
+
             return View();
         }
-        
+
         public ActionResult DashboardBar()
         {
 
@@ -58,6 +58,93 @@ namespace Xedap.Controllers
             configuration["ImageUrlLogo"] = "logo-TGCF-224.png";
             return Json(configuration["ImageUrlLogo"]);
         }
+
+        public ActionResult Attribute()
+        {
+            ViewBag.Attributes = context.Attributes.ToList();
+            return View(context.Attributes.Where(p => p.IsDelete == false));
+        }
         
+        public ActionResult EditAttribute(int id)
+        {
+            var Attribute = context.Attributes.Select(p => p).Where(p => p.IDAttribute == id).FirstOrDefault();
+            return View(Attribute);
+        }
+        [HttpPost]
+        public ActionResult EditAttribute(Models.Attribute edited)
+        {
+            try
+            {
+                var udm = context.Attributes.Select(p => p).Where(p => p.IDAttribute == edited.IDAttribute).FirstOrDefault();
+                udm.AttributeName = edited.AttributeName;
+                var id = context.SaveChanges();
+                return RedirectToAction("Attribute");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult AddAtribute()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddAtribute(Models.Attribute att)
+        {
+
+            att.IsDelete = false;
+            context.Attributes.Add(att);
+            context.SaveChanges();
+            if (att.IDAttribute > 0)
+            {
+                return RedirectToAction("Attribute");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Khong luu duoc");
+                return View();
+            }
+        }
+
+        public ActionResult DeletedAttribute()
+        {
+
+            return View(context.Attributes.Where(p => p.IsDelete == true));
+        }
+        [HttpPost]
+        [HttpGet]
+        public ActionResult DeletedAttribute(int id)
+        {
+            try
+            {
+                var md = context.Attributes.FirstOrDefault(p => p.IDAttribute == id);
+                md.IsDelete = true;
+                context.SaveChanges();
+                return RedirectToAction("Attribute");
+            }
+            catch(Exception e)
+            {
+                 Console.WriteLine(e.Message);
+                return View();
+            }
+            
+        }
+        
+        public ActionResult DeletedAttributeVV(int id)
+        {
+            var md = context.Attributes.Find(id);
+            context.Attributes.Remove(md);
+            context.SaveChanges();
+            return RedirectToAction("DeletedAttribute");
+        }
+        public ActionResult RestoreAttribute(int id)
+        {
+
+            var md = context.Attributes.Find(id);
+            md.IsDelete = false;
+            context.SaveChanges();
+            return RedirectToAction("DeletedAttribute");
+        }
     }
 }

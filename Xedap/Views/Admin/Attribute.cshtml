@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Attribute";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="mt-4">DANH MỤC</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Trang quản lí</a></li>
+
+        <li class="breadcrumb-item active">DANH MỤC</li>
+    </ol>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="bg-dark" style="color:white">
+                <tr>
+
+                    <td>Tên Danh Mục</td>
+                    <td>Sửa Danh Mục</td>
+                    <td>Xóa Danh Mục</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <p><h5 class="categorye-name" style="color:black">@item.AttributeName</h5></p>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-editattribute" href="~/Admin/EditAttribute?id=@item.IDAttribute">SỬA</a>
+
+                        </td>
+                        <td>
+                           
+                                <a class="btn btn-primary " href="~/Admin/DeletedAttribute?id=@item.IDAttribute">XÓA</a>
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                <a class="btn btn-primary btn-addattribute" href="/Admin/AddAtribute">Thêm thuộc tính</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                <a class="btn btn-primary btn-addattribute" href="~/Admin/DeletedAttribute">Xóa-Khôi phục</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+  
+}
+

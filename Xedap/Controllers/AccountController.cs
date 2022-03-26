@@ -135,5 +135,6 @@ namespace Xedap.Controllers
             Session.Clear();//remove session
             return RedirectToAction("Login");
         }
+
     }
 }
