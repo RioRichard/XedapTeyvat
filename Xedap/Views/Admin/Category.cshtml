@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Attribute";
+    ViewBag.Title = "Category";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -24,59 +24,54 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
-
                     <tr>
 
                         <td>
-                            <p><h5 class="categorye-name" style="color:black">@item.AttributeName</h5></p>
+                            <p><h5 class="categorye-name" style="color:black">@item.CategoryName</h5></p>
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-editattribute" href="~/Admin/EditAttribute?id=@item.IDAttribute">SỬA</a>
-
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top: 0px !important">
+                                <button class="btn btn-primary btn-editcategory">
+                                    SỬA
+                                </button>
+                            </div>
                         </td>
                         <td>
-                           
-                                <a class="btn btn-primary " href="~/Admin/DeletedAttribute?id=@item.IDAttribute">XÓA</a>
-                            
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
+                                <button class="btn btn-primary" name="delete" ctgrID="@item.IDCategory">XÓA</button>
+                            </div>
                         </td>
                     </tr>
                 }
-
-
             </tbody>
         </table>
         <div class="form-group">
             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                <a class="btn btn-primary btn-addattribute" href="/Admin/AddAtribute">Thêm thuộc tính</a>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                <a class="btn btn-primary btn-addattribute" href="~/Admin/DeletedAttribute">Xóa-Khôi phục</a>
+                <button class="btn btn-primary btn-addcategory">Thêm Danh Mục</button>
             </div>
         </div>
     </div>
 </div>
-@section scripts{
+
+@section Scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script>
         $("button[name='delete']").click(function () {
-            var attrID = $(this).attr("attrID");
+            var ctgrID = $(this).attr("ctgrID");
             $.ajax({
                 type: "POST",
-                url: "/admin/deleteattribute",
-                data: { attrID: attrID },
+                url: "/admin/deletecategory",
+                data: { ctgrID: ctgrID },
                 dataType: "json",
 
                 success: function (response) {
                     if (response == false) {
-                        alert("Xóa thuộc tính không thành công");
+                        alert("Xóa danh mục không thành công");
                     }
                     else {
-                        alert("Xóa thuộc tính thành công.");
+                        alert("Xóa danh mục thành công.");
                         window.location.href = window.location.href;
                     }
                 }
@@ -84,4 +79,3 @@
         })
     </script>
 }
-

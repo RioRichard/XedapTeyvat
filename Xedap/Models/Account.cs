@@ -1,11 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
+
 namespace Xedap.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
     [Table("Account")]
     public partial class Account
     {
@@ -23,7 +23,7 @@ namespace Xedap.Models
         [StringLength(32)]
         public string UserName { get; set; }
 
-        [MaxLength(32)]
+        [MaxLength(64)]
         public byte[] Password { get; set; }
 
         [StringLength(64)]

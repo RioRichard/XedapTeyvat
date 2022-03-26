@@ -1,10 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
+
 namespace Xedap.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+   
 
     [Table("ProductAttribute")]
     public partial class ProductAttribute
@@ -25,5 +27,8 @@ namespace Xedap.Models
         public virtual Attribute Attribute { get; set; }
 
         public virtual Product Product { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        public string AttributeName { get; set; }
     }
 }

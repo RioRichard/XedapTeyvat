@@ -9,11 +9,11 @@
 <div>
     <main>
         <div class="container-fluid">
-    <h1 class="mt-4">DANH MỤC</h1>
+            <h1 class="mt-4">DANH MỤC ĐÃ XÓA</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/admin">Trang quản lí</a></li>
 
-        <li class="breadcrumb-item active">DANH MỤC</li>
+                <li class="breadcrumb-item active">DANH MỤC ĐÃ XÓA</li>
             </ol>
 
             <div class="card-body">
@@ -21,9 +21,9 @@
                     <thead class="bg-dark" style="color:white">
                         <tr>
 
-                            <td>Tên Thuộc Tính</td>
-                            <td>Khôi Phục Thuộc Tính</td>
-                            <td>Xóa vĩnh viễn</td>
+                            <td>Tên Danh Mục</td>
+                            <td>Khôi Phục Danh Mục</td>
+                            <td>Xóa Danh Mục Vĩnh Viễn</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,16 +33,16 @@
                         <tr>
 
                             <td>
-                            <p><h5 class="categorye-name" style="color:black">@item.AttributeName</h5></p>
+                                <p><h5 class="Category-name" style="color:black">@item.CategoryName</h5></p>
                             </td>
                             <td>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                <a class="btn btn-primary btn-editattribute" href="/Admin/RestoreAttribute?id=@item.IDAttribute">Khôi Phục</a>
+                                    <button class="btn btn-primary btn-restoreCategory" name="restore" ctgrID="@item.IDCategory">Khôi Phục</button>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                <a class="btn btn-primary" href="/Admin/DeletedAttributeVV?id=@item.IDAttribute">Xóa vĩnh viễn</a>
+                                    <button class="btn btn-primary btn-delete4everCategory" >Xóa vĩnh viễn</button>
                                 </div>
                             </td>
                         </tr>
@@ -53,25 +53,25 @@
                 </table>
             </div>
         </div>
-<div>
-    @Html.ActionLink("Back to List", "Attribute")
+    </main>
+
 </div>
 @section Scripts{
     <script>
         $("button[name='restore']").click(function () {
-            var attrID = $(this).attr("attrID");
+            var ctgrID = $(this).attr("ctgrID");
             $.ajax({
                 type: "POST",
-                url: "/admin/restoreattribute",
-                data: { attrID: attrID },
+                url: "/admin/restorecategory",
+                data: { ctgrID: ctgrID },
                 dataType: "json",
 
                 success: function (response) {
                     if (response == false) {
-                        alert("Khôi phục thuộc tính không thành công");
+                        alert("Khôi phục danh mục không thành công");
                     }
                     else {
-                        alert("Khôi phục thuộc tính thành công.");
+                        alert("Khôi phục danh mục thành công.");
                         window.location.href = window.location.href;
                     }
                 }

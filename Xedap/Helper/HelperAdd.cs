@@ -10,13 +10,12 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using System.Web;
 using Xedap.Models;
 
 namespace Xedap.Helper
 {
-    public class Helper
+    public class HelperAdd
     {
         
         public static byte[] Hash(string plainText)
@@ -51,21 +50,38 @@ namespace Xedap.Helper
         }
         public static void SendMail(IConfiguration configuration, string toEmail, string content, string subject)
         {
-
-            IConfigurationSection section = configuration.GetSection("email:gmail");
-            SmtpClient client = new SmtpClient(section["host"], Convert.ToInt32(section["port"]))
+            string email = string.Empty;
+            string pass = string.Empty;
+            var textFile = "../../password.txt";
+            using (StreamReader file = new StreamReader(textFile))
             {
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(section["address"], Helper.DecryptString("058ef654da951060eb6307d980548a86", section["password"])),
-                EnableSsl = true
-            };
-            MailAddress addressFrom = new MailAddress(section["address"]);
-            MailAddress addressTo = new MailAddress(toEmail);
-            MailMessage message = new MailMessage(addressFrom, addressTo);
+                int counter = 0;
+                string ln;
 
-            message.Body = content;
-            message.Subject = subject;
-            client.Send(message);
+                while ((ln = file.ReadLine()) != null)
+                {
+                    Console.WriteLine(ln);
+                    counter++;
+                }
+                file.Close();
+                Console.WriteLine($"File has {counter} lines.");
+            }
+            //IConfigurationSection section = configuration.GetSection("email:gmail");
+            //SmtpClient client = new SmtpClient(section["host"], Convert.ToInt32(section["port"]))
+            //{
+            //    UseDefaultCredentials = false,
+            //    Credentials = new NetworkCredential(section["address"], HelperAdd.DecryptString("058ef654da951060eb6307d980548a86", section["password"])),
+            //    EnableSsl = true
+            //};
+            //MailAddress addressFrom = new MailAddress(section["address"]);
+            //MailAddress addressTo = new MailAddress(toEmail);
+            //MailMessage message = new MailMessage(addressFrom, addressTo);
+
+            //message.Body = content;
+            //message.Subject = subject;
+            //client.Send(message);
+
+
         }
         public static string EncryptString(string key, string plainText)
         {
@@ -114,8 +130,8 @@ namespace Xedap.Helper
         }
         public static string GenerateToken(string IdAccount)
         {
-            var ConfirmToken = IdAccount + Helper.RandomString(32);
-            var HashToken = Helper.HashToken(ConfirmToken);
+            var ConfirmToken = IdAccount + HelperAdd.RandomString(32);
+            var HashToken = HelperAdd.HashToken(ConfirmToken);
             return HashToken;
         }
         public static string GerenerateIdAccount(DataContext context)
@@ -124,7 +140,7 @@ namespace Xedap.Helper
             bool checkSame = false;
             do
             {
-                IDAccount = Helper.RandomString(64);
+                IDAccount = HelperAdd.RandomString(64);
                 checkSame = context.Accounts.FirstOrDefault(p => p.IDAccount == IDAccount) == null;
             } while (!checkSame);
             return IDAccount;
@@ -135,7 +151,7 @@ namespace Xedap.Helper
             bool checkSame = false;
             do
             {
-                IDAccount = Helper.RandomString(64);
+                IDAccount = HelperAdd.RandomString(64);
                 checkSame = context.AccountStaffs.FirstOrDefault(p => p.IDStaff == IDAccount) == null;
             } while (!checkSame);
             return IDAccount;

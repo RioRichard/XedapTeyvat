@@ -1,11 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
+
 namespace Xedap.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
     [Table("Address")]
     public partial class Address
     {
@@ -18,6 +18,10 @@ namespace Xedap.Models
 
         [Key]
         public int IDAddress { get; set; }
+
+        [Column("Address")]
+        [StringLength(64)]
+        public string Address1 { get; set; }
 
         [StringLength(12)]
         public string Phone { get; set; }
