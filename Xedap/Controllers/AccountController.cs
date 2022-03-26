@@ -14,13 +14,13 @@ namespace Xedap.Controllers
     {
         
         // GET: Account
-        [UserAuthorize]
-
+        
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
-        [UserAuthorize]
+    
 
         public ActionResult ForgotPassword()
         {
@@ -71,13 +71,29 @@ namespace Xedap.Controllers
             }
             else
             {
-                var result = new { stringUrl = "/Account/Register", message = "Có lỗi đã xảy ra. Thử lại sau" };
+                var result = new { stringUrl = "/Account/Login", message = "Có lỗi đã xảy ra. Thử lại sau" };
                 return Json(result);
 
             }
 
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Log(string UserName,string Pass, bool? rem)
+        {
+            var Rem = rem ?? false;
+            if (ModelState.IsValid)
+            {
+                var result = AuthRepo.Login(UserName, Pass, Rem);
+                return Json(result);
 
+            }
+            else
+            {
+                var result = new { stringUrl = "/Account/Login", message = "Có lỗi đã xảy ra. Thử lại sau" };
+                return Json(result);
 
+            }
         }
         public ActionResult Address()
         {

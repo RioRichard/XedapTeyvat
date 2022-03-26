@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
+using System.Web.Security;
 using Xedap.Helper;
 
 namespace Xedap.Models.Repo
@@ -38,6 +37,27 @@ namespace Xedap.Models.Repo
                 context.SaveChanges();  
                 return new { stringUrl = "/Account/Login", message = "Đăng kí thành công. Vui lòng vào email của bạn để nhấn vào link xác nhận." };
                 
+            }
+        }
+        public object Login(string UserName, string Pass, bool rememberMe)
+        {
+            var account = context.Accounts.FirstOrDefault(p => p.UserName == UserName);
+            if (account == null)
+            {
+                return new { stringUrl = "/Account/Login", message = "Sai Username hoặc Password" };
+
+            }
+            else
+            {
+                var check = HelperAdd.Hash(account.IDAccount + Pass);
+                if (check.SequenceEqual(account.Password) )
+                {
+                    FormsAuthentication.SetAuthCookie(account.IDAccount,rememberMe);
+                    return new { stringUrl = "/", message = "Đăng nhập thành công" };
+
+                }
+                return new { stringUrl = "/Account/Login", message = "Sai Username hoặc Password" };
+
             }
         }
 
