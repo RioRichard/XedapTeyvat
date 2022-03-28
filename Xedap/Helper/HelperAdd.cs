@@ -142,7 +142,7 @@ namespace Xedap.Helper
         public static Guid GenerateGuidCart(DataContext context)
         {
             Guid newGuid = Guid.Empty;
-            CartRepo check = null;
+            Cart check = null;
             do
             {
                 newGuid = Guid.NewGuid();

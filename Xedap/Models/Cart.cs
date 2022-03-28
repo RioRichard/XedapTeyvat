@@ -7,10 +7,10 @@ using System.Data.Entity.Spatial;
 namespace Xedap.Models
 {
     [Table("Cart")]
-    public partial class CartRepo
+    public partial class Cart
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CartRepo()
+        public Cart()
         {
             Invoices = new HashSet<Invoice>();
             ProductCarts = new HashSet<ProductCart>();

@@ -7,6 +7,47 @@ namespace Xedap.Models.Repo
 {
     public class CartRepo
     {
+        public static Cart CreateCart(DataContext context, string userId)
+        {
+            var newGuid = Helper.HelperAdd.GenerateGuidCart(context);
+            var newCart = new Cart()
+            {
+                IDAccount = userId,
+                IDCart = newGuid,
+                IsExpired = false,
+
+
+            };
+            context.SaveChanges();
+            return newCart;
+        }
+        public static IEnumerable<ProductCart> GetAllCartItem(DataContext context, string userId)
+        {
+            var cart = context.Carts.FirstOrDefault(p => p.IdAccount == userId && p.IsExpired == false);
+            if (cart == null)
+                return null;
+            var productCart = context.ProductCarts.Where(p => p.IdCart == cart.IdCart).ToList();
+            if (productCart.Count == 0)
+                return null;
+            var product = context.Products.ToList();
+            var result = (from proCart in productCart
+                          join pro in product
+                          on proCart.IdProduct equals (int)pro.IdProduct
+                          select new ProductCart
+                          {
+                              IdCart = proCart.IdCart,
+                              IdProduct = proCart.IdProduct,
+                              Quantity = proCart.Quantity,
+                              ProductName = pro.Name,
+                              PaymentPrice = pro.Price,
+                              UrlImage = pro.ImageUrl,
+                              Stock = (int)pro.Stock
+
+                          }).ToList();
+            if (result.Count != 0)
+                UpdateProductCart(context, result);
+            return result;
+        }
         public static List<ProductCart> GetAllCartItemInInvoice(DataContext context, Guid IdCart)
         {
 
