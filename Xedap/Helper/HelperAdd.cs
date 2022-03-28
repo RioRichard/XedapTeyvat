@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ServiceStack;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,14 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 using Xedap.Models;
 
 namespace Xedap.Helper
 {
     public class HelperAdd
     {
-        
+        public static string WebsiteUrl = "https://localhost:44318";
         public static byte[] Hash(string plainText)
         {
             HashAlgorithm hashAlgorithm = HashAlgorithm.Create("SHA-512");
@@ -48,38 +50,26 @@ namespace Xedap.Helper
             }
             return string.Join("", a);
         }
-        public static void SendMail(IConfiguration configuration, string toEmail, string content, string subject)
+        public static void SendMail(string toEmail, string content, string subject)
         {
-            string email = string.Empty;
-            string pass = string.Empty;
-            var textFile = "../../password.txt";
-            using (StreamReader file = new StreamReader(textFile))
+            var path = HostingEnvironment.ApplicationPhysicalPath + "password.json";
+            JObject json = JObject.Parse(File.ReadAllText(path));
+            
+
+
+            SmtpClient client = new SmtpClient(json["host"].ToString(), Convert.ToInt32(json["port"].ToString()))
             {
-                int counter = 0;
-                string ln;
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(json["email"].ToString(), HelperAdd.DecryptString("058ef654da951060eb6307d980548a86", json["pass"].ToString())),
+                EnableSsl = true
+            };
+            MailAddress addressFrom = new MailAddress(json["email"].ToString());
+            MailAddress addressTo = new MailAddress(toEmail);
+            MailMessage message = new MailMessage(addressFrom, addressTo);
 
-                while ((ln = file.ReadLine()) != null)
-                {
-                    Console.WriteLine(ln);
-                    counter++;
-                }
-                file.Close();
-                Console.WriteLine($"File has {counter} lines.");
-            }
-            //IConfigurationSection section = configuration.GetSection("email:gmail");
-            //SmtpClient client = new SmtpClient(section["host"], Convert.ToInt32(section["port"]))
-            //{
-            //    UseDefaultCredentials = false,
-            //    Credentials = new NetworkCredential(section["address"], HelperAdd.DecryptString("058ef654da951060eb6307d980548a86", section["password"])),
-            //    EnableSsl = true
-            //};
-            //MailAddress addressFrom = new MailAddress(section["address"]);
-            //MailAddress addressTo = new MailAddress(toEmail);
-            //MailMessage message = new MailMessage(addressFrom, addressTo);
-
-            //message.Body = content;
-            //message.Subject = subject;
-            //client.Send(message);
+            message.Body = content;
+            message.Subject = subject;
+            client.Send(message);
 
 
         }

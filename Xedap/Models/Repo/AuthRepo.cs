@@ -31,10 +31,16 @@ namespace Xedap.Models.Repo
                 newAccount.Email = Email;
                 newAccount.Password = HelperAdd.Hash(newAccount.IDAccount + Pass);
                 newAccount.Token = HelperAdd.GenerateToken(newAccount.IDAccount);
+                newAccount.ExpiredTokenTime = System.DateTime.Now.AddMinutes(15);
                 newAccount.IsConfirmed = false;
                 newAccount.IsDelete = false;
                 context.Accounts.Add(newAccount);
-                context.SaveChanges();  
+                context.SaveChanges();
+                var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email xác thực của XeDapTeyVat. Hãy nhấn vào đường link sau để có thể xác thực tài khoản.\n" +
+                    $"{HelperAdd.WebsiteUrl}/account/confirm/{newAccount.Token}";
+                var subject = "Kích hoạt tài khoản XeDapTeyVat";
+                HelperAdd.SendMail(newAccount.Email, msg, subject);
+
                 return new { stringUrl = "/Account/Login", message = "Đăng kí thành công. Vui lòng vào email của bạn để nhấn vào link xác nhận." };
                 
             }
