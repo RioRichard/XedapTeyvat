@@ -52,7 +52,7 @@ namespace Xedap.Helper
         }
         public static void SendMail(string toEmail, string content, string subject)
         {
-            var path = HostingEnvironment.ApplicationPhysicalPath + "password.json";
+            var path = HostingEnvironment.ApplicationPhysicalPath + "/password.json";
             JObject json = JObject.Parse(File.ReadAllText(path));
             
 
@@ -149,7 +149,7 @@ namespace Xedap.Helper
         public static Guid GenerateGuidCart(DataContext context)
         {
             Guid newGuid = Guid.Empty;
-            CartRepo check = null;
+            Cart check = null;
             do
             {
                 newGuid = Guid.NewGuid();

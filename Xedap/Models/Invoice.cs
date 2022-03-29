@@ -25,7 +25,7 @@ namespace Xedap.Models
 
         public virtual Address Address { get; set; }
 
-        public virtual CartRepo Cart { get; set; }
+        public virtual Cart Cart { get; set; }
 
         public virtual Status Status { get; set; }
         [NotMapped]

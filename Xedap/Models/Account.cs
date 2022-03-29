@@ -13,7 +13,7 @@ namespace Xedap.Models
         public Account()
         {
             AccountAddresses = new HashSet<AccountAddress>();
-            Carts = new HashSet<CartRepo>();
+            Carts = new HashSet<Cart>();
         }
 
         [Key]
@@ -49,6 +49,6 @@ namespace Xedap.Models
         public virtual ICollection<AccountAddress> AccountAddresses { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartRepo> Carts { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }
