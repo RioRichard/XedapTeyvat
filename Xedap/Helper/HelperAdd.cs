@@ -19,7 +19,9 @@ namespace Xedap.Helper
 {
     public class HelperAdd
     {
-        public static string WebsiteUrl = "https://localhost:44318";
+        static string path = HostingEnvironment.ApplicationPhysicalPath + "/password.json";
+        static JObject json = JObject.Parse(File.ReadAllText(path));
+        public static string WebsiteUrl = json["URL"].ToString();
         public static byte[] Hash(string plainText)
         {
             HashAlgorithm hashAlgorithm = HashAlgorithm.Create("SHA-512");
@@ -52,11 +54,6 @@ namespace Xedap.Helper
         }
         public static void SendMail(string toEmail, string content, string subject)
         {
-            var path = HostingEnvironment.ApplicationPhysicalPath + "/password.json";
-            JObject json = JObject.Parse(File.ReadAllText(path));
-            
-
-
             SmtpClient client = new SmtpClient(json["host"].ToString(), Convert.ToInt32(json["port"].ToString()))
             {
                 UseDefaultCredentials = false,
