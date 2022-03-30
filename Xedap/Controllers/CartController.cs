@@ -22,26 +22,42 @@ namespace Xedap.Controllers
             else
                 TempData["messageAddItem"] = "Thêm vào giỏ hàng không thành công";
 
-            return Redirect($"/product/{idProduct}");
+            return Redirect($"/product/productdetail/{idProduct}");
+        }
+        public ActionResult Add1ItemToCart(int idProduct)
+        {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = CartRepo.AddItem(Context, userId, idProduct, 1);
+            if (result == true)
+                TempData["messageAddItem"] = "Thêm vào giỏ hàng thành công";
+            else
+                TempData["messageAddItem"] = "Thêm vào giỏ hàng không thành công";
+
+            return Json(idProduct);
         }
         [HttpPost]
         public ActionResult ChangeQuantityCart(string CartID, int ProductId, int Quantity)
         {
-            var proCart = Context.ProductCarts.FirstOrDefault(p => p.IDCart == Guid.Parse(CartID) && p.IDProduct == ProductId);
+            var cartid = Guid.Parse(CartID);
+            var proCart = Context.ProductCarts.FirstOrDefault(p => p.IDCart == cartid && p.IDProduct == ProductId);
             proCart.Quantity = Quantity;
             if (proCart.Quantity == 0)
             {
                 Context.ProductCarts.Remove(proCart);
             }
-            //else
-            //    Context.ProductCarts.Update(proCart);
+            else
+            {
+                proCart.Quantity = Quantity;
+                Context.SaveChanges();
+            }    
             Context.SaveChanges();
             return Json(Quantity);
         }
         [HttpPost]
         public ActionResult DeleteProductCart(string CartID, int ProductId)
         {
-            var proCart = Context.ProductCarts.FirstOrDefault(p => p.IDCart == Guid.Parse(CartID) && p.IDProduct == ProductId);
+            var cartid = Guid.Parse(CartID);
+            var proCart = Context.ProductCarts.FirstOrDefault(p => p.IDCart == cartid && p.IDProduct == ProductId);
             Context.ProductCarts.Remove(proCart);
             Context.SaveChanges();
             return Json(true);

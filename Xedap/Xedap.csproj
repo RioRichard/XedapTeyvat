@@ -389,6 +389,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="password.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -446,6 +447,7 @@
     <Content Include="Views\Admin\Chart.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

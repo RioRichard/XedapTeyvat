@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
                         <a href="#" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
-                        <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,8 @@
                     <div class="card-body">
                         <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
                         <a href="#" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
-                        <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
+
                     </div>
                 </div>
             </div>
@@ -44,7 +45,7 @@
     </div>
 </div>
 
-<div style="border: 5px solid yellow; border-radius:20px; padding:5px;margin:10px 0" >
+<div style="border: 5px solid yellow; border-radius:20px; padding:5px;margin:10px 0">
     <h3 class="text-center">Xe đạp trẻ em</h3>
     <div class="row">
         @foreach (var item in Model)
@@ -55,13 +56,28 @@
                     <div class="card-body">
                         <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
                         <a href="#" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
-                        <a href="#" class="btn btn-outline-danger"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
                     </div>
                 </div>
             </div>
         }
     </div>
-    @HttpContext.Current.User.Identity.IsAuthenticated
 </div>
+@section Scripts{
+    <script>
+        $('button[name="add"]').click(function () {
+            event.preventDefault;
+            event.stopPropagation;
+            var pid = $(this).attr('pid');
 
+            $.post('/cart/Add1ItemToCart', { idProduct: pid }, (r) => {
+                alert("Thêm sản phẩm vào giỏ hàng thành công")
+                console.log(r);
+                /*window.location.href = window.location.href;*/
+            });
+        });
+    </script>
+    
+    
+    }
 

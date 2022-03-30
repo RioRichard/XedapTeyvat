@@ -38,8 +38,8 @@
             @foreach (var item in Model)
             {
                 <tr class="product_tr">
-                    <td>@item.ProductName</td>
-                    <td><img src="~/Content/Image/@item.UrlImage" alt="@item.ProductName" width="150" height="150" /></td>
+                    <td>@Html.Raw(item.ProductName)</td>
+                    <td><img src="~/Content/Image/@item.UrlImage" alt="@Html.Raw(item.ProductName)" width="150" height="150" /></td>
                     <td>
                         @String.Format("{0:0,0}", item.PaymentPrice) VND
                         <div style="display:none" class="unitprice" val="@item.PaymentPrice"></div>
@@ -160,9 +160,7 @@
             $('.product_tr').each(function () {
                 var quantity = parseInt($(this).find('.quantity').val());
                 var unitprice = ($(this).find('.unitprice').attr("val"));
-
                 rowtotal = (quantity * unitprice)
-
                 $(this).find('.totalItem').text(numberWithCommas(rowtotal) + ' VNĐ');
                 total += rowtotal;
             })
@@ -172,7 +170,7 @@
             var qty = $(this).val();
             var cid = $(this).attr('cid');
             var pid = $(this).attr('pid');
-            $.post('/cart/changeQuantityCart', { Quantity: qty, ProductId: pid, CartID: cid }, (r) => {
+            $.post('/cart/ChangeQuantityCart', { Quantity: qty, ProductId: pid, CartID: cid }, (r) => {
 
                 calculate();
                 if (qty == 0) {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Xedap.Helper;
@@ -31,10 +32,16 @@ namespace Xedap.Models.Repo
                 newAccount.Email = Email;
                 newAccount.Password = HelperAdd.Hash(newAccount.IDAccount + Pass);
                 newAccount.Token = HelperAdd.GenerateToken(newAccount.IDAccount);
+                newAccount.ExpiredTokenTime = DateTime.Now.AddMinutes(15);
                 newAccount.IsConfirmed = false;
                 newAccount.IsDelete = false;
                 context.Accounts.Add(newAccount);
-                context.SaveChanges();  
+                context.SaveChanges();
+                var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email xác thực của XeDapTeyVat. Hãy nhấn vào đường link sau để có thể xác thực tài khoản.\n" +
+                    $"{HelperAdd.WebsiteUrl}/account/confirm/{newAccount.Token}";
+                var subject = "Kích hoạt tài khoản XeDapTeyVat";
+                HelperAdd.SendMail(newAccount.Email, msg, subject);
+
                 return new { stringUrl = "/Account/Login", message = "Đăng kí thành công. Vui lòng vào email của bạn để nhấn vào link xác nhận." };
                 
             }
@@ -52,6 +59,25 @@ namespace Xedap.Models.Repo
                 var check = HelperAdd.Hash(account.IDAccount + Pass);
                 if (check.SequenceEqual(account.Password) )
                 {
+                    if(account.IsConfirmed == false)
+                    {
+                        var time = DateTime.Compare(((DateTime)account.ExpiredTokenTime).AddMinutes(15), DateTime.Now);
+                        if ( time< 0)
+                        {
+                            account.Token = HelperAdd.GenerateToken(account.IDAccount);
+                            account.ExpiredTokenTime = DateTime.Now.AddMinutes(15);
+                            context.SaveChanges();
+                            var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email xác thực của XeDapTeyVat." +
+                                " Hãy nhấn vào đường link sau để có thể xác thực tài khoản.\n" +
+                                $"{HelperAdd.WebsiteUrl}/account/confirm/{account.Token}";
+                            var subject = "Kích hoạt tài khoản XeDapTeyVat";
+                            HelperAdd.SendMail(account.Email, msg, subject);
+                        }
+                        
+                        return new { stringUrl = "/Account/Login", message = "Tài khoản bạn chưa được kích hoạt. Vui lòng xem email kích hoạt tài khoản." };
+
+                    }
+
                     FormsAuthentication.SetAuthCookie(account.IDAccount,rememberMe);
                     return new { stringUrl = "/", message = "Đăng nhập thành công" };
 
