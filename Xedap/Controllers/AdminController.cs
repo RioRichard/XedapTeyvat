@@ -1,17 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using Xedap.Models;
 using Xedap.Models.Repo;
-using Newtonsoft.Json;
 
 
 namespace Xedap.Controllers
@@ -20,7 +13,7 @@ namespace Xedap.Controllers
     public class AdminController : BaseController
     {
         DataContext context = new DataContext();
-        IConfiguration configuration;
+        //IConfiguration configuration;
         string productPath = Path.Combine(Directory.GetCurrentDirectory(), "Content", "Image");
         public ActionResult Index()
         {

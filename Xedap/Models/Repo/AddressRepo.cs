@@ -9,19 +9,17 @@ namespace Xedap.Models.Repo
     {
         public static List<AccountAddress> GetAddressByUser(DataContext context, string userID)
         {
-            var addressAccount = context.AccountAddresses.Where(p => p.IdAccount == userID).ToList();
+            var addressAccount = context.AccountAddresses.Where(p => p.IDAccount == userID).ToList();
             var address = context.Addresses.ToList();
             var result = (from addressAcc in addressAccount
                           join add in address
-                          on addressAcc.IdAddress equals (int)add.IdAddress
+                          on addressAcc.IDAddress equals (int)add.IDAddress
                           select new AccountAddress
                           {
-                              IdAddress = addressAcc.IdAddress,
-                              IdAccount = addressAcc.IdAccount,
+                              IDAddress = addressAcc.IDAddress,
+                              IDAccount = addressAcc.IDAccount,
                               IsDefault = addressAcc.IsDefault,
-                              Adresss = add.Addressed,
-                              PhoneNumber = add.Phone,
-                              Receiver = add.Receiver,
+                              AdresssAcc = add.Address1,
 
                           }).ToList();
             return result;
@@ -36,9 +34,9 @@ namespace Xedap.Models.Repo
         {
             var newAddress = new Address()
             {
-                Addressed = address,
+                Address1 = address,
                 Phone = phone,
-                Receiver = receiver
+                Reciever = receiver
             };
             context.Addresses.Add(newAddress);
             context.SaveChanges();
@@ -46,7 +44,7 @@ namespace Xedap.Models.Repo
         }
         static AccountAddress AddNewAccountAddress(DataContext context, Address address, string userId, bool isDefalut)
         {
-            var checkHaveAddress = context.AccountAddresses.FirstOrDefault(p => p.IdAccount == userId);
+            var checkHaveAddress = context.AccountAddresses.FirstOrDefault(p => p.IDAccount == userId);
             if (checkHaveAddress == null)
                 isDefalut = true;
             if (isDefalut == true)
@@ -55,8 +53,8 @@ namespace Xedap.Models.Repo
             }
             var newAccountAddress = new AccountAddress()
             {
-                IdAccount = userId,
-                IdAddress = (int)address.IdAddress,
+                IDAccount = userId,
+                IDAddress = (int)address.IDAddress,
                 IsDefault = isDefalut
             };
             context.AccountAddresses.Add(newAccountAddress);
@@ -65,20 +63,18 @@ namespace Xedap.Models.Repo
         }
         static void SetDefaultAnotherAddress(DataContext context, string userId)
         {
-            var accountAddressDefault = context.AccountAddresses.FirstOrDefault(p => p.IsDefault == true && p.IdAccount == userId);
+            var accountAddressDefault = context.AccountAddresses.FirstOrDefault(p => p.IsDefault == true && p.IDAccount == userId);
             if (accountAddressDefault != null)
             {
                 accountAddressDefault.IsDefault = false;
-                context.AccountAddresses.Update(accountAddressDefault);
                 context.SaveChanges();
             }
         }
         public static void SetDefault(DataContext context, string userId, int addId)
         {
             SetDefaultAnotherAddress(context, userId);
-            var addressAccount = context.AccountAddresses.FirstOrDefault(p => p.IdAccount == userId && p.IdAddress == addId);
+            var addressAccount = context.AccountAddresses.FirstOrDefault(p => p.IDAccount == userId && p.IDAddress == addId);
             addressAccount.IsDefault = true;
-            context.AccountAddresses.Update(addressAccount);
             context.SaveChanges();
         }
     }
