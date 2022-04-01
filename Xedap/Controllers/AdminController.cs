@@ -102,17 +102,28 @@ namespace Xedap.Controllers
                 ViewBag.Attributes = context.Attributes.ToList();
             return View(context.Categories.Where(p => p.Isdelete == false));
         }
-        
+        [HttpPost]
+        public ActionResult EditCategory(int IdCate, string categoryName)
+        {
+            var result = CategoryRepo.EditCategory(context, IdCate, categoryName);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult AddCategory(string categoryName2)
+        {
+            CategoryRepo.AddCategory(context, categoryName2);
+            return Json(true);
+        }
         public ActionResult DeletedCategory()
         {
-           
+
             return View(context.Categories.Where(p => p.Isdelete == true));
         }
         [HttpPost]
-        public ActionResult DeleteCategory(int ctgrID)
+        public ActionResult DeleteCategory(int ctgrID2)
         {
            
-            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
+            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID2);
             if (prod == null)
             {
                 return Json(false);

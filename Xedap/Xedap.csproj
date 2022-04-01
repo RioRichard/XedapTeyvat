@@ -182,6 +182,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -205,8 +206,10 @@
     <Compile Include="Models\ProductAttribute.cs" />
     <Compile Include="Models\ProductCart.cs" />
     <Compile Include="Models\Repo\AccountRepo.cs" />
+    <Compile Include="Models\Repo\AddressRepo.cs" />
     <Compile Include="Models\Repo\AuthModel.cs" />
     <Compile Include="Models\Repo\CartRepo.cs" />
+    <Compile Include="Models\Repo\CategoryRepo.cs" />
     <Compile Include="Models\Repo\InvoiceRepo.cs" />
     <Compile Include="Models\Repo\AuthRepo.cs" />
     <Compile Include="Models\Repo\ProductRepo.cs" />
@@ -303,6 +306,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="password.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -363,6 +367,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Cart\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

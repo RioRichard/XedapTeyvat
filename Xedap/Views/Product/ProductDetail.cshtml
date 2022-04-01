@@ -27,8 +27,17 @@
             }
 
             <p>Giá cả: @Model.Price VNĐ</p>
-            
-            <form >
+
+            @*<form >
+                <input action="/cart/AddItemToCart" type="hidden" name="iDProduct" value="@Model.IDProduct" method="post"/>
+                <label for="quantity"> Nhập số lượng:</label>
+                <br />
+                <input type=number min="1" max="@Model.Stock" name="quantity" id="quantity" value="0" />
+                <br />
+                <br />
+                <button class="btn btn-danger" style="">Thêm vào giỏ hàng</button>
+            </form>*@
+            <form action="/cart/AddItemToCart" method="post">
                 <input type="hidden" name="iDProduct" value="@Model.IDProduct" />
                 <label for="quantity"> Nhập số lượng:</label>
                 <br />

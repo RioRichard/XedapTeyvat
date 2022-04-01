@@ -7,19 +7,26 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
         <div id="header" style="position:fixed;top:0;">
             <ul id="nav">
                 <li><a href="#"><img src="~/Content/Image/Free_Sample_By_Wix.jpg" style="width:70%" /></a></li>
                 <li><a href="">Home</a></li>
-                <li><a href="">Band</a></li>
-                <li><a href="">Tour</a></li>
-                <li><a href="">Contact</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="/Account/Index">Thông tin tài khoản</a></li>
+                    <li><a href="/Account/Logout">Đăng xuất</a></li>
+                }
+                else
+                {
+                    <li><a href="/Account/Login">Đăng nhập/Đăng kí</a></li>
+                    <li><a href="">Contact</a></li>
+                }
                 <li>
                     <a href="">
-                        More
+                        Sản phẩm
                         <i class="fa fa-caret-down" aria-hidden="true" style="color:white;"></i>
                     </a>
                     <div class="subnav">
@@ -34,7 +41,7 @@
                 </li>
 
             </ul>
-            <a class="cart" href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            <a class="cart" href="/account/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
         </div>
         <div style="margin-top:150px">
             <div class="container">

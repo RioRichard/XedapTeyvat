@@ -116,14 +116,15 @@ ul {
 }
 
 #nav li:hover {
-    color: #000 !important;
-    background-color: #42cbf5;
+    color: #fff !important;
 }
 
 #nav li a {
     display: block;
 }
-
+#nav li a:hover {
+        color: #fff !important;
+}
 .cart {
     color: white;
     font-size: 2rem;

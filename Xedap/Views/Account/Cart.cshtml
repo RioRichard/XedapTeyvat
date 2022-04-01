@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Xedap.Models.Cart>
+﻿@model IEnumerable<Xedap.Models.ProductCart>
 @{
     ViewBag.Title = "Cart";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
@@ -35,18 +35,18 @@
             </tr>
         </thead>
         <tbody>
-            @*@foreach (var item in Model)
+            @foreach (var item in Model)
             {
                 <tr class="product_tr">
-                    <td>@item.ProductName</td>
-                    <td><img src="/img/productImg/@item.UrlImage" alt="@item.ProductName" width="150" height="150" /></td>
+                    <td>@Html.Raw(item.ProductName)</td>
+                    <td><img src="~/Content/Image/@item.UrlImage" alt="@Html.Raw(item.ProductName)" width="150" height="150" /></td>
                     <td>
-                        @item.PaymentPrice.ToString("#,##0") VNĐ
+                        @String.Format("{0:0,0}", item.PaymentPrice) VND
                         <div style="display:none" class="unitprice" val="@item.PaymentPrice"></div>
                     </td>
 
 
-                    <td><input type="number" class="quantity" name="quantity" value="@item.Quantity" cid="@item.IdCart" pid="@item.IdProduct" min="0" required /></td>
+                    <td><input type="number" class="quantity" name="quantity" value="@item.Quantity" cid="@item.IDCart" pid="@item.IDProduct" min="0" required /></td>
                     <td><div class="totalItem"></div></td>
                     <td>
                         @if (item.Stock <= 0)
@@ -60,11 +60,11 @@
                         }
 
                     </td>
-                    <td><button name="delete" class="btn btn-outline-danger" cid="@item.IdCart" pid="@item.IdProduct"><i class="fas fa-trash"></i></button></td>
+                    <td><button name="delete" class="btn btn-outline-danger" cid="@item.IDCart" pid="@item.IDProduct"><i class="fas fa-trash"></i></button></td>
 
 
                 </tr>
-            }*@
+            }
         </tbody>
     </table>
     <div class="d-flex justify-content-end">
@@ -106,9 +106,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @*@if (ViewBag.Address != null)
+                    @if (ViewBag.Address != null)
                     {
-                        @foreach (var item in ViewBag.Address)
+                        foreach (var item in ViewBag.Address)
                         {
                             <tr class="table-body">
                                 <td>@item.IDAddress</td>
@@ -127,7 +127,7 @@
                                 </td>
                             </tr>
                         }
-                    }*@
+                    }
                 </tbody>
             </table>
         </div>
@@ -160,9 +160,7 @@
             $('.product_tr').each(function () {
                 var quantity = parseInt($(this).find('.quantity').val());
                 var unitprice = ($(this).find('.unitprice').attr("val"));
-
                 rowtotal = (quantity * unitprice)
-
                 $(this).find('.totalItem').text(numberWithCommas(rowtotal) + ' VNĐ');
                 total += rowtotal;
             })
@@ -172,7 +170,7 @@
             var qty = $(this).val();
             var cid = $(this).attr('cid');
             var pid = $(this).attr('pid');
-            $.post('/cart/changeQuantityCart', { Quantity: qty, ProductId: pid, CartID: cid }, (r) => {
+            $.post('/cart/ChangeQuantityCart', { Quantity: qty, ProductId: pid, CartID: cid }, (r) => {
 
                 calculate();
                 if (qty == 0) {

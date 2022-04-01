@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using Xedap.Helper;
+using Xedap.Models;
+using Xedap.Models.Repo;
 
 namespace Xedap.Controllers
 {
@@ -62,10 +64,21 @@ namespace Xedap.Controllers
        
         public ActionResult Cart()
         {
-            //var address = AddressRepo.GetAddressByUser(context, userId);
-            //ViewBag.Address = address;
-            //ViewBag.AddressCount = address.Count;
-            return View(Context.Carts);
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+
+            var result = CartRepo.GetAllCartItem(Context, userId);
+            var address = AddressRepo.GetAddressByUser(Context, userId);
+
+            ViewBag.Address = address;
+            ViewBag.AddressCount = address.Count;
+
+            if (result == null)
+            {
+                var fakeList = new List<ProductCart>();
+                return View(fakeList);
+
+            }
+            return View(result);
         }
         public ActionResult Invoice()
         {

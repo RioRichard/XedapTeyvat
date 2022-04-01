@@ -6,22 +6,22 @@ namespace Xedap.Models.Repo
     public class ProductRepo
     {
         DataContext context = new DataContext();
-        public IEnumerable<Product> GetProducts(out int TotalPage,int? page , string search )
+        public IEnumerable<Product> GetProducts(out int TotalPage, int? page, string search)
         {
             var listProduct = context.Products;
             TotalPage = listProduct.Count();
             if (string.IsNullOrEmpty(search))
             {
-                
-                return listProduct.Where(p=>p.Name.Contains(search)).OrderBy(p=>p.IDProduct).Skip(((page ?? 1)-1) *10).Take(10);
+
+                return listProduct.Where(p => p.Name.Contains(search)).OrderBy(p => p.IDProduct).Skip(((page ?? 1) - 1) * 10).Take(10);
             }
             else
                 return listProduct.Skip(((page ?? 1) - 1) * 10).OrderBy(p => p.IDProduct).Take(10);
 
 
         }
-      
-            public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
+
+        public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
         {
             var products = context.Products.Where(p => p.IDProduct == idProducts).ToList();
             var attribute = context.Attributes.ToList();
@@ -40,7 +40,7 @@ namespace Xedap.Models.Repo
                           }).ToList();
             return output;
         }
-       
+
 
         public static Product GetProductForm(DataContext context, int idProduct)
         {
@@ -57,8 +57,6 @@ namespace Xedap.Models.Repo
             }
             else
             {
-                
-
                 Pros.Name = productName;
                 Pros.Price = productPrice;
                 Pros.Stock = productStock;
@@ -67,10 +65,6 @@ namespace Xedap.Models.Repo
                 context.Products.Add(Pros);
                 context.SaveChanges();
             }
-           
-           
-           
-           
             var proAttr = context.ProductAttributes.Where(p => p.IDProduct == proID).ToList();
             if (proAttr.Count == 0)
             {
@@ -135,8 +129,8 @@ namespace Xedap.Models.Repo
             };
             context.Products.Add(newProduct);
             context.SaveChanges();
-           
-        
+
+
             for (int i = 0; i < attr.Length; i++)
             {
                 if (!string.IsNullOrEmpty(attrValue[i]))
@@ -155,7 +149,7 @@ namespace Xedap.Models.Repo
             //for
             return newProduct;
         }
-        
+
 
     }
 }
