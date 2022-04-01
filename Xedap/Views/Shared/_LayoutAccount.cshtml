@@ -9,7 +9,6 @@
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="~/Content/admincss.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <style>
         .modal, .modalver2 {
             position: fixed;
@@ -132,12 +131,19 @@
             <ul id="nav">
                 <li><a href="#"><img src="~/Content/Image/Free_Sample_By_Wix.jpg" style="width:70%" /></a></li>
                 <li><a href="">Home</a></li>
-                <li><a href="">Band</a></li>
-                <li><a href="">Tour</a></li>
-                <li><a href="">Contact</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="/Account/Index">Thông tin tài khoản</a></li>
+                    <li><a href="/Account/Logout">Đăng xuất</a></li>
+                }
+                else
+                {
+                    <li><a href="/Account/Login">Đăng nhập/Đăng kí</a></li>
+                    <li><a href="">Contact</a></li>
+                }
                 <li>
                     <a href="">
-                        More
+                        Sản phẩm
                         <i class="fa fa-caret-down" aria-hidden="true" style="color:white;"></i>
                     </a>
                     <div class="subnav">
@@ -163,7 +169,7 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Thông tin chung</div>
                             <a class="nav-link" href="/account">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                                 Thông tin tài khoản
                             </a>
                             <a class="nav-link" href="/account/address">
@@ -171,19 +177,19 @@
                                 Địa chỉ
                             </a>
                             <a class="nav-link" href="/account/ChangePassword">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-lock"></i></div>
                                 Đổi mật khẩu
                             </a>
                             <a class="nav-link" href="/account/cart">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>
                                 Giỏ hàng của bạn
                             </a>
                             <a class="nav-link" href="/account/invoice">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-receipt"></i></div>
                                 Đơn hàng của bạn
                             </a>
-                            <a class="nav-link" href="/auth/logout">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <a class="nav-link" href="/account/logout">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
                                 Đăng xuất
                             </a>
 

@@ -22,7 +22,8 @@ namespace Xedap.Models
         public string IDAccount { get; set; }
 
         public bool? IsDefault { get; set; }
-
+        [NotMapped]
+        public string AdresssAcc { get; set; }
         public virtual Account Account { get; set; }
 
         public virtual Address Address { get; set; }

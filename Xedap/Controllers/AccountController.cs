@@ -1,48 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Xedap.Helper;
 using Xedap.Models;
+using Xedap.Models.Repo;
 
 namespace Xedap.Controllers
 {
-    
+
     public class AccountController : BaseController
     {
         
         // GET: Account
-        [UserAuthorize]
-
+        
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
-        [UserAuthorize]
-
+    
         public ActionResult ForgotPassword()
         {
             return View();
-
         }
         public ActionResult ResetPassword()
         {
             return View();
-
         }
         public ActionResult EmailConfirmCompleted()
         {
             return View();
         }
-        //[HttpPost]
-        /*public ActionResult SendConfirmMailAgain(string idStaff)
-        {
-            var Staff = context.AccountStaffs.FirstOrDefault(p => p.IDStaff == idStaff);
-            var result = accountStaffRepo.ResendEmail(context, Staff);
-            return Json(result);
-        }*/
+
         public ActionResult SendMailAgain()
         {
             return View();
@@ -60,25 +51,7 @@ namespace Xedap.Controllers
         //POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(FormCollection collection)
-        {
-
-            if (ModelState.IsValid)
-            {
-                var result = AuthRepo.AddAccount(collection["UserName"], collection["Pass"], collection["Email"]);
-                return Json(result);
-
-            }
-            else
-            {
-                var result = new { stringUrl = "/Account/Register", message = "Có lỗi đã xảy ra. Thử lại sau" };
-                return Json(result);
-
-            }
-
-
-
-        }
+       
         public ActionResult Address()
         {
             return View(Context.Addresses);
@@ -92,55 +65,30 @@ namespace Xedap.Controllers
        
         public ActionResult Cart()
         {
-            //var address = AddressRepo.GetAddressByUser(context, userId);
-            //ViewBag.Address = address;
-            //ViewBag.AddressCount = address.Count;
-            return View(Context.Carts);
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+
+            var result = CartRepo.GetAllCartItem(Context, userId);
+            var address = AddressRepo.GetAddressByUser(Context, userId);
+
+            ViewBag.Address = address;
+            ViewBag.AddressCount = address.Count;
+
+            if (result == null)
+            {
+                var fakeList = new List<ProductCart>();
+                return View(fakeList);
+
+            }
+            return View(result);
         }
         public ActionResult Invoice()
         {
             return View(Context.Invoices);
         }
-        [AllowAnonymous]
-        public ActionResult Login()
-        {
-            return View();
-
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(string email, string password)
-        {
-            //if (ModelState.IsValid)
-            //{
 
 
-               
-            //    var data = DataContext.Accounts.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
-            //    if (data.Count() > 0)
-            //    {                
-            //        Session["IDAccount"] = data.FirstOrDefault().IDAccount;
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        ViewBag.error = "Login failed";
-            //        return RedirectToAction("Login");
-            //    }
-            //}
-            return View();
-        }
-
-        [UserAuthorize]
-
-        //Logout
-        public ActionResult Logout()
-        {
-            Session.Clear();//remove session
-            return RedirectToAction("Login");
-        }
+       
+        
         
     }
 }

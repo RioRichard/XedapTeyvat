@@ -1,4 +1,4 @@
-﻿using com.sun.tools.corba.se.idl.toJavaPortable;
+﻿
 using Microsoft.AspNetCore.Http;
 using ServiceStack;
 using System;
@@ -6,27 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Xedap.Helper;
+
 namespace Xedap.Models.Repo
 {
     public class ProductRepo
     {
         DataContext context = new DataContext();
-        public IEnumerable<Product> GetProducts(out int TotalPage,int? page , string search )
+        public IEnumerable<Product> GetProducts(out int TotalPage, int? page, string search)
         {
             var listProduct = context.Products;
             TotalPage = listProduct.Count();
             if (string.IsNullOrEmpty(search))
             {
-                
-                return listProduct.Where(p=>p.Name.Contains(search)).OrderBy(p=>p.IDProduct).Skip(((page ?? 1)-1) *10).Take(10);
+
+                return listProduct.Where(p => p.Name.Contains(search)).OrderBy(p => p.IDProduct).Skip(((page ?? 1) - 1) * 10).Take(10);
             }
             else
                 return listProduct.Skip(((page ?? 1) - 1) * 10).OrderBy(p => p.IDProduct).Take(10);
 
 
         }
-      
-            public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
+
+        public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
         {
             var products = context.Products.Where(p => p.IDProduct == idProducts).ToList();
             var attribute = context.Attributes.ToList();
@@ -45,7 +46,7 @@ namespace Xedap.Models.Repo
                           }).ToList();
             return output;
         }
-       
+
 
         public static Product GetProductForm(DataContext context, int idProduct)
         {
@@ -62,7 +63,7 @@ namespace Xedap.Models.Repo
             }
             else
             {
-                var result = HelperAdd.FileUpload(UploadEdit, productpath);
+                var result = HelperAdd.FileUploadimg(UploadEdit, productpath);
                 if (result != null)
                 {
                     HelperAdd.DeleteFile(Pros.ImageURL, productpath);
@@ -118,7 +119,7 @@ namespace Xedap.Models.Repo
 
         public static Product AddProduct(DataContext context, string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue, HttpPostedFileBase imgUp, string productpath)
         {
-            var result = HelperAdd.FileUpload(imgUp, productpath);
+            var result = HelperAdd.FileUploadimg(imgUp, productpath);
             var newProduct = new Product()
             {
                 Name = productName2,
@@ -131,8 +132,8 @@ namespace Xedap.Models.Repo
             };
             context.Products.Add(newProduct);
             context.SaveChanges();
-           
-        
+
+
             for (int i = 0; i < attr.Length; i++)
             {
                 if (!string.IsNullOrEmpty(attrValue[i]))
@@ -151,7 +152,7 @@ namespace Xedap.Models.Repo
             
             return newProduct;
         }
-        
+
 
     }
 }

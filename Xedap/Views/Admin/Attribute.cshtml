@@ -6,11 +6,11 @@
 
 
 <div class="container-fluid">
-    <h1 class="mt-4">THUỘC TÍNH</h1>
+    <h1 class="mt-4">DANH MỤC</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/admin">Trang quản lí</a></li>
 
-        <li class="breadcrumb-item active">THUỘC TÍNH</li>
+        <li class="breadcrumb-item active">DANH MỤC</li>
     </ol>
 
     <div class="card-body">
@@ -18,9 +18,9 @@
             <thead class="bg-dark" style="color:white">
                 <tr>
 
-                    <td>Tên Thuộc Tính</td>
-                    <td>Sửa Thuộc Tính</td>
-                    <td>Xóa Thuộc Tính</td>
+                    <td>Tên Danh Mục</td>
+                    <td>Sửa Danh Mục</td>
+                    <td>Xóa Danh Mục</td>
                 </tr>
             </thead>
             <tbody>
@@ -31,20 +31,16 @@
                     <tr>
 
                         <td>
-                            <p><h5 class="Attribute-name" style="color:black; ">@item.AttributeName</h5></p>
+                            <p><h5 class="categorye-name" style="color:black">@item.AttributeName</h5></p>
                         </td>
                         <td>
-                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                <button class="btn btn-primary btn-editattribute" href="#">
-                                    SỬA
-                                </button>
-                            </div>
-                        </td>
+                            <a class="btn btn-primary btn-editattribute" href="~/Admin/EditAttribute?id=@item.IDAttribute">SỬA</a>
 
+                        </td>
                         <td>
-                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                <button class="btn btn-primary" attrID="@item.IDAttribute" name="delete">XÓA</button>
-                            </div>
+                           
+                                <a class="btn btn-primary " href="~/Admin/DeletedAttribute?id=@item.IDAttribute">XÓA</a>
+                            
                         </td>
                     </tr>
                 }
@@ -54,13 +50,17 @@
         </table>
         <div class="form-group">
             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                <button class="btn btn-primary btn-addattribute" href="#">Thêm thuộc tính</button>
+                <a class="btn btn-primary btn-addattribute" href="/Admin/AddAtribute">Thêm thuộc tính</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                <a class="btn btn-primary btn-addattribute" href="~/Admin/DeletedAttribute">Xóa-Khôi phục</a>
             </div>
         </div>
     </div>
 </div>
-
-@section Scripts{
+@section scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script>
         $("button[name='delete']").click(function () {
@@ -84,3 +84,4 @@
         })
     </script>
 }
+

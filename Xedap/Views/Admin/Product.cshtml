@@ -417,15 +417,10 @@
         //EDITFORM
         function showEdit() {
             var pID = $(this).attr("pID");
-
-
             $.ajax({
                 type: "GET",
                 url: "/Partial/getProductForm",
                 data: { id: pID },
-
-
-
                 success: function (response) {
 
                     $('#editform').html(response);

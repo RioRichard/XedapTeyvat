@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using ServiceStack;
+﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,6 +7,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 using Xedap.Models;
 using UploadFile = Xedap.Models.Repo.UploadFile;
 
@@ -18,7 +15,9 @@ namespace Xedap.Helper
 {
     public class HelperAdd
     {
-       
+        static string path = HostingEnvironment.ApplicationPhysicalPath + "/password.json";
+        static JObject json = JObject.Parse(File.ReadAllText(path));
+        public static string WebsiteUrl = json["URL"].ToString();
         public static byte[] Hash(string plainText)
         {
             HashAlgorithm hashAlgorithm = HashAlgorithm.Create("SHA-512");
@@ -49,23 +48,23 @@ namespace Xedap.Helper
             }
             return string.Join("", a);
         }
-        public static void SendMail(IConfiguration configuration, string toEmail, string content, string subject)
+        public static void SendMail(string toEmail, string content, string subject)
         {
-
-            IConfigurationSection section = configuration.GetSection("email:gmail");
-            SmtpClient client = new SmtpClient(section["host"], Convert.ToInt32(section["port"]))
+            SmtpClient client = new SmtpClient(json["host"].ToString(), Convert.ToInt32(json["port"].ToString()))
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(section["address"], HelperAdd.DecryptString("058ef654da951060eb6307d980548a86", section["password"])),
+                Credentials = new NetworkCredential(json["email"].ToString(), HelperAdd.DecryptString("058ef654da951060eb6307d980548a86", json["pass"].ToString())),
                 EnableSsl = true
             };
-            MailAddress addressFrom = new MailAddress(section["address"]);
+            MailAddress addressFrom = new MailAddress(json["email"].ToString());
             MailAddress addressTo = new MailAddress(toEmail);
             MailMessage message = new MailMessage(addressFrom, addressTo);
 
             message.Body = content;
             message.Subject = subject;
             client.Send(message);
+
+
         }
         public static string EncryptString(string key, string plainText)
         {
@@ -90,6 +89,12 @@ namespace Xedap.Helper
             }
             return Convert.ToBase64String(array);
         }
+
+        internal static object FileUpload(HttpPostedFileBase uploadEdit, string productpath)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string DecryptString(string key, string cipherText)
         {
             byte[] iv = new byte[16];
@@ -143,7 +148,7 @@ namespace Xedap.Helper
         public static Guid GenerateGuidCart(DataContext context)
         {
             Guid newGuid = Guid.Empty;
-            CartRepo check = null;
+            Cart check = null;
             do
             {
                 newGuid = Guid.NewGuid();
@@ -174,7 +179,7 @@ namespace Xedap.Helper
 
             return false;
         }
-        public static UploadFile FileUpload(HttpPostedFileBase f, string savePath)
+        public static UploadFile FileUploadimg(HttpPostedFileBase f, string savePath)
         {
             if (f != null && !string.IsNullOrEmpty(f.FileName))
             {
