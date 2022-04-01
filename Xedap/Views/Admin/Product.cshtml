@@ -56,7 +56,7 @@
                                 <p><h5 style="color:black;max-width:400px">@Html.Raw(item.Name)</h5></p>
                             </td>
                             <td>
-                                <p><h5 style="color:black">@item.Price VND</h5></p>
+                                <p><h5 style="color:black">@String.Format("{0:0,0}", item.Price) VND</h5></p>
                             </td>
                             <td>
                                 <p><h5 style="color:black">@item.Stock</h5></p>
@@ -117,7 +117,7 @@
     </ul>
 </nav>
 @*MODAL*@
-<div id ="editmodal"class="modal" style="position:fixed;top:0;bottom:0;right:0;left:0">
+<div id="editmodal" class="modal" style="position:fixed;top:0;bottom:0;right:0;left:0">
     <div class="modal-container">
         <div class="close">
             <i class="fas fa-times-circle"></i>
@@ -128,82 +128,82 @@
         </header>
         <form id="editform">
             @*<div class="modal-body">
-                <div class="modal-product-name">
-                    <label for="text-tickets" class="modal-label">
-                        Tên Sản Phẩm
-                    </label>
-                    <input type="text" class="modal-input" placeholder="Name" name="productName">
-                    <input type="hidden" name="proID" />
-                </div>
-                <div class="modal-product-price">
-                    <label for="text-tickets" class="modal-label">
-                        Giá Cả
-                    </label>
-                    <input type="text" class="modal-input" placeholder="Price" name="productPrice">
-                </div>
+                    <div class="modal-product-name">
+                        <label for="text-tickets" class="modal-label">
+                            Tên Sản Phẩm
+                        </label>
+                        <input type="text" class="modal-input" placeholder="Name" name="productName">
+                        <input type="hidden" name="proID" />
+                    </div>
+                    <div class="modal-product-price">
+                        <label for="text-tickets" class="modal-label">
+                            Giá Cả
+                        </label>
+                        <input type="text" class="modal-input" placeholder="Price" name="productPrice">
+                    </div>
 
-                <div class="modal-product-stock">
-                    <label for="text-tickets" class="modal-label">
-                        Số Lượng
-                    </label>
-                    <input type="text" class="modal-input" placeholder="Stock" name="productStock">
-                </div>
-                <div class="modal-product-description">
-                    <label for="text-tickets" class="modal-label">
-                        Thông Tin Chi Tiết
-                    </label>
-                    <textarea name="productDes" cols="80" rows="5" style="min-width:100%"></textarea>
-                </div>
-                <div class="">
-                    <label for="text-tickets" class="modal-label">
-                        Chọn Danh Mục Cho Sản Phẩm
-                    </label>
-                    <select name="cttr" id="" class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' style="max-width:50%">
-                        @foreach (var item in ViewBag.Categories)
-                        {
-                            <option value="@item.IDCategory">@item.CategoryName</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="form-group upload-form" id="uploadForm" style="margin-top:20px">
-                    <h4>Sửa ảnh</h4>
-                    <input type="file" name="UploadEdit" class="form-control-file" id="UploadEdit" accept=".jpg, .jpeg, .png">
-                </div>
-
-                <div class="add-attribute row" style="max-height:200px">
-                    <table class="table table-bordered">
-                        <thead class="bg-dark" style="color:white">
-                            <tr>
-                                <td class="col-8">Tên Thuộc Tính</td>
-                                <td class="col-4">Giá Trị</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in ViewBag.Attributes)
+                    <div class="modal-product-stock">
+                        <label for="text-tickets" class="modal-label">
+                            Số Lượng
+                        </label>
+                        <input type="text" class="modal-input" placeholder="Stock" name="productStock">
+                    </div>
+                    <div class="modal-product-description">
+                        <label for="text-tickets" class="modal-label">
+                            Thông Tin Chi Tiết
+                        </label>
+                        <textarea name="productDes" cols="80" rows="5" style="min-width:100%"></textarea>
+                    </div>
+                    <div class="">
+                        <label for="text-tickets" class="modal-label">
+                            Chọn Danh Mục Cho Sản Phẩm
+                        </label>
+                        <select name="cttr" id="" class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' style="max-width:50%">
+                            @foreach (var item in ViewBag.Categories)
                             {
-                                <tr>
-                                    <td>@item.AttributeName</td>
-                                    <td>
-                                        <input id="enter-value" name="productAttr1" type="text" placeholder="Default Value" attr="@item.IDAttribute">
-                                        <input type="hidden" name="attrID" value="@item.IDAttribute" />
-
-
-                                    </td>
-                                </tr>
+                                <option value="@item.IDCategory">@item.CategoryName</option>
                             }
-                        </tbody>
-                    </table>
-                </div>
+                        </select>
+                    </div>
 
-            </div>*@
+                    <div class="form-group upload-form" id="uploadForm" style="margin-top:20px">
+                        <h4>Sửa ảnh</h4>
+                        <input type="file" name="UploadEdit" class="form-control-file" id="UploadEdit" accept=".jpg, .jpeg, .png">
+                    </div>
+
+                    <div class="add-attribute row" style="max-height:200px">
+                        <table class="table table-bordered">
+                            <thead class="bg-dark" style="color:white">
+                                <tr>
+                                    <td class="col-8">Tên Thuộc Tính</td>
+                                    <td class="col-4">Giá Trị</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Attributes)
+                                {
+                                    <tr>
+                                        <td>@item.AttributeName</td>
+                                        <td>
+                                            <input id="enter-value" name="productAttr1" type="text" placeholder="Default Value" attr="@item.IDAttribute">
+                                            <input type="hidden" name="attrID" value="@item.IDAttribute" />
+
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>*@
 
             @*<footer class="modal-footer">
-                <button class="buy-tickets save">
-                    <i class="fas fa-check"></i>
-                    LƯU THAY ĐỔI
-                </button>
-            </footer>*@
+                    <button class="buy-tickets save">
+                        <i class="fas fa-check"></i>
+                        LƯU THAY ĐỔI
+                    </button>
+                </footer>*@
         </form>
     </div>
 </div>
@@ -218,7 +218,7 @@
             <i class="far fa-edit"></i>
             Thêm Sản Phẩm
         </header>
-        <form id="addform">
+        <form  id="addform">
             <div class="modal-body">
                 <div class="modal-product-name">
                     <label for="text-tickets" class="modal-label">
@@ -228,7 +228,7 @@
                 </div>
                 <div class="modal-product-price">
                     <label for="text-tickets" class="modal-label">
-                        Giá Cả
+                        Giá Cả (VND)
                     </label>
                     <input type="text" class="modal-input" placeholder="Price" name="productPrice2">
                 </div>
@@ -252,6 +252,7 @@
                     <select name="idCate" id="" class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' style="max-width:50%">
                         @foreach (var item in ViewBag.Categories)
                         {
+                            <option value="" Selected disabled hidden>Choose the Category</option>
                             <option value="@item.IDCategory">@item.CategoryName</option>
                         }
                     </select>
@@ -298,6 +299,7 @@
 </div>
 @section Scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
+    
     <script>
         const editBtns = document.querySelectorAll('.btn-edit');
         const modal = document.querySelector('.modal');
@@ -337,7 +339,11 @@
                         digits: true,
                     },
                     imgUp: {
-                        required: true
+                        required: true,
+                    },
+
+                    idCate: {
+                        required: true,
                     }
 
                 },
@@ -359,17 +365,28 @@
                         maxlength: "Số lượng không thế lớn hơn 9999",
                         digits: "Vui lòng nhập số",
                     },
-                   
+
                     imgUp: {
-                        required: "Vui lòng chọn ảnh"
+                        required: "Vui lòng chọn ảnh",
+                    },
+
+                    idCate: {
+                        required: "Vui long chon Category",
                     }
 
 
                 },
 
                 submitHandler: function (form) {
+                    
+                    //var fileUpload = $('#imgUp').get(0);
+                    //var files = fileUpload.files;
+                    //var formData = new FormData(form);
 
+                    //formData.append('file', files[0]);
+                    console.log($('[name="productPrice2"]').val());
                     $.ajax({
+
                         type: "POST",
                         url: "/admin/addproduct",
                         data: new FormData(form),
@@ -385,6 +402,7 @@
                                 window.location.href = window.location.href;
                             }
                         }
+
                     });
 
                 }
@@ -409,14 +427,14 @@
 
 
                 success: function (response) {
-                    
+
                     $('#editform').html(response);
                     $('#editform').submit(function (e) {
                         e.preventDefault();
-                        
+
                     })
-                    
-                   
+
+
                     //var pName = response.Name;
                     //var pPrice = response.Price;
                     //var pStock = response.Stock;
@@ -433,12 +451,94 @@
                     //}
                     //var category = response.Product.category[0].IDCategory;
                     //$("option[value='" + category + "']").prop("selected", true);
+                    $('#editform').validate({
+                        rules: {
+                            productName: {
+                                required: true,
+                                minlength: 6,
+                                maxlength: 256,
+                            },
+                            productPrice: {
+                                required: true,
+                                minlength: 4,
+                                maxlength: 12,
+                                digits: true,
+                            },
+                            productStock: {
+                                required: true,
+                                minlength: 0,
+                                maxlength: 9999,
+                                digits: true,
+                            },
+                            cttr: {
+                                required: true,
+                            }
+                            //attribute: {
+                            //    required: true,
+                            //    minlength: 1,
+                            //    maxlength: 256,
+                            //},
+                        },
+                        messages: {
+                            productName: {
+                                required: "Vui lòng nhập tên sản phẩm",
+                                minlength: "Ít nhất nhập 6 kí tự",
+                                maxlength: "Nhập nhiều nhất 256 kí tự",
+                            },
+                            productPrice: {
+                                required: "Vui lòng nhập giá sản phẩm",
+                                minlength: "Giá không thể bé hơn đơn vị nghàn",
+                                maxlength: "Giá không thể hơn nghìn tỷ",
+                                digits: "Vui lòng nhập số",
+                            },
+                            productStock: {
+                                required: "Vui lòng nhập số lượng sản phẩm",
+                                minlength: "Số lượng không thể bé hơn 0",
+                                maxlength: "Số lượng không thế lớn hơn 9999",
+                                digits: "Vui lòng nhập số",
+                            },
+                            cttr: {
+                                required: "Vui lòng chon danh muc san pham",
+                            }
+                            //attribute: {
+                            //    required: "Vui lòng nhập đầy đủ thuộc tính",
+                            //    minlength: "Số ký tự phải lớn hơn 1",
+                            //    maxlength: "Số ký tự phải bé hơn 256",
+                            //},
+                        },
+                        submitHandler: function (form) {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/admin/editproduct",
+                                data: new FormData(form),
+                                dataType: "json",
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    $('#editform').submit(function (e) {
+                                        e.preventDefault();
+
+                                    })
+                                    if (response == false) {
+                                        alert("Sửa sản phẩm không thành công");
+                                    }
+                                    else {
+                                        alert("Sửa sản phẩm thành công.");
+                                        window.location.href = window.location.href;
+                                    }
+                                }
+                            });
+                        },
+
+                    })
                 }
 
+
             });
-           
+
             modal.classList.add('open')
-           
+
         }
         function closeEdit() {
             modal.classList.remove('open')
@@ -468,80 +568,10 @@
                 }
             });
         })
-        $('#editform').validate({
-            rules: {
-                productName: {
-                    required: true,
-                    minlength: 6,
-                    maxlength: 256,
-                },
-                productPrice: {
-                    required: true,
-                    minlength: 4,
-                    maxlength: 12,
-                    digits: true,
-                },
-                productStock: {
-                    required: true,
-                    minlength: 0,
-                    maxlength: 9999,
-                    digits: true,
-                },
-                cttr: {
-                    required: true,
-                }
-                //attribute: {
-                //    required: true,
-                //    minlength: 1,
-                //    maxlength: 256,
-                //},
-            },
-            messages: {
-                productName: {
-                    required: "Vui lòng nhập tên sản phẩm",
-                    minlength: "Ít nhất nhập 6 kí tự",
-                    maxlength: "Nhập nhiều nhất 256 kí tự",
-                },
-                productPrice: {
-                    required: "Vui lòng nhập giá sản phẩm",
-                    minlength: "Giá không thể bé hơn đơn vị nghàn",
-                    maxlength: "Giá không thể hơn nghìn tỷ",
-                    digits: "Vui lòng nhập số",
-                },
-                productStock: {
-                    required: "Vui lòng nhập số lượng sản phẩm",
-                    minlength: "Số lượng không thể bé hơn 0",
-                    maxlength: "Số lượng không thế lớn hơn 9999",
-                    digits: "Vui lòng nhập số",
-                },
-                //attribute: {
-                //    required: "Vui lòng nhập đầy đủ thuộc tính",
-                //    minlength: "Số ký tự phải lớn hơn 1",
-                //    maxlength: "Số ký tự phải bé hơn 256",
-                //},
-            },
-            submitHandler: function (form) {
 
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/editproduct",
-                    data: new FormData(form),
-                    dataType: "json",
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        if (response == false) {
-                            alert("Sửa sản phẩm không thành công");
-                        }
-                        else {
-                            alert("Sửa sản phẩm thành công.");
-                            window.location.href = window.location.href;
-                        }
-                    }
-                });
-            },
 
-        })
+
+
     </script>
 }
 

@@ -12,12 +12,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using Xedap.Models;
+using UploadFile = Xedap.Models.Repo.UploadFile;
 
 namespace Xedap.Helper
 {
     public class HelperAdd
     {
-        
+       
         public static byte[] Hash(string plainText)
         {
             HashAlgorithm hashAlgorithm = HashAlgorithm.Create("SHA-512");
@@ -173,7 +174,22 @@ namespace Xedap.Helper
 
             return false;
         }
-        
+        public static UploadFile FileUpload(HttpPostedFileBase f, string savePath)
+        {
+            if (f != null && !string.IsNullOrEmpty(f.FileName))
+            {
+                UploadFile obj = new UploadFile()
+                {
+                    OriginalName = f.FileName,
+                    ImageURL = HelperAdd.RandomString(32) + Path.GetExtension(f.FileName)
+                };
+                string path = Path.Combine(savePath, obj.ImageURL);
+                f.SaveAs(path);
+                return obj;
+            }
+            else return null;
+        }
+
     }
     
 

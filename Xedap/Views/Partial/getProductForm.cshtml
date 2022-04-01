@@ -10,7 +10,7 @@
     </div>
     <div class="modal-product-price">
         <label for="text-tickets" class="modal-label">
-            Giá Cả
+            Giá Cả (VND)
         </label>
         <input type="text" class="modal-input" placeholder="Price" name="productPrice" value="@Model.Price">
     </div>
@@ -61,7 +61,7 @@
                         <td>@item.AttributeName</td>
                         <td>
 
-                            <input id="enter-value" name="productAttr1" type="text" placeholder="Default Value" attr="@item.IDAttribute" value="@item.AttributeValue">
+                            <input id="enter-value" name="productAttr1" type="text" placeholder="Default Value"  value="@item.AttributeValue">
                             <input type="hidden" name="attrID" value="@item.IDAttribute" />
 
 

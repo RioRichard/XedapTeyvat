@@ -12,7 +12,8 @@ using System.Web.Services;
 using Xedap.Models;
 using Xedap.Models.Repo;
 using Newtonsoft.Json;
-
+using static Xedap.Helper.HelperAdd;
+using System.Web.Hosting;
 
 namespace Xedap.Controllers
 {
@@ -20,8 +21,11 @@ namespace Xedap.Controllers
     public class AdminController : BaseController
     {
         DataContext context = new DataContext();
+
         IConfiguration configuration;
-        string productPath = Path.Combine(Directory.GetCurrentDirectory(), "Content", "Image");
+
+       string productPath = HostingEnvironment.ApplicationPhysicalPath + @"Content\Image";
+       
         public ActionResult Index()
         {
             return View();
@@ -78,16 +82,17 @@ namespace Xedap.Controllers
             }
         }
         [HttpPost]
-        public ActionResult EditProduct(int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1)
+        public ActionResult EditProduct(int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1, HttpPostedFileBase UploadEdit)
         {
-            var result = ProductRepo.EditProduct(context, proID, productName, productPrice, productStock, productDes, cttr, attrID, productAttr1);
+            var result = ProductRepo.EditProduct(context, proID, productName, productPrice, productStock, productDes, cttr, attrID, productAttr1, UploadEdit, productPath);
 
-            return Json(result ,JsonRequestBehavior.AllowGet);
+            return Json(true);
         }
         [HttpPost]
-        public ActionResult AddProduct(string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue)
+        public ActionResult AddProduct(string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue, HttpPostedFileBase imgUp)
         {
-            ProductRepo.AddProduct(context, productName2, productPrice2, productStock2, productDes2, idCate, attr, attrValue);
+
+            ProductRepo.AddProduct(context, productName2, productPrice2, productStock2, productDes2, idCate, attr, attrValue, imgUp, productPath);
 
             return Json(true);
         }
