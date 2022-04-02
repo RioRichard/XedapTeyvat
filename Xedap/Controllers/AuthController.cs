@@ -54,7 +54,7 @@ namespace Xedap.Controllers
         }
         public ActionResult Logout()
         {
-            if (!HttpContext.User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
             {
                 return Redirect("/Account/Login");
 
@@ -81,8 +81,8 @@ namespace Xedap.Controllers
                     account.ExpiredTokenTime = DateTime.Now.AddMinutes(15);
                     Context.SaveChanges();
                     var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email xác thực của XeDapTeyVat. Hãy nhấn vào đường link sau để có thể xác thực tài khoản.\n" +
-                        $"{HelperAdd.WebsiteUrl}/account/confirm/{account.Token}";
-                    var subject = "Kích hoạt tài khoản XeDapTeyVat";
+                        $"{HelperAdd.WebsiteUrl}/auth/confirm/{account.Token}";
+                    var subject = "Lấy lại tài khoản XeDapTeyVat";
                     HelperAdd.SendMail(account.Email, msg, subject);
                     ViewBag.rs = "Token đã hết hạn, vui lòng xác nhận lại";
                     return View();
@@ -90,17 +90,86 @@ namespace Xedap.Controllers
             }
             account.IsConfirmed = true;
             account.Token = String.Empty;
+            account.ExpiredTokenTime = DateTime.MinValue;
             Context.SaveChanges();
             ViewBag.rs = "Xác nhận thành công";
             return View();
 
         }
-        [HttpPost]
+
         public ActionResult ForgotPassword(string input)
         {
             return View();
-            
+        }
+        [HttpPost]
+        public JsonResult Forgot(string email)
+        {
+            var account = Context.Accounts.FirstOrDefault(p => p.Email == email);
+            if (account == null)
+            {
+
+
+                return Json(new { msg = "Không có tài khoản có email tương ứng", url = "null" });
+            }
+            else
+            {
+                if ((DateTime)account.ExpiredTokenTime < DateTime.Now)
+                {
+                    account.Token = HelperAdd.GenerateToken(account.IDAccount);
+                    account.ExpiredTokenTime = DateTime.Now.AddMinutes(15);
+                    Context.SaveChanges();
+                    var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email lấy lại mật khẩu của XeDapTeyVat." +
+                        "Hãy nhấn vào đường dẫn dưới để có thể xác thực tài khoản.\n" +
+                        $"{HelperAdd.WebsiteUrl}/auth/reset/{account.Token}";
+                    var subject = "Lấy lại mật khẩu XeDapTeyVat";
+                    HelperAdd.SendMail(account.Email, msg, subject);
+                    
+                    return Json(new { msg = "Email lấy lại mật khẩu đã được gửi đến email của bạn", url = "/Auth/SignAndReg" });
+                }
+                return Json(new { msg = "Bạn vừa đăng ký hoặc vừa gửi yêu cầu lấy lại mật khẩu. Hãy thử lại sau 15 phút", url = "null" });
+
+            }
+
 
         }
+        public ActionResult ResetPass()
+        {
+
+        }
+        public ActionResult Reset(string id)
+        {
+
+            var account = Context.Accounts.FirstOrDefault(p => p.Token == id);
+            if (account == null)
+            {
+                ViewBag.rs = "Không tồn tại tài khoản. Vui lòng thử lại.";
+
+                return View();
+            }
+            if (account != null)
+            {
+                if ((DateTime)account.ExpiredTokenTime < DateTime.Now)
+                {
+                    account.Token = HelperAdd.GenerateToken(account.IDAccount);
+                    account.ExpiredTokenTime = DateTime.Now.AddMinutes(15);
+                    Context.SaveChanges();
+                    var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email lấy lại mật khẩu của XeDapTeyVat." +
+                         "Hãy nhấn vào đường dẫn dưới để có thể xác thực tài khoản.\n" +
+                         $"{HelperAdd.WebsiteUrl}/auth/reset/{account.Token}";
+                    var subject = "Lấy lại mật khẩu XeDapTeyVat";
+                    HelperAdd.SendMail(account.Email, msg, subject);
+                    ViewBag.rs = "Token đã hết hạn, vui lòng xác nhận lại";
+                    return View();
+                }
+            }
+            account.IsConfirmed = true;
+            account.Token = String.Empty;
+            account.ExpiredTokenTime = DateTime.Parse("01/01/1970");
+            Context.SaveChanges();
+            ViewBag.rs = "Xác nhận thành công";
+            return View();
+
+        }
+
     }
 }
