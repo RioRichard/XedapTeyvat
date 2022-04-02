@@ -362,8 +362,10 @@
     <Content Include="Views\Admin\Chart.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
-    <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Auth\Confirm.cshtml" />
     <Content Include="Views\Auth\SignAndReg.cshtml" />
+    <Content Include="Views\Auth\ForgotPassword.cshtml" />
+    <Content Include="Views\Auth\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
