@@ -7,26 +7,28 @@
 }
 
 .login-box {
-    width: 100%;
+    width: 120%;
     height: 115%;
     margin: auto;
-    max-width: 525px;
-    min-height: 670px;
+    max-width: 630px;
+    min-height: 770px;
     position: relative;
-    background: url(Image/bg-xedap1.jpg) no-repeat center;
+    background-image: url(Image/bg-xedap1.jpg) ;
+    background-size:contain;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19)
 }
 
 .login-snip {
     width: 100%;
-    height: inherit;
+    height: 100%;
     position: absolute;
     padding: 90px 70px 50px 70px;
     background: rgba(0, 77, 77, .9)
 }
 
     .login-snip .login,
-    .login-snip .sign-up-form {
+    .login-snip .sign-up-form,
+    .login-snip .fogot {
         top: 0;
         left: 0;
         right: 0;
@@ -39,6 +41,7 @@
 
     .login-snip .sign-in,
     .login-snip .sign-up,
+    .login-snip .forgot-pass,
     .login-space .group .check {
         display: none
     }
@@ -59,7 +62,8 @@
     }
 
     .login-snip .sign-in:checked + .tab,
-    .login-snip .sign-up:checked + .tab {
+    .login-snip .sign-up:checked + .tab,
+    .login-snip .forgot-pass:checked + .tab {
         color: #fff;
         border-color: #1161ee
     }
@@ -153,13 +157,35 @@
                     transform: scale(1) rotate(-45deg)
                 }
 
-.login-snip .sign-in:checked + .tab + .sign-up + .tab + .login-space .login {
+/*.login-snip .sign-in:checked + .tab + .sign-up + .tab + .login-space .login {
+    transform: rotate(0)
+}*/
+.login-snip .sign-in:checked + .tab + .forgot-pass + .tab + .login-space .login {
     transform: rotate(0)
 }
 
-.login-snip .sign-up:checked + .tab + .login-space .sign-up-form {
+/*.login-snip .sign-up:checked + .tab + .forgot-pass + .tab + .login-space .sign-up-form {
+    transform: rotate(0)
+}*/
+/*.login-snip .sign-up:checked + .tab + .sign-in + .tab + .login-space .sign-up-form {
+    transform: rotate(0)
+}*/
+
+/*.login-snip .forgot-pass:checked + .tab + .sign-in + .tab + .login-space .forgot-pass {
+    transform: rotate(0)
+}*/
+
+/*.login-snip .forgot-pass:checked + .tab + .sign-up + .tab + .login-space .forgot-pass {
+    transform: rotate(0)
+}*/
+
+/*.login-snip .sign-up:checked + .tab + .login-space .sign-up-form {
+    transform: rotate(0)
+}*/
+.login-snip .forgot-pass:checked + .tab + .login-space .fogot {
     transform: rotate(0)
 }
+
 
 *,
 :after,
