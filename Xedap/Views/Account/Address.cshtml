@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Xedap.Models.Address>
+﻿@model IEnumerable<Xedap.Models.AccountAddress>
 @{
     ViewBag.Title = "Address";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
@@ -26,20 +26,20 @@
                         @foreach (var item in Model)
                         {
                             <tr class="table-body">
-                                <td>@item.IDAddress</td>
-                                <td>@item.Phone</td>
-                                <td>@item.Reciever</td>
-                                @*<td>
-                                    @if (item.IsDefault == true)
+                                <td>@item.Address.Address1</td>
+                                <td>@item.Address.Phone</td>
+                                <td>@item.Address.Reciever</td>
+                                <td>
+                                    @if (item.IsDefault==false)
                                     {
-                                        <input name="IsDefault" checked type="radio" value="true" addId="@item.IDAddress" />
+                                        <input name="isdefault" checked type="radio" value="true" addid="@item.IDAddress" />
                                     }
                                     else
                                     {
-                                        <input name="IsDefault" type="radio" value="true" addId="@item.IDAddress" />
+                                        <input name="isdefault" type="radio" value="true" addid="@item.IDAddress" />
 
                                     }
-                                </td>*@
+                                </td>
                             </tr>
                         }
                     </tbody>

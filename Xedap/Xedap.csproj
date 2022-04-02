@@ -269,6 +269,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
@@ -448,10 +449,12 @@
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
     <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Partial\getInvocieDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Invoice\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

@@ -96,9 +96,20 @@ namespace Xedap.Controllers
 
             }
         }
+        public ActionResult AddAddress(string address, string phone, string receiver, bool isDef)
+        {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+
+            AddressRepo.AddAccount(Context, userId, address, phone, receiver, isDef);
+
+            return Json(true);
+        }
         public ActionResult Address()
         {
-            return View(Context.Addresses);
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            //var result = AddressRepo.GetAddressByUser(Context, userId);
+
+            return View(Context.AccountAddresses.Where(p=>p.IDAccount==userId).ToList());
         }
         public ActionResult ChangePassword()
         {
@@ -110,10 +121,8 @@ namespace Xedap.Controllers
         public ActionResult Cart()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
-
             var result = CartRepo.GetAllCartItem(Context, userId);
-            var address = AddressRepo.GetAddressByUser(Context, userId);
-
+            var address= Context.AccountAddresses.Where(p => p.IDAccount == userId).ToList();
             ViewBag.Address = address;
             ViewBag.AddressCount = address.Count;
 
@@ -127,7 +136,9 @@ namespace Xedap.Controllers
         }
         public ActionResult Invoice()
         {
-            return View(Context.Invoices);
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = InvoiceRepo.GetInvoices(Context, userId);
+            return View(result);
         }
         [AllowAnonymous]
         public ActionResult Login()
