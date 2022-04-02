@@ -28,7 +28,7 @@ namespace Xedap.Controllers
             }
             else
             {
-                var result = new { stringUrl = "/Account/Login", message = "Có lỗi đã xảy ra. Thử lại sau" };
+                var result = new { stringUrl = "/auth/SignAndReg", message = "Có lỗi đã xảy ra. Thử lại sau" };
                 return Json(result);
 
             }
@@ -47,7 +47,7 @@ namespace Xedap.Controllers
             }
             else
             {
-                var result = new { stringUrl = "/Account/Login", message = "Có lỗi đã xảy ra. Thử lại sau" };
+                var result = new { stringUrl = "/auth/SignAndReg", message = "Có lỗi đã xảy ra. Thử lại sau" };
                 return Json(result);
 
             }

@@ -157,12 +157,12 @@
                     transform: scale(1) rotate(-45deg)
                 }
 
-/*.login-snip .sign-in:checked + .tab + .sign-up + .tab + .login-space .login {
-    transform: rotate(0)
-}*/
-.login-snip .sign-in:checked + .tab + .forgot-pass + .tab + .login-space .login {
+.login-snip .sign-in:checked + .tab + .sign-up + .tab + .login-space .login {
     transform: rotate(0)
 }
+/*.login-snip .sign-in:checked + .tab + .forgot-pass + .tab + .login-space .login {
+    transform: rotate(0)
+}*/
 
 /*.login-snip .sign-up:checked + .tab + .forgot-pass + .tab + .login-space .sign-up-form {
     transform: rotate(0)
@@ -179,12 +179,12 @@
     transform: rotate(0)
 }*/
 
-/*.login-snip .sign-up:checked + .tab + .login-space .sign-up-form {
-    transform: rotate(0)
-}*/
-.login-snip .forgot-pass:checked + .tab + .login-space .fogot {
+.login-snip .sign-up:checked + .tab + .login-space .sign-up-form {
     transform: rotate(0)
 }
+/*.login-snip .forgot-pass:checked + .tab + .login-space .fogot {
+    transform: rotate(0)
+}*/
 
 
 *,

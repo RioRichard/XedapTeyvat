@@ -51,7 +51,7 @@ namespace Xedap.Models.Repo
             var account = context.Accounts.FirstOrDefault(p => p.UserName == UserName);
             if (account == null)
             {
-                return new { stringUrl = "/Account/Login", message = "Sai Username hoặc Password" };
+                return new { stringUrl = "/auth/SignAndReg", message = "Sai Username hoặc Password" };
 
             }
             else
@@ -69,12 +69,12 @@ namespace Xedap.Models.Repo
                             context.SaveChanges();
                             var msg = "Chào bạn, đây là email của hỗ trợ Teyvat. Đây là email xác thực của XeDapTeyVat." +
                                 " Hãy nhấn vào đường link sau để có thể xác thực tài khoản.\n" +
-                                $"{HelperAdd.WebsiteUrl}/account/confirm/{account.Token}";
+                                $"{HelperAdd.WebsiteUrl}/auth/confirm/{account.Token}";
                             var subject = "Kích hoạt tài khoản XeDapTeyVat";
                             HelperAdd.SendMail(account.Email, msg, subject);
                         }
                         
-                        return new { stringUrl = "/Account/Login", message = "Tài khoản bạn chưa được kích hoạt. Vui lòng xem email kích hoạt tài khoản." };
+                        return new { stringUrl = "/auth/SignAndReg", message = "Tài khoản bạn chưa được kích hoạt. Vui lòng xem email kích hoạt tài khoản." };
 
                     }
 
@@ -82,7 +82,7 @@ namespace Xedap.Models.Repo
                     return new { stringUrl = "/", message = "Đăng nhập thành công" };
 
                 }
-                return new { stringUrl = "/Account/Login", message = "Sai Username hoặc Password" };
+                return new { stringUrl = "/auth/SignAndReg", message = "Sai Username hoặc Password" };
 
             }
         }

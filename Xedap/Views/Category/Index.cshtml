@@ -8,32 +8,39 @@
 
 
 <div class="container-fluid" style=" padding: 0!important">
+    <h1 class="mt-4">SẢN PHẨM</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home">Xe đạp</a></li>
+        @foreach (var item in ViewBag.CategoryActive)
+        {
+            <li class="breadcrumb-item active">@item.CategoryName</li>
+        }
+
+    </ol>
     <div class="row">
         <div class="col-12">
             <div class="container-fluid">
                 <div class="row">
                     @foreach (var item in Model)
-        {
-            <div class=" col-4" style="padding-bottom:40px">
-                <div class="card border-secondary" style="max-height: 500px; max-width: 300px; min-height: 250px; min-width: 150px; ">
-                    <a href="/product/@item.IDProduct">
-                        <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(item.Name)">
-                    </a>
-                    <div class="card-body">
-                        <a href="/product/@item.IDProduct">
-                            <h5 style="min-height:70px " class="card-title">@Html.Raw(item.Name)</h5>
-                        </a>
-
-                        <h6 class="card-price">Giá cả: @item.Price VND</h6>
-
-
-                    </div>
+                    {
+                        <div class=" col-4" style="padding-bottom:40px">
+                            <div class="card border-0" style="height: 500px; max-width: 300px; min-height: 250px; min-width: 150px; ">
+                                <a href="/product/@item.IDProduct">
+                                    <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(item.Name)">
+                                </a>
+                                <div class="card-body">
+                                    <a href="/product/@item.IDProduct">
+                                        <h5 style="min-height:70px " class="card-title">@Html.Raw(item.Name)</h5>
+                                    </a>
+                                    <h6 class="card-price">Giá cả: @item.Price VND</h6>
+                                    <a href="/product/ProductDetail/@item.IDProduct" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+                                    <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        }
-
-                        </div>
-                    </div>
         </div>
 
     </div>
@@ -45,7 +52,7 @@
 <!-- Mã phân trang -->
 <br />
 
-<div class="paginationtest " >
+<div class="paginationtest ">
 
     <p class="text-center">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
     <div class="d-flex justify-content-center">
@@ -57,3 +64,20 @@
     </div>
 
 </div>
+@section Scripts{
+    <script>
+        $('button[name="add"]').click(function () {
+            event.preventDefault;
+            event.stopPropagation;
+            var pid = $(this).attr('pid');
+
+            $.post('/cart/Add1ItemToCart', { idProduct: pid }, (r) => {
+                alert("Thêm sản phẩm vào giỏ hàng thành công")
+                console.log(r);
+                /*window.location.href = window.location.href;*/
+            });
+        });
+    </script>
+
+
+}

@@ -9,9 +9,7 @@
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
         <label for="tab-1" class="tab">Đăng nhập</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up">
-        <label for="tab-2" class="tab">Đăng kí</label>
-        <input id="tab-3" type="radio" name="tab" class="forgot-pass">
-        <label for="tab-3" class="tab">Quên mật khẩu</label>
+        <label for="tab-2" class="tab">Đăng kí</label>       
         <div class="login-space">
             <form id="log">
                 @Html.AntiForgeryToken()
@@ -68,7 +66,7 @@
 
                 </div>
             </form>
-            <form id="Forgot">
+            @*<form id="Forgot">
                 @Html.AntiForgeryToken()
 
                 <div class="fogot">
@@ -85,7 +83,7 @@
                     <div class="foot"><a href="#">Về trang chủ</a></div>
 
                 </div>
-            </form>
+            </form>*@
         </div>
     </div>
 </div>

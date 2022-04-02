@@ -18,9 +18,53 @@ namespace Xedap.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var account = Context.Accounts.FirstOrDefault(p => p.IDAccount == userId);
+            return View(account);
+        }
+        [HttpPost]
+        public ActionResult Index(DataContext context, string userId, string fullname, bool? gender)
+        {
+
+            userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var account = context.Accounts.FirstOrDefault(p => p.IDAccount == userId);
+            account.FullName = fullname;
+            account.Gender = gender;
+            context.SaveChanges();
+            return Redirect("/account");
+        }
+        public ActionResult ChangePassword()
+        {
             return View();
         }
-    
+        [HttpPost]
+        public ActionResult ChangePassword(DataContext context, string userId, string currentPass, string newPass)
+        {
+            userId = System.Web.HttpContext.Current.User.Identity.Name;
+            Account account = context.Accounts.FirstOrDefault(p => p.IDAccount == userId);
+            if (account is null)
+            {
+                TempData["messageChangePass"] = "Tài khoản không tồn tại";
+            }
+            else
+            {
+                var password = Helper.HelperAdd.Hash(account.IDAccount + currentPass);
+                var passwordEqualCheck = password.SequenceEqual(account.Password);
+                if (!passwordEqualCheck)
+                {
+                    TempData["messageChangePass"] = "Mật khẩu cũ không đúng";
+                }
+                else
+                {
+                    var newPassBeforeHash = account.IDAccount + newPass;
+                    var hashNewPass = Helper.HelperAdd.Hash(newPassBeforeHash);
+                    account.Password = hashNewPass;
+                    context.SaveChanges();
+                    TempData["messageChangePass"] = "Đổi mật khẩu thành công";
+                }
+            }
+            return View();
+        }
         public ActionResult ForgotPassword()
         {
             return View();
@@ -59,13 +103,9 @@ namespace Xedap.Controllers
 
             return View(Context.AccountAddresses.Where(p=>p.IDAccount==userId).ToList());
         }
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
 
         //create a string MD5
-       
+        //[Authorize]
         public ActionResult Cart()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
