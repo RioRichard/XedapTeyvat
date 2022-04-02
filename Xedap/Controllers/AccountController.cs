@@ -54,7 +54,10 @@ namespace Xedap.Controllers
        
         public ActionResult Address()
         {
-            return View(Context.Addresses);
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            //var result = AddressRepo.GetAddressByUser(Context, userId);
+
+            return View(Context.AccountAddresses.Where(p=>p.IDAccount==userId).ToList());
         }
         public ActionResult ChangePassword()
         {
@@ -66,10 +69,8 @@ namespace Xedap.Controllers
         public ActionResult Cart()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
-
             var result = CartRepo.GetAllCartItem(Context, userId);
-            var address = AddressRepo.GetAddressByUser(Context, userId);
-
+            var address= Context.AccountAddresses.Where(p => p.IDAccount == userId).ToList();
             ViewBag.Address = address;
             ViewBag.AddressCount = address.Count;
 
@@ -83,7 +84,9 @@ namespace Xedap.Controllers
         }
         public ActionResult Invoice()
         {
-            return View(Context.Invoices);
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = InvoiceRepo.GetInvoices(Context, userId);
+            return View(result);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Xedap.Models;
 using Xedap.Models.Repo;
@@ -25,6 +26,13 @@ namespace Xedap.Controllers
             ViewBag.Attributes = context.Attributes.ToList();
             return PartialView(result);
              
+        }
+        public ActionResult getInvocieDetail(string idInvoice)
+        {
+            var idiv = Guid.Parse(idInvoice);
+            var result = Context.Invoices.FirstOrDefault(p => p.IDInvoice == idiv);
+            //var result = InvoiceRepo.GetInvoiceDetail(context, Guid.Parse(idInvoice));
+            return PartialView(result);
         }
     }
 }

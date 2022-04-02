@@ -1,0 +1,38 @@
+﻿@model Xedap.Models.Invoice
+@{
+    ViewBag.Title = "getInvocieDetail";
+    int? total = 0;
+}
+
+@foreach (var item in Model.Cart.ProductCarts)
+{
+    <tr>
+        <td>
+            @Html.Raw(item.Product.Name)
+        </td>
+        <td>
+            <img src="~/Content/Image/@item.Product.ImageURL" width="150" height="150" alt="@Html.Raw(item.UrlImage)"/>
+        </td>
+        <td>
+            @String.Format("{0:0,0}", item.PaymentPrice) VND
+        </td>
+        <td>
+            @item.Quantity
+        </td>
+        <td>
+            @String.Format("{0:0,0}",(item.PaymentPrice * item.Quantity)) VND
+        </td>
+    </tr>
+        total += item.PaymentPrice * item.Quantity;   
+}
+<tr>
+    <td colspan="5">
+        <div class="d-flex justify-content-end">
+            <p>Tổng cộng: <b id="total">@String.Format("{0:0,0}", total) VND</b></p>
+        </div>
+    </td>
+</tr>
+
+
+
+
