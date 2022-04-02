@@ -18,12 +18,12 @@ namespace Xedap.Controllers
     {
         DataContext context = new DataContext();
 
-       
 
-       string productPath = HostingEnvironment.ApplicationPhysicalPath + @"Content\Image";
-       
+
+        string productPath = HostingEnvironment.ApplicationPhysicalPath + @"Content\Image";
+
         //IConfiguration configuration;
-   
+
         public ActionResult Index()
         {
             return View();
@@ -34,11 +34,11 @@ namespace Xedap.Controllers
         //PRODUCT
         public ActionResult Product(int? page)
         {
-            
+
             ViewBag.page = (page ?? 1);
             var search = string.Empty;
             int count = 0;
-            var result = ProductRepo.GetProducts(out count, (page ?? 1), search).Where(p=>p.IsDelete==false);
+            var result = ProductRepo.GetProducts(out count, (page ?? 1), search).Where(p => p.IsDelete == false);
             ViewBag.count = count / 10;
             ViewBag.Attributes = context.Attributes.ToList();
             ViewBag.Categories = context.Categories.ToList();
@@ -47,12 +47,12 @@ namespace Xedap.Controllers
         }
         public ActionResult DeletedProduct()
         {
-           
+
             return View(context.Products.Where(p => p.IsDelete == true));
         }
         public ActionResult DeleteProduct(int pdID)
         {
-           
+
             var prod = context.Products.FirstOrDefault(p => p.IDProduct == pdID);
             if (prod == null)
             {
@@ -94,22 +94,22 @@ namespace Xedap.Controllers
 
             return Json(true);
         }
-        
+
         [HttpGet]
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
         public ActionResult getProductForm(int id)
         {
             var result = ProductRepo.GetProductForm(context, id);
-             
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //CATEGORY
         public ActionResult Category()
         {
-                
-                ViewBag.Products = context.Products.ToList();
-                ViewBag.Attributes = context.Attributes.ToList();
+
+            ViewBag.Products = context.Products.ToList();
+            ViewBag.Attributes = context.Attributes.ToList();
             return View(context.Categories.Where(p => p.Isdelete == false));
         }
         [HttpPost]
@@ -132,7 +132,7 @@ namespace Xedap.Controllers
         [HttpPost]
         public ActionResult DeleteCategory(int ctgrID2)
         {
-           
+
             var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID2);
             if (prod == null)
             {
@@ -142,66 +142,107 @@ namespace Xedap.Controllers
             {
                 prod.Isdelete = true;
                 context.SaveChanges();
-                return Json(true) ;
+                return Json(true);
             }
         }
-        public ActionResult RestoreCategory(int ctgrID)
+
+        [HttpPost]
+        public ActionResult Delete4everCategory(int ctID)
         {
-            
-            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
+            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctID);
             if (prod == null)
             {
                 return Json(false);
             }
             else
             {
-                prod.Isdelete = false;
+                context.Categories.Remove(prod);
                 context.SaveChanges();
                 return Json(true);
             }
         }
-        //ATTRIBUTE
-        public ActionResult Attribute()
-        {
-           
-            ViewBag.Categories = context.Categories.ToList();
-            return View(context.Attributes.Where(p => p.IsDelete == false));
-        }
-        
+            public ActionResult RestoreCategory(int ctgrID)
+            {
+
+                var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    prod.Isdelete = false;
+                    context.SaveChanges();
+                    return Json(true);
+                }
+            }
+            //ATTRIBUTE
+            public ActionResult Attribute()
+            {
+
+                ViewBag.Categories = context.Categories.ToList();
+                return View(context.Attributes.Where(p => p.IsDelete == false));
+            }
+            [HttpPost]
+            public ActionResult AddAttribute (string attributeName2)
+            {
+                AttributeRepo.AddAttribute(context, attributeName2);
+                return Json(true);
+            }
+            [HttpPost]
+            public ActionResult EditAttribute(int attrId, string attributeName)
+            {
+                var result = AttributeRepo.EditAttribute(context, attrId, attributeName);
+                return Json(result);
+            }
         public ActionResult DeletedAttribute()
-        {
-            
-            return View(context.Attributes.Where(p => p.IsDelete == true));
-        }
-        public ActionResult DeleteAttribute(int attrID)
-        {
-            
-            var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
-            if (prod == null)
             {
-                return Json(false);
+
+                return View(context.Attributes.Where(p => p.IsDelete == true));
             }
-            else
+            public ActionResult DeleteAttribute(int attrID2)
             {
-                prod.IsDelete = true;
-                context.SaveChanges();
-                return Json(prod);
+
+                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID2);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    prod.IsDelete = true;
+                    context.SaveChanges();
+                    return Json(true);
+                }
             }
-        }
+            public ActionResult Delete4everAttribute(int atrID)
+            {
+                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == atrID);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    context.Attributes.Remove(prod);
+                    context.SaveChanges();
+                    return Json(true);
+                }
+            }
         public ActionResult RestoreAttribute(int attrID)
-        {
-            
-            var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
-            if (prod == null)
             {
-                return Json(false);
-            }
-            else
-            {
-                prod.IsDelete = false;
-                context.SaveChanges();
-                return Json(prod);
+
+                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    prod.IsDelete = false;
+                    context.SaveChanges();
+                    return Json(true);
+                }
             }
         }
     }
-}

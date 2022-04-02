@@ -207,6 +207,7 @@
     <Compile Include="Models\ProductCart.cs" />
     <Compile Include="Models\Repo\AccountRepo.cs" />
     <Compile Include="Models\Repo\AddressRepo.cs" />
+    <Compile Include="Models\Repo\AttributeRepo.cs" />
     <Compile Include="Models\Repo\AuthModel.cs" />
     <Compile Include="Models\Repo\CartRepo.cs" />
     <Compile Include="Models\Repo\CategoryRepo.cs" />

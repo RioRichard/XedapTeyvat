@@ -42,7 +42,7 @@
                             </td>
                             <td>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                    <button class="btn btn-primary btn-delete4everCategory" >Xóa vĩnh viễn</button>
+                                    <button class="btn btn-primary btn-delete4everCategory" name="delete4ever" ctID ="@item.IDCategory" >Xóa vĩnh viễn</button>
                                 </div>
                             </td>
                         </tr>
@@ -77,5 +77,27 @@
                 }
             });
         })
+        $("button[name='delete4ever']").click(function () {
+            var ctID = $(this).attr("ctID");
+            $.ajax({
+                type: "POST",
+                url: "/admin/Delete4everCategory",
+                data: { ctID: ctID },
+                dataType: "json",
+
+                success: function (response) {
+                    if (response == false) {
+                        alert("Xóa vĩnh viễn danh mục không thành công");
+                    }
+                    else {
+                        alert("Xóa vĩnh viễn danh mục thành công.");
+                        window.location.href = window.location.href;
+                    }
+                }
+            });
+        })
+
+       
+        
     </script>
 }

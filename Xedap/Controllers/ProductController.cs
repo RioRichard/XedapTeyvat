@@ -8,7 +8,7 @@ namespace Xedap.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        public ActionResult ProductDetail(int? id = 10)
+        public ActionResult ProductDetail(int? id )
         {
             DataContext context = new DataContext();
             ViewBag.PA = ProductRepo.GetAttribute(context, id);

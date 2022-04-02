@@ -6,6 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+        @foreach(var test in ViewBag.Product)
+            {
+                <h3 class="text-center">@test.CategoryName</h3>
+            }
 
 <div class="container-fluid" style=" padding: 0!important">
     <div class="row">
@@ -13,26 +17,30 @@
             <div class="container-fluid">
                 <div class="row">
                     @foreach (var item in Model)
-        {
-            <div class=" col-4" style="padding-bottom:40px">
-                <div class="card border-secondary" style="max-height: 500px; max-width: 300px; min-height: 250px; min-width: 150px; ">
-                    <a href="/product/@item.IDProduct">
-                        <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(item.Name)">
-                    </a>
-                    <div class="card-body">
-                        <a href="/product/@item.IDProduct">
-                            <h5 style="min-height:70px " class="card-title">@Html.Raw(item.Name)</h5>
-                        </a>
+                    {
+                        if (item.IsDelete != true)
+                        {
+                            <div class=" col-4" style="padding-bottom:40px">
+                                <div class="card border-secondary" style="max-height: 600px; max-width: 300px; min-height: 250px; min-width: 150px; ">
+                                    <a href="/product/productdetail/@item.IDProduct">
+                                        <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(item.Name)">
+                                    </a>
+                                    <div class="card-body">
+                                        <a href="/product/productdetail/@item.IDProduct">
+                                            <h5 style="min-height:100px "  class="card-title">@Html.Raw(item.Name)</h5>
+                                        </a>
 
-                        <h6 class="card-price">Giá cả: @item.Price VND</h6>
+                                        <h6 class="card-price">Giá cả: @String.Format("{0:0,0}", item.Price) VND</h6>
 
 
-                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
                 </div>
-            </div>
-        }
-
-                        </div>
                     </div>
         </div>
 

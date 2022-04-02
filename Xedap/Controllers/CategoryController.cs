@@ -11,8 +11,9 @@ namespace Xedap.Controllers
 
         public ActionResult Index(int? page, int? id )
         {
-
+            
             DataContext context = new DataContext();
+            ViewBag.Product = context.Categories.Where(p=>p.IDCategory == id);
             if (page == null) page = 1;
             IEnumerable<Product> links;
             if(id == null)
