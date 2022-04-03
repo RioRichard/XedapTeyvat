@@ -17,10 +17,12 @@
                     </a>
                     
                     <div class="card-body">
-                        <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
-                        <a href="/product/ProductDetail/@item.IDProduct" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
-                        <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
-                    </div>
+                        <a href="/product/productdetail/@item.IDProduct">
+                            <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
+                            </a>
+                            <a href="/product/ProductDetail/@item.IDProduct" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+                            <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
+</div>
                 </div>
             </div>
         }
@@ -38,12 +40,14 @@
                     <a href="/product/productdetail/@item.IDProduct">
                         <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(@item.Name)">
                         </a>
-                        <div class="card-body">
+                    <div class="card-body">
+                        <a href="/product/productdetail/@item.IDProduct">
                             <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
+                            </a>
                             <a href="/product/ProductDetail/@item.IDProduct" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
                             <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
 
-                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -60,11 +64,13 @@
                     <a href="/product/productdetail/@item.IDProduct">
                         <img src="~/Content/Image/@item.ImageURL" class="card-img-top" alt="@Html.Raw(@item.Name)">
                         </a>
-                        <div class="card-body">
+                    <div class="card-body">
+                        <a href="/product/productdetail/@item.IDProduct">
                             <h5 class="card-title" style="min-height:100px;">@Html.Raw(@item.Name)</h5>
+                            </a>
                             <a href="/product/ProductDetail/@item.IDProduct" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
                             <button name="add" class="btn btn-outline-danger" pid="@item.IDProduct"><i class="fa-solid fa-cart-shopping"></i></button>
-                        </div>
+                    </div>
                 </div>
             </div>
         }

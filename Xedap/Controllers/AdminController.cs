@@ -286,5 +286,13 @@ namespace Xedap.Controllers
                     return Json(true);
                 }
             }
+        public ActionResult Chart()
+        {
+            return View();
         }
+        public ActionResult Setting()
+        {
+            return View();
+        }
+    }
     }
