@@ -93,8 +93,9 @@ namespace Xedap.Controllers
         //}
 
         //POST: Register
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
        
         public ActionResult Address()
         {

@@ -10,6 +10,7 @@ using static Xedap.Helper.HelperAdd;
 using System.Web.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Web;
+using System;
 
 namespace Xedap.Controllers
 {
@@ -290,9 +291,33 @@ namespace Xedap.Controllers
         {
             return View();
         }
+        public ActionResult DashboardBar()
+        {
+
+            var accounts = InvoiceRepo.TotalBuyFolowUser(context);
+            var result = accounts.OrderByDescending(p => p.TotalBought).Select(p => new { p.UserName, p.TotalBought });
+            return Json(result);
+        }
+        public ActionResult DashboardPie()
+        {
+            var result = CartRepo.GetTotalFollowProduct(context);
+            return Json(result);
+        }
         public ActionResult Setting()
         {
             return View();
+        }
+        public ActionResult Invoicedetail()
+        {
+            return View();
+        }
+        public ActionResult EditInvoicedetail(int SelectStatus, Guid IdInvoice)
+        {
+
+            InvoiceRepo.EditInvoice(context, SelectStatus, IdInvoice);
+
+            return Json(true);
+
         }
     }
     }
