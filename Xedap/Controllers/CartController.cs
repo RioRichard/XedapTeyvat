@@ -16,6 +16,7 @@ namespace Xedap.Controllers
         public ActionResult AddItemToCart(int idProduct, int Quantity)
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
+
             var result = CartRepo.AddItem(Context, userId, idProduct, Quantity);
             if (result == true)
                 TempData["messageAddItem"] = "Thêm vào giỏ hàng thành công";

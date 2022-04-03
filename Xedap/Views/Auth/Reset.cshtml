@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Lấy lại mật khẩu";
+    Layout = "~/Views/Shared/_LayoutAuthen.cshtml";
+}
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+
+<div class="login-box ">
+    <div class="login-snip">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+        <label for="tab-1" class="tab">Đăng nhập</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up" disabled style="display:none">
+        <label for="tab-2" class="tab" style="display:none">Đăng kí</label>
+        <div class="login-space">
+            <form id="reset">
+                @Html.AntiForgeryToken()
+                <div class="login">
+                    <input type="hidden" name="token" value="@ViewBag.Token" />
+                    <div class="group">
+                        <label for="passSignIn" class="label">Password</label>
+                        <input id="passSignIn" type="password" class="input" name="Pass" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="group">
+                        <label for="rePassSignIn" class="label">Repeat Password</label>
+                        <input id="rePassSignIn" type="password" name="RePass" class="input" placeholder="Nhập lại mật khẩu">
+                    </div>
+                    <div class="group">
+                        <button class="button">Đăng nhập</button>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="foot"> <a href="/Auth/SignAndReg">Đăng nhập/Đăng ký</a> </div>
+                    <div class="foot"><a href="/">Về trang chủ</a></div>
+
+                </div>
+            </form>
+            
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script>
+
+         $().ready(function () {
+            alert("@Html.Raw(ViewBag.rs)");
+            window.location.href = "/";
+        })
+
+        $('#reset').validate({
+            rules: {
+
+                Pass: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 24,
+                },
+                RePass: {
+                    required: true,
+                    equalTo: '#passSignIn',
+                    minlength: 6,
+                    maxlength: 24,
+                },
+
+            },
+            messages: {
+
+                Pass: {
+                    required: "Bắt buộc nhập password",
+                    minlength: "Hãy nhập ít nhất 6 ký tự",
+                    maxlength: "Hãy nhập ít nhất 24 ký tự",
+                },
+                RePass: {
+                    required: "Bắt buộc nhập lại password",
+                    equalTo: "Hai password phải giống nhau",
+                    minlength: "Hãy nhập ít nhất 6 ký tự",
+                    maxlength: "Hãy nhập ít nhất 24 ký tự",
+                },
+
+            },
+            submitHandler: function (form) {
+                //console.log('/Account/' + id);
+                $.post('/Auth/' + id, $(form).serialize(), (r) => {
+                    /*console.log(r);*/
+
+                    alert(r.message);
+                    window.location.href = r.stringUrl;
+
+
+                })
+            }
+        });
+
+    </script>
+}

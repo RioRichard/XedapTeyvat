@@ -20,8 +20,8 @@ namespace Xedap.Models
         [Column(Order = 1)]
         [StringLength(64)]
         public string IDAccount { get; set; }
-
         public bool? IsDefault { get; set; }
+
         [NotMapped]
         public string AdresssAcc { get; set; }
         public virtual Account Account { get; set; }

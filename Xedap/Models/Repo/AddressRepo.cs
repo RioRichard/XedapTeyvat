@@ -7,23 +7,13 @@ namespace Xedap.Models.Repo
 {
     public class AddressRepo
     {
-        public static List<AccountAddress> GetAddressByUser(DataContext context, string userID)
-        {
-            var addressAccount = context.AccountAddresses.Where(p => p.IDAccount == userID).ToList();
-            var address = context.Addresses.ToList();
-            var result = (from addressAcc in addressAccount
-                          join add in address
-                          on addressAcc.IDAddress equals (int)add.IDAddress
-                          select new AccountAddress
-                          {
-                              IDAddress = addressAcc.IDAddress,
-                              IDAccount = addressAcc.IDAccount,
-                              IsDefault = addressAcc.IsDefault,
-                              AdresssAcc = add.Address1,
-
-                          }).ToList();
-            return result;
-        }
+        //public static List<AccountAddress> GetAddressByUser(DataContext context, string userID)
+        //{
+        ////    var addressAccount = context.AccountAddresses.Where(p => p.IDAccount == userID).ToList();
+        ////    var address = context.Addresses.ToList();
+           
+        ////    return result;
+        ////}
 
         public static void AddAccount(DataContext context, string userId, string address, string phone, string receiver, bool isDefault)
         {

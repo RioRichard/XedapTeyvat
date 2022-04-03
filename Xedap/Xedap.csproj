@@ -186,6 +186,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
@@ -363,14 +364,18 @@
     <Content Include="Views\Admin\Chart.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
+    <Content Include="Views\Auth\Confirm.cshtml" />
     <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Partial\getInvocieDetail.cshtml" />
     <Content Include="Views\Auth\SignAndReg.cshtml" />
-    <Content Include="Views\Admin\AddAtribute.cshtml" />
+    <Content Include="Views\Auth\ForgotPassword.cshtml" />
+    <Content Include="Views\Auth\Reset.cshtml" />
     <Content Include="Views\Admin\EditAttribute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Invoice\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

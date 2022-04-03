@@ -28,8 +28,7 @@ namespace Xedap.Controllers
 
             int pageSize = 6;
             int pageNumber = (page ?? 1);
-
-
+            ViewBag.CategoryActive = context.Categories.Where(p => p.IDCategory == id).ToList();
             return View(links.ToPagedList(pageNumber, pageSize) );
         }
        

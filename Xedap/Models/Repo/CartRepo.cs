@@ -15,9 +15,9 @@ namespace Xedap.Models.Repo
                 IDAccount = userId,
                 IDCart = newGuid,
                 IsExpired = false,
-
-
+                
             };
+            context.Carts.Add(newCart);
             context.SaveChanges();
             return newCart;
         }
