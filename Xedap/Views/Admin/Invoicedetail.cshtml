@@ -1,7 +1,7 @@
-﻿
+﻿@model IEnumerable<Xedap.Models.Invoice>
 
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Hóa Đơn";
 }
 <main>
@@ -35,9 +35,9 @@
                 {
                     <tr class="product_tr">
                         <td>@item.IDInvoice</td>
-                        <td>@item.Status</td>
-                        <td>@item.Address.Addressed</td>
-                        <td>@item.Address.Receiver</td>
+                        <td>@item.Status.StatusName</td>
+                        <td>@item.Address.Address1</td>
+                        <td>@item.Address.Reciever</td>
                         <td>@item.Address.Phone</td>
 
 
@@ -97,9 +97,7 @@
                 </tbody>
 
             </table>
-            <div class="d-flex justify-content-end">
-                <p>Tổng cộng: <b id="total"></b></p>
-            </div>
+
 
         </div>
 
@@ -119,7 +117,7 @@
         </header>
         <form id="editform">
             <div class="modal-body" style="max-height:150px">
-                <input type="hidden" name="IDInvoice" />
+                <input type="hidden" name="IdInvoice" />
                 <div class="WhatisStatus">
                     <label for="text-tickets" class="modal-label">
                         Trạng Thái Hiện Tại Của Đơn Hàng
@@ -144,6 +142,7 @@
 </div>
 
 @section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
     <script>
         const editBtns = document.querySelectorAll('.btn-edit');
         const editBtnsver2 = document.querySelectorAll('.btn-editinvoicedetail');
@@ -168,16 +167,16 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "/admin/editinvoicedetail",
+                        url: "/admin/EditInvoicedetail",
                         data: $(form).serialize(),
                         dataType: "json",
 
                         success: function (response) {
                             if (response == false) {
-                                alert("Sửa thuộc tính không thành công");
+                                alert("Sửa tình trạng đơn hàng không thành công");
                             }
                             else {
-                                alert("Sửa thuộc tính thành công.");
+                                alert("Sửa tình trạng đơn hàng thành công.");
                                 window.location.href = window.location.href;
                             }
 
@@ -205,12 +204,22 @@
 
         function showEdit() {
 
-            modal.classList.add('open');
-            var id = $(this).attr('Incid');
-            $.get('/invoice/InvoiceDetail', { IdInvoice: id }, (r) => {
-                fillTable(r);
-            });
+            var Incid = $(this).attr("Incid");
+            $.ajax({
+                type: "GET",
+                url: "/Partial/getInvocieDetail",
+                data: { idInvoice: Incid },
+                success: function (response) {
 
+                    $('#tbodyModal').html(response);
+                    $('#tbodyModal').submit(function (e) {
+                        e.preventDefault();
+
+                    })
+                }
+
+            });
+            modal.classList.add('open')
 
         }
         function closeEdit() {
@@ -223,27 +232,27 @@
         modalClose.addEventListener('click', closeEdit)
         const delBtns = document.querySelectorAll('.btn-del');
 
-        function fillTable(response) {
-            var listProduct = response.productCarts;
-            var text = '';
-            for (let i = 0; i < listProduct.length; i++) {
-                var name = listProduct[i].productName;
-                var quantity = listProduct[i].quantity;
-                var img = listProduct[i].urlImage;
-                var price = listProduct[i].paymentPrice;
-                var total = listProduct[i].total;
-                text += "<tr>";
-                text += "<td>" + name + "</td>"
-                text += '<td><img src="/img/productImg/' + img + '" alt="' + name + '" width="100" height="100"</td > ';
-                text += "<td>" + numberWithCommas(price) + " VNĐ</td>"
-                text += "<td>" + quantity + "</td>"
-                text += "<td>" + numberWithCommas(total) + " VNĐ</td>"
+        //function fillTable(response) {
+        //    var listProduct = response.productCarts;
+        //    var text = '';
+        //    for (let i = 0; i < listProduct.length; i++) {
+        //        var name = listProduct[i].productName;
+        //        var quantity = listProduct[i].quantity;
+        //        var img = listProduct[i].urlImage;
+        //        var price = listProduct[i].paymentPrice;
+        //        var total = listProduct[i].total;
+        //        text += "<tr>";
+        //        text += "<td>" + name + "</td>"
+        //        text += '<td><img src="/img/productImg/' + img + '" alt="' + name + '" width="100" height="100"</td > ';
+        //        text += "<td>" + numberWithCommas(price) + " VNĐ</td>"
+        //        text += "<td>" + quantity + "</td>"
+        //        text += "<td>" + numberWithCommas(total) + " VNĐ</td>"
 
-                text += "</tr>";
-            }
-            document.getElementById("tbodyModal").innerHTML = text;
-            document.getElementById("total").innerHTML = numberWithCommas(response.total) + ' VNĐ';
-        }
+        //        text += "</tr>";
+        //    }
+        //    document.getElementById("tbodyModal").innerHTML = text;
+        //    document.getElementById("total").innerHTML = numberWithCommas(response.total) + ' VNĐ';
+        //}
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }

@@ -81,22 +81,7 @@ namespace Xedap.Controllers
         public ActionResult SendMailAgain()
         {
             return View();
-        }
-
-
-        
-        //public ActionResult Register(string UserName, string Pass, string Email)
-        //{
-        //    var result = AuthRepo.AddAccount(UserName, Pass, Email);
-        //    return Json(result);
-
-        //}
-
-        //POST: Register
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-       
+        }       
         public ActionResult Address()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
@@ -129,10 +114,21 @@ namespace Xedap.Controllers
             var result = InvoiceRepo.GetInvoices(Context, userId);
             return View(result);
         }
+        [HttpPost]
+        public ActionResult AddAddress(string address, string phone, string receiver, bool isDef)
+        {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
 
+            AddressRepo.AddAccount(Context, userId, address, phone, receiver, isDef);
 
-       
-        
-        
+            return Json(true);
+        }
+        [HttpPost]
+        public ActionResult ChangeDefalut(int AddID)
+        {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            AddressRepo.SetDefault(Context, userId, AddID);
+            return Json(true);
+        }
     }
 }

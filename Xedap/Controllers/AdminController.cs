@@ -309,8 +309,11 @@ namespace Xedap.Controllers
         }
         public ActionResult Invoicedetail()
         {
-            return View();
+            ViewBag.Status = context.Status.ToList();
+            var result = InvoiceRepo.GetAllInvoice(context);
+            return View(result);
         }
+        [HttpPost]
         public ActionResult EditInvoicedetail(int SelectStatus, Guid IdInvoice)
         {
 
