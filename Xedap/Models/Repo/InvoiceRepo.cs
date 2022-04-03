@@ -84,6 +84,20 @@ namespace Xedap.Models.Repo
 
             return detailedInvoice;
         }
+        public static bool EditInvoice(DataContext context, int StatusID, Guid IDInvoice)
+        {
+            var Invo = context.Invoices.FirstOrDefault(p => p.IDInvoice == IDInvoice);
+            if (Invo == null)
+            {
+                return false;
+            }
+            else
+            {
+                Invo.IDStatus = StatusID;
+                context.SaveChanges();
+                return true;
+            }
+        }
     }
     
     

@@ -18,9 +18,53 @@ namespace Xedap.Controllers
         
         public ActionResult Index()
         {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var account = Context.Accounts.FirstOrDefault(p => p.IDAccount == userId);
+            return View(account);
+        }
+        [HttpPost]
+        public ActionResult Index(DataContext context, string userId, string fullname, bool? gender)
+        {
+
+            userId = System.Web.HttpContext.Current.User.Identity.Name;
+            var account = context.Accounts.FirstOrDefault(p => p.IDAccount == userId);
+            account.FullName = fullname;
+            account.Gender = gender;
+            context.SaveChanges();
+            return Redirect("/account");
+        }
+        public ActionResult ChangePassword()
+        {
             return View();
         }
-    
+        [HttpPost]
+        public ActionResult ChangePassword(DataContext context, string userId, string currentPass, string newPass)
+        {
+            userId = System.Web.HttpContext.Current.User.Identity.Name;
+            Account account = context.Accounts.FirstOrDefault(p => p.IDAccount == userId);
+            if (account is null)
+            {
+                TempData["messageChangePass"] = "Tài khoản không tồn tại";
+            }
+            else
+            {
+                var password = Helper.HelperAdd.Hash(account.IDAccount + currentPass);
+                var passwordEqualCheck = password.SequenceEqual(account.Password);
+                if (!passwordEqualCheck)
+                {
+                    TempData["messageChangePass"] = "Mật khẩu cũ không đúng";
+                }
+                else
+                {
+                    var newPassBeforeHash = account.IDAccount + newPass;
+                    var hashNewPass = Helper.HelperAdd.Hash(newPassBeforeHash);
+                    account.Password = hashNewPass;
+                    context.SaveChanges();
+                    TempData["messageChangePass"] = "Đổi mật khẩu thành công";
+                }
+            }
+            return View();
+        }
         public ActionResult ForgotPassword()
         {
             return View();
@@ -37,20 +81,7 @@ namespace Xedap.Controllers
         public ActionResult SendMailAgain()
         {
             return View();
-        }
-
-
-        
-        //public ActionResult Register(string UserName, string Pass, string Email)
-        //{
-        //    var result = AuthRepo.AddAccount(UserName, Pass, Email);
-        //    return Json(result);
-
-        //}
-
-        //POST: Register
-        
-       
+        }       
         public ActionResult Address()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
@@ -58,13 +89,9 @@ namespace Xedap.Controllers
 
             return View(Context.AccountAddresses.Where(p=>p.IDAccount==userId).ToList());
         }
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
 
         //create a string MD5
-       
+        //[Authorize]
         public ActionResult Cart()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
@@ -88,10 +115,21 @@ namespace Xedap.Controllers
             var result = InvoiceRepo.GetInvoices(Context, userId);
             return View(result);
         }
+        [HttpPost]
+        public ActionResult AddAddress(string address, string phone, string receiver, bool isDef)
+        {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
 
+            AddressRepo.AddAccount(Context, userId, address, phone, receiver, isDef);
 
-       
-        
-        
+            return Json(true);
+        }
+        [HttpPost]
+        public ActionResult ChangeDefalut(int AddID)
+        {
+            var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            AddressRepo.SetDefault(Context, userId, AddID);
+            return Json(true);
+        }
     }
 }

@@ -9,11 +9,11 @@
 <div>
     <main>
         <div class="container-fluid">
-    <h1 class="mt-4">DANH MỤC</h1>
+    <h1 class="mt-4">THUỘC TÍNH ĐÃ XÓA</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/admin">Trang quản lí</a></li>
 
-        <li class="breadcrumb-item active">DANH MỤC</li>
+        <li class="breadcrumb-item active">Thuộc TínhC</li>
             </ol>
 
             <div class="card-body">
@@ -37,12 +37,12 @@
                             </td>
                             <td>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                <a class="btn btn-primary btn-editattribute" href="/Admin/RestoreAttribute?id=@item.IDAttribute">Khôi Phục</a>
+                                    <button class="btn btn-primary btn-editattribute" name="restore" attrID="@item.IDAttribute">Khôi Phục</button>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0" style="margin-top:0px !important">
-                                <a class="btn btn-primary" href="/Admin/DeletedAttributeVV?id=@item.IDAttribute">Xóa vĩnh viễn</a>
+                                    <button class="btn btn-primary btn-editattribute" name="delete4ever" atrID="@item.IDAttribute">Xóa4EVER</button>
                                 </div>
                             </td>
                         </tr>
@@ -53,9 +53,8 @@
                 </table>
             </div>
         </div>
-<div>
-    @Html.ActionLink("Back to List", "Attribute")
-</div>
+        </main>
+    </div>
 @section Scripts{
     <script>
         $("button[name='restore']").click(function () {
@@ -72,6 +71,25 @@
                     }
                     else {
                         alert("Khôi phục thuộc tính thành công.");
+                        window.location.href = window.location.href;
+                    }
+                }
+            });
+        })
+        $("button[name='delete4ever']").click(function () {
+            var atrID = $(this).attr("atrID");
+            $.ajax({
+                type: "POST",
+                url: "/admin/Delete4everAttribute",
+                data: { atrID: atrID },
+                dataType: "json",
+
+                success: function (response) {
+                    if (response == false) {
+                        alert("Xóa vĩnh viễn thuộc tính không thành công");
+                    }
+                    else {
+                        alert("Xóa vĩnh viễn thuộc tính thành công.");
                         window.location.href = window.location.href;
                     }
                 }

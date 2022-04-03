@@ -6,7 +6,12 @@ using System.Web.Services;
 using Xedap.Helper;
 using Xedap.Models;
 using Xedap.Models.Repo;
-
+using Newtonsoft.Json;
+using static Xedap.Helper.HelperAdd;
+using System.Web.Hosting;
+using Microsoft.Extensions.Configuration;
+using System.Web;
+using System;
 
 namespace Xedap.Controllers
 {
@@ -14,8 +19,13 @@ namespace Xedap.Controllers
     public class AdminController : BaseController
     {
         DataContext context = new DataContext();
+
+
+
+        string productPath = HostingEnvironment.ApplicationPhysicalPath + @"Content\Image";
+
         //IConfiguration configuration;
-        string productPath = Path.Combine(Directory.GetCurrentDirectory(), "Content", "Image");
+
         public ActionResult Index()
         {
             if (Session["Admin"] == null)
@@ -33,11 +43,11 @@ namespace Xedap.Controllers
         //PRODUCT
         public ActionResult Product(int? page)
         {
-            
+
             ViewBag.page = (page ?? 1);
             var search = string.Empty;
             int count = 0;
-            var result = ProductRepo.GetProducts(out count, (page ?? 1), search).Where(p=>p.IsDelete==false);
+            var result = ProductRepo.GetProducts(out count, (page ?? 1), search).Where(p => p.IsDelete == false);
             ViewBag.count = count / 10;
             ViewBag.Attributes = context.Attributes.ToList();
             ViewBag.Categories = context.Categories.ToList();
@@ -55,7 +65,7 @@ namespace Xedap.Controllers
         }
         public ActionResult DeleteProduct(int pdID)
         {
-           
+
             var prod = context.Products.FirstOrDefault(p => p.IDProduct == pdID);
             if (prod == null)
             {
@@ -83,27 +93,28 @@ namespace Xedap.Controllers
             }
         }
         [HttpPost]
-        public ActionResult EditProduct(int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1)
+        public ActionResult EditProduct(int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1, HttpPostedFileBase UploadEdit)
         {
-            var result = ProductRepo.EditProduct(context, proID, productName, productPrice, productStock, productDes, cttr, attrID, productAttr1);
-
-            return Json(result ,JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public ActionResult AddProduct(string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue)
-        {
-            ProductRepo.AddProduct(context, productName2, productPrice2, productStock2, productDes2, idCate, attr, attrValue);
+            var result = ProductRepo.EditProduct(context, proID, productName, productPrice, productStock, productDes, cttr, attrID, productAttr1, UploadEdit, productPath);
 
             return Json(true);
         }
-        
+        [HttpPost]
+        public ActionResult AddProduct(string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue, HttpPostedFileBase imgUp)
+        {
+
+            ProductRepo.AddProduct(context, productName2, productPrice2, productStock2, productDes2, idCate, attr, attrValue, imgUp, productPath);
+
+            return Json(true);
+        }
+
         [HttpGet]
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
         public ActionResult getProductForm(int id)
         {
             var result = ProductRepo.GetProductForm(context, id);
-             
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //CATEGORY
@@ -142,7 +153,7 @@ namespace Xedap.Controllers
         [HttpPost]
         public ActionResult DeleteCategory(int ctgrID2)
         {
-           
+
             var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID2);
             if (prod == null)
             {
@@ -152,36 +163,101 @@ namespace Xedap.Controllers
             {
                 prod.Isdelete = true;
                 context.SaveChanges();
-                return Json(true) ;
+                return Json(true);
             }
         }
-        public ActionResult RestoreCategory(int ctgrID)
+
+        //public ActionResult DeleteProduct4Ever(int prID)
+        //{
+        //    var prod = context.Products.FirstOrDefault(p => p.IDProduct == prID);
+        //    var checkCart = context.ProductCarts.FirstOrDefault(p => p.IDProduct == prID);
+        //    var checkAttr = context.ProductAttributes.FirstOrDefault(p => p.IDProduct == prID);
+        //    if (prod == null)
+        //    {
+        //        return Json(false);
+        //    }
+        //    else
+        //    {
+                
+        //        if(checkAttr!= null)
+        //        {
+        //            if (checkCart != null)
+        //            {
+        //                context.ProductCarts.Remove(checkCart);
+                       
+        //                context.ProductAttributes.Remove(checkAttr);
+                       
+        //                context.Products.Remove(prod);
+        //                context.SaveChanges();
+        //            }    
+        //            else
+        //            {
+        //                context.ProductAttributes.Remove(checkAttr);
+                       
+        //                context.Products.Remove(prod);
+        //                context.SaveChanges();
+        //            }    
+                   
+        //        }
+        //        else
+        //        {
+        //            context.Products.Remove(prod);
+        //            context.SaveChanges();
+        //        }    
+                
+        //        return Json(true);
+        //    }
+        //}
+
+        [HttpPost]
+        public ActionResult Delete4everCategory(int ctID)
         {
-            
-            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
+            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctID);
             if (prod == null)
             {
                 return Json(false);
             }
             else
             {
-                prod.Isdelete = false;
+                context.Categories.Remove(prod);
                 context.SaveChanges();
                 return Json(true);
             }
         }
-        //ATTRIBUTE
-        public ActionResult Attribute()
-        {
-            if (Session["Admin"] == null)
+            public ActionResult RestoreCategory(int ctgrID)
             {
-                return Redirect("/AdminAuth/SignIn");
 
+                var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    prod.Isdelete = false;
+                    context.SaveChanges();
+                    return Json(true);
+                }
             }
-            ViewBag.Categories = context.Categories.ToList();
-            return View(context.Attributes.Where(p => p.IsDelete == false));
-        }
-        
+            //ATTRIBUTE
+            public ActionResult Attribute()
+            {
+
+                ViewBag.Categories = context.Categories.ToList();
+                return View(context.Attributes.Where(p => p.IsDelete == false));
+            }
+            [HttpPost]
+            public ActionResult AddAttribute (string attributeName2)
+            {
+                AttributeRepo.AddAttribute(context, attributeName2);
+                return Json(true);
+            }
+            [HttpPost]
+            public ActionResult EditAttribute(int attrId, string attributeName)
+            {
+                var result = AttributeRepo.EditAttribute(context, attrId, attributeName);
+                return Json(result);
+            }
         public ActionResult DeletedAttribute()
         {
             if (Session["Admin"] == null)
@@ -206,20 +282,86 @@ namespace Xedap.Controllers
                 return Json(prod);
             }
         }
+       
+        //[HttpPost]
+        //    public ActionResult DeleteAttribute(int attrID2)
+        //    {
+
+        //        var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID2);
+        //        if (prod == null)
+        //        {
+        //            return Json(false);
+        //        }
+        //        else
+        //        {
+        //            prod.IsDelete = true;
+        //            context.SaveChanges();
+        //            return Json(true);
+        //        }
+        //    }
+            public ActionResult Delete4everAttribute(int atrID)
+            {
+                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == atrID);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    context.Attributes.Remove(prod);
+                    context.SaveChanges();
+                    return Json(true);
+                }
+            }
         public ActionResult RestoreAttribute(int attrID)
+            {
+
+                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
+                if (prod == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    prod.IsDelete = false;
+                    context.SaveChanges();
+                    return Json(true);
+                }
+            }
+        public ActionResult Chart()
         {
-            
-            var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
-            if (prod == null)
-            {
-                return Json(false);
-            }
-            else
-            {
-                prod.IsDelete = false;
-                context.SaveChanges();
-                return Json(prod);
-            }
+            return View();
+        }
+        public ActionResult DashboardBar()
+        {
+
+            var accounts = InvoiceRepo.TotalBuyFolowUser(context);
+            var result = accounts.OrderByDescending(p => p.TotalBought).Select(p => new { p.UserName, p.TotalBought });
+            return Json(result);
+        }
+        public ActionResult DashboardPie()
+        {
+            var result = CartRepo.GetTotalFollowProduct(context);
+            return Json(result);
+        }
+        public ActionResult Setting()
+        {
+            return View();
+        }
+        public ActionResult Invoicedetail()
+        {
+            ViewBag.Status = context.Status.ToList();
+            var result = InvoiceRepo.GetAllInvoice(context);
+            return View(result);
+        }
+        [HttpPost]
+        public ActionResult EditInvoicedetail(int SelectStatus, Guid IdInvoice)
+        {
+
+            InvoiceRepo.EditInvoice(context, SelectStatus, IdInvoice);
+
+            return Json(true);
+
         }
     }
-}
+    }

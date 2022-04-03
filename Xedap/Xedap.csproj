@@ -210,6 +210,8 @@
     <Compile Include="Models\ProductCart.cs" />
     <Compile Include="Models\Repo\AccountRepo.cs" />
     <Compile Include="Models\Repo\AddressRepo.cs" />
+    <Compile Include="Models\Repo\AttributeRepo.cs" />
+    
     <Compile Include="Models\Repo\CartRepo.cs" />
     <Compile Include="Models\Repo\CategoryRepo.cs" />
     <Compile Include="Models\Repo\InvoiceRepo.cs" />
@@ -305,10 +307,10 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="password.json" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="password.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -365,6 +367,9 @@
     <Content Include="Views\Auth\SignAndReg.cshtml" />
     <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <Content Include="Views\Auth\Reset.cshtml" />
+    <Content Include="Views\Admin\EditAttribute.cshtml" />
+    <Content Include="Views\Admin\Setting.cshtml" />
+    <Content Include="Views\Admin\Invoicedetail.cshtml" />
     <Content Include="Views\AdminAuth\SignIn.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>

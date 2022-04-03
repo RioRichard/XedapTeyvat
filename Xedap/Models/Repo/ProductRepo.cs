@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿
+using Microsoft.AspNetCore.Http;
+using ServiceStack;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using Xedap.Helper;
 
 namespace Xedap.Models.Repo
 {
@@ -20,8 +26,8 @@ namespace Xedap.Models.Repo
 
 
         }
-
-        public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
+       
+            public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
         {
             var products = context.Products.Where(p => p.IDProduct == idProducts).ToList();
             var attribute = context.Attributes.ToList();
@@ -48,7 +54,7 @@ namespace Xedap.Models.Repo
             product.ProductAttributes = GetAttribute(context, idProduct);
             return product;
         }
-        public static bool EditProduct(DataContext context, int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1)
+        public static bool EditProduct(DataContext context, int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1, HttpPostedFileBase UploadEdit, string productpath)
         {
             var Pros = context.Products.FirstOrDefault(p => p.IDProduct == proID);
             if (Pros == null)
@@ -57,74 +63,71 @@ namespace Xedap.Models.Repo
             }
             else
             {
+                var result = HelperAdd.FileUploadimg(UploadEdit, productpath);
+                if (result != null)
+                {
+                    HelperAdd.DeleteFile(Pros.ImageURL, productpath);
+                    Pros.ImageURL = result.ImageURL;
+
+                }
                 Pros.Name = productName;
                 Pros.Price = productPrice;
                 Pros.Stock = productStock;
                 Pros.Description = productDes;
-
-                context.Products.Add(Pros);
+                Pros.IDCategory = cttr;
                 context.SaveChanges();
             }
+
             var proAttr = context.ProductAttributes.Where(p => p.IDProduct == proID).ToList();
-            if (proAttr.Count == 0)
+            if (proAttr.Count != 0)
             {
-                for (int i = 0; i < attrID.Length; i++)
+                if (attrID != null)
                 {
-                    var attrProd = new ProductAttribute()
+                    for (int i = 0; i < attrID.Length; i++)
                     {
-                        IDProduct = proID,
-                        IDAttribute = attrID[i],
-                        AttributeValue = productAttr1[i]
-                    };
-                    context.ProductAttributes.Add(attrProd);
-                    context.SaveChanges();
-                }
-            }
-            else
-            {
-                for (int i = 0; i < attrID.Length; i++)
-                {
-                    var x = proAttr.FirstOrDefault(p => p.IDAttribute == attrID[i]);
-                    if (x == null)
-                    {
-                        var attrProd = new ProductAttribute()
+                        var x = proAttr.FirstOrDefault(p => p.IDAttribute == attrID[i]);
+                        if (x == null)
                         {
-                            IDProduct = proID,
-                            IDAttribute = attrID[i],
-                            AttributeValue = productAttr1[i]
-                        };
-                        context.ProductAttributes.Add(attrProd);
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        context.ProductAttributes.Remove(x);
-                        context.SaveChanges();
-                        if (!string.IsNullOrEmpty(productAttr1[i]))
-                        {
-                            x.IDAttribute = attrID[i];
-                            x.AttributeValue = productAttr1[i];
-                            context.ProductAttributes.Add(x);
+                            var attrProd = new ProductAttribute()
+                            {
+                                IDProduct = proID,
+                                IDAttribute = attrID[i],
+                                AttributeValue = productAttr1[i]
+                            };
+                            context.ProductAttributes.Add(attrProd);
                             context.SaveChanges();
                         }
-                    }
+                        else
+                        {
+                            context.ProductAttributes.Remove(x);
+                            context.SaveChanges();
+                            if (!string.IsNullOrEmpty(productAttr1[i]))
+                            {
 
+                                x.AttributeValue = productAttr1[i];
+                                context.ProductAttributes.Add(x);
+                                context.SaveChanges();
+                            }
+                        }
+                    }
                 }
 
             }
+
             return true;
         }
 
-        public static Product AddProduct(DataContext context, string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue)
+        public static Product AddProduct(DataContext context, string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue, HttpPostedFileBase imgUp, string productpath)
         {
-            //var result = Helper.FileUpload(f, productpath);
+            var result = HelperAdd.FileUploadimg(imgUp, productpath);
             var newProduct = new Product()
             {
                 Name = productName2,
                 Price = productPrice2,
                 Stock = productStock2,
                 Description = productDes2,
-                //ImageUrl = result.ImageUrl,
+                IDCategory = idCate,
+                ImageURL = result.ImageURL,
                 IsDelete = false,
             };
             context.Products.Add(newProduct);
@@ -141,12 +144,12 @@ namespace Xedap.Models.Repo
                         IDAttribute = attr[i],
                         AttributeValue = attrValue[i],
                     };
-                    context.ProductAttributes.Add(productAttr);
+                    context.ProductAttributes.Add(productAttr );
                     context.SaveChanges();
                 }
             }
 
-            //for
+            
             return newProduct;
         }
 

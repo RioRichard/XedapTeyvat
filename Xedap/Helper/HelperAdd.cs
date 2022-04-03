@@ -6,8 +6,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using System.Web.Hosting;
 using Xedap.Models;
+using UploadFile = Xedap.Models.Repo.UploadFile;
 
 namespace Xedap.Helper
 {
@@ -87,6 +89,12 @@ namespace Xedap.Helper
             }
             return Convert.ToBase64String(array);
         }
+
+        internal static object FileUpload(HttpPostedFileBase uploadEdit, string productpath)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string DecryptString(string key, string cipherText)
         {
             byte[] iv = new byte[16];
@@ -171,7 +179,22 @@ namespace Xedap.Helper
 
             return false;
         }
-        
+        public static UploadFile FileUploadimg(HttpPostedFileBase f, string savePath)
+        {
+            if (f != null && !string.IsNullOrEmpty(f.FileName))
+            {
+                UploadFile obj = new UploadFile()
+                {
+                    OriginalName = f.FileName,
+                    ImageURL = HelperAdd.RandomString(32) + Path.GetExtension(f.FileName)
+                };
+                string path = Path.Combine(savePath, obj.ImageURL);
+                f.SaveAs(path);
+                return obj;
+            }
+            else return null;
+        }
+
     }
     
 

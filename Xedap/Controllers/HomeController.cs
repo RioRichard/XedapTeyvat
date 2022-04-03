@@ -12,9 +12,9 @@ namespace Xedap.Controllers
             //1 = Duong Pho
             //2 = Dua
             //6 = Tre em
-            ViewBag.DuongPho = context.Products.Where(p => p.Category.IDCategory == 1).Take(4);
-            ViewBag.Dua = context.Products.Where(p => p.Category.IDCategory == 2).Take(4);
-            return View(context.Products.Where(p=>p.Category.IDCategory == 6).Take(4));
+            ViewBag.DuongPho = context.Products.Where(p => p.Category.IDCategory == 1 && p.IsDelete == false).Take(4);
+            ViewBag.Dua = context.Products.Where(p => p.Category.IDCategory == 2 && p.IsDelete == false).Take(4);
+            return View(context.Products.Where(p=>p.Category.IDCategory == 6 && p.IsDelete == false).Take(4));
         }
         [ChildActionOnly]
         public ActionResult Category()
@@ -24,7 +24,7 @@ namespace Xedap.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your application description page." ;
 
             return View();
         }

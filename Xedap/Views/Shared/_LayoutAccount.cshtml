@@ -129,12 +129,12 @@
     <header>
         <div id="header" style="position:relative">
             <ul id="nav">
-                <li><a href="/home/index"><img src="~/Content/Image/Free_Sample_By_Wix.jpg" style="width:70%" /></a></li>
-                <li><a href="/home/index">Home</a></li>
+                <li><a href="/"><img src="~/Content/Image/Free_Sample_By_Wix.jpg" style="width:70%" /></a></li>
+                <li><a href="/">Home</a></li>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a href="/Account/Index">Thông tin tài khoản</a></li>
-                    <li><a href="/Account/Logout">Đăng xuất</a></li>
+                    <li><a href="/Auth/Logout">Đăng xuất</a></li>
                 }
                 else
                 {
@@ -188,7 +188,7 @@
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-receipt"></i></div>
                                 Đơn hàng của bạn
                             </a>
-                            <a class="nav-link" href="/auth/logout">
+                            <a class="nav-link" href="/auth/Logout">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
                                 Đăng xuất
                             </a>
