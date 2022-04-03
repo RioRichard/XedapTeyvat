@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using Xedap.Models;
 using Xedap.Helper;
-using Xedap.Models.Repo;
-using System.Web.Security;
+using Xedap.Models;
 
 namespace Xedap.Controllers
 {
-    public class AuthController : BaseController
+    public class AdminAuthController : BaseController
     {
-        // GET: CustomerAuth
-        public ActionResult SignAndReg()
+        public ActionResult SignIn()
         {
+            if (Session["Admin"] != null)
+            {
+                return Redirect("/Admin");
+
+            }
             return View();
         }
         [HttpPost]
@@ -22,13 +26,23 @@ namespace Xedap.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = AuthRepo.AddAccount(collection["UserName"], collection["Pass"], collection["Email"]);
+                var acc = new AccountStaff()
+                {
+                    IDStaff = Helper.HelperAdd.GerenerateIdStaff(Context),
+                    UserName = collection["UserName"],
+
+                };
+                acc.Password = HelperAdd.Hash(acc.IDStaff + collection["Pass"]);
+                Context.AccountStaffs.Add(acc);
+                Context.SaveChanges();
+                var result = new { stringUrl = "/AdminAuth/SignIn", message = "Đăng nhập thành công." };
+
                 return Json(result);
 
             }
             else
             {
-                var result = new { stringUrl = "/Account/Login", message = "Có lỗi đã xảy ra. Thử lại sau" };
+                var result = new { stringUrl = "/AdminAuth/SignIn", message = "Có lỗi đã xảy ra. Thử lại sau" };
                 return Json(result);
 
             }
@@ -36,31 +50,37 @@ namespace Xedap.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Log(string UserName, string Pass, bool? rem)
+        public ActionResult Log(string UserName, string Pass)
         {
-            var Rem = rem ?? false;
-            if (ModelState.IsValid)
+            
+            var Acc = Context.AccountStaffs.FirstOrDefault(x => x.UserName == UserName);
+            if (Acc == null)
             {
-                var result = AuthRepo.Login(UserName, Pass, Rem);
-                return Json(result);
+                return Json(new { stringUrl = "/AdminAuth/SignIn", message = "Trùng email hoặc UserName" });
+            }
+            if (Acc.Password.SequenceEqual(HelperAdd.Hash(Acc.IDStaff + Pass)))
+            {
+                Session["Admin"] = new AdminInfo()
+                {
+                    Id = Acc.IDStaff,
+                    RoleId = Acc.StaffRoles.Select(p => p.IDRole).ToList(),
+                };
+                return Json(new { stringUrl = "/Admin", message = "Đăng nhập thành công." });
+
 
             }
-            else
-            {
-                var result = new { stringUrl = "/Auth/SignAndReg", message = "Có lỗi đã xảy ra. Thử lại sau" };
-                return Json(result);
+            return Json(new { stringUrl = "/AdminAuth/SignIn", message = "Trùng email hoặc UserName" });
 
-            }
         }
-        [Authorize]
+        
         public ActionResult Logout()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (Session["Admin"]==null)
             {
-                return Redirect("/Auth/SignAndReg");
+                return Redirect("/AdminAuth/SignIn");
 
             }
-            FormsAuthentication.SignOut();
+            Session.Clear();
             return Redirect("/");
         }
 
@@ -122,7 +142,7 @@ namespace Xedap.Controllers
                         $"{HelperAdd.WebsiteUrl}/auth/reset/{account.Token}";
                     var subject = "Lấy lại mật khẩu XeDapTeyVat";
                     HelperAdd.SendMail(account.Email, msg, subject);
-                    
+
                     return Json(new { msg = "Email lấy lại mật khẩu đã được gửi đến email của bạn", url = "/Auth/SignAndReg" });
                 }
                 return Json(new { msg = "Bạn vừa đăng ký hoặc vừa gửi yêu cầu lấy lại mật khẩu. Hãy thử lại sau 15 phút", url = "null" });
@@ -132,8 +152,9 @@ namespace Xedap.Controllers
 
         }
         [HttpPost]
-        
-        public JsonResult ResetPass(string token, string pass) { 
+
+        public JsonResult ResetPass(string token, string pass)
+        {
             var account = Context.Accounts.FirstOrDefault(Context => Context.Token == token);
             if (account == null)
             {
@@ -143,7 +164,7 @@ namespace Xedap.Controllers
             {
                 if ((DateTime)account.ExpiredTokenTime < DateTime.Now)
                 {
-                    
+
                     return Json(new { msg = "Token hết hạn. Hãy thử lại sau", url = "/Auth/ForgotPassword" });
                 }
                 account.Password = HelperAdd.Hash(account.IDAccount + pass);
@@ -153,7 +174,7 @@ namespace Xedap.Controllers
 
             }
         }
-        
+
         public ActionResult Reset(string id)
         {
 
@@ -176,6 +197,5 @@ namespace Xedap.Controllers
             return View();
 
         }
-
     }
 }

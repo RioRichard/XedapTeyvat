@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Services;
 using System.Web.Services;
+using Xedap.Helper;
 using Xedap.Models;
 using Xedap.Models.Repo;
 
@@ -17,7 +18,14 @@ namespace Xedap.Controllers
         string productPath = Path.Combine(Directory.GetCurrentDirectory(), "Content", "Image");
         public ActionResult Index()
         {
-            return View();
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
+            AdminInfo info = Session["Admin"] as AdminInfo;
+            var acc = Context.AccountStaffs.FirstOrDefault(p=>p.IDStaff==info.Id);
+            return View(acc);
         }
 
 
@@ -38,7 +46,11 @@ namespace Xedap.Controllers
         }
         public ActionResult DeletedProduct()
         {
-           
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
             return View(context.Products.Where(p => p.IsDelete == true));
         }
         public ActionResult DeleteProduct(int pdID)
@@ -97,9 +109,13 @@ namespace Xedap.Controllers
         //CATEGORY
         public ActionResult Category()
         {
-                
-                ViewBag.Products = context.Products.ToList();
-                ViewBag.Attributes = context.Attributes.ToList();
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
+            ViewBag.Products = context.Products.ToList();
+            ViewBag.Attributes = context.Attributes.ToList();
             return View(context.Categories.Where(p => p.Isdelete == false));
         }
         [HttpPost]
@@ -116,7 +132,11 @@ namespace Xedap.Controllers
         }
         public ActionResult DeletedCategory()
         {
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
 
+            }
             return View(context.Categories.Where(p => p.Isdelete == true));
         }
         [HttpPost]
@@ -153,14 +173,22 @@ namespace Xedap.Controllers
         //ATTRIBUTE
         public ActionResult Attribute()
         {
-           
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
             ViewBag.Categories = context.Categories.ToList();
             return View(context.Attributes.Where(p => p.IsDelete == false));
         }
         
         public ActionResult DeletedAttribute()
         {
-            
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
             return View(context.Attributes.Where(p => p.IsDelete == true));
         }
         public ActionResult DeleteAttribute(int attrID)
