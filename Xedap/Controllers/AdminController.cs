@@ -146,6 +146,48 @@ namespace Xedap.Controllers
             }
         }
 
+        //public ActionResult DeleteProduct4Ever(int prID)
+        //{
+        //    var prod = context.Products.FirstOrDefault(p => p.IDProduct == prID);
+        //    var checkCart = context.ProductCarts.FirstOrDefault(p => p.IDProduct == prID);
+        //    var checkAttr = context.ProductAttributes.FirstOrDefault(p => p.IDProduct == prID);
+        //    if (prod == null)
+        //    {
+        //        return Json(false);
+        //    }
+        //    else
+        //    {
+                
+        //        if(checkAttr!= null)
+        //        {
+        //            if (checkCart != null)
+        //            {
+        //                context.ProductCarts.Remove(checkCart);
+                       
+        //                context.ProductAttributes.Remove(checkAttr);
+                       
+        //                context.Products.Remove(prod);
+        //                context.SaveChanges();
+        //            }    
+        //            else
+        //            {
+        //                context.ProductAttributes.Remove(checkAttr);
+                       
+        //                context.Products.Remove(prod);
+        //                context.SaveChanges();
+        //            }    
+                   
+        //        }
+        //        else
+        //        {
+        //            context.Products.Remove(prod);
+        //            context.SaveChanges();
+        //        }    
+                
+        //        return Json(true);
+        //    }
+        //}
+
         [HttpPost]
         public ActionResult Delete4everCategory(int ctID)
         {

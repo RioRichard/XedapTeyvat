@@ -26,8 +26,8 @@ namespace Xedap.Models.Repo
 
 
         }
-
-        public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
+       
+            public static List<ProductAttribute> GetAttribute(DataContext context, int? idProducts)
         {
             var products = context.Products.Where(p => p.IDProduct == idProducts).ToList();
             var attribute = context.Attributes.ToList();
