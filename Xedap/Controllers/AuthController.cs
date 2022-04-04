@@ -147,6 +147,7 @@ namespace Xedap.Controllers
                     return Json(new { msg = "Token hết hạn. Hãy thử lại sau", url = "/Auth/ForgotPassword" });
                 }
                 account.Password = HelperAdd.Hash(account.IDAccount + pass);
+                account.Token = String.Empty;
                 account.ExpiredTokenTime = DateTime.Parse("01/01/1970");
                 Context.SaveChanges();
                 return Json(new { msg = "Đổi mật khẩu thành công", url = "/Auth/SignAndReg" });

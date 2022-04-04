@@ -37,13 +37,42 @@ namespace Xedap.Controllers
             var acc = Context.AccountStaffs.FirstOrDefault(p=>p.IDStaff==info.Id);
             return View(acc);
         }
+        public ActionResult ChangePassword()
+        {
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string currentPass,string newPass)
+        {
+            var info = Session["Admin"] as AdminInfo;
+            var acc = Context.AccountStaffs.FirstOrDefault(p=>p.IDStaff == info.Id);
+            if (acc.Password.SequenceEqual(HelperAdd.Hash(acc.IDStaff + currentPass)))
+            {
+                acc.Password = HelperAdd.Hash(acc.IDStaff + newPass);
+                context.SaveChanges();
+                ViewBag.Msg = "Đổi mật khẩu thành công!";
+            }
+            else
+                ViewBag.Msg = "Sai mật khẩu hiện tại!";
+
+            return View();
+        }
 
 
         [Route("Product/{page?}")]
         //PRODUCT
         public ActionResult Product(int? page)
         {
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
 
+            }
             ViewBag.page = (page ?? 1);
             var search = string.Empty;
             int count = 0;
