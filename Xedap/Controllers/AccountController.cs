@@ -9,13 +9,13 @@ using Xedap.Models.Repo;
 
 namespace Xedap.Controllers
 {
-
+    [Authorize]
     public class AccountController : BaseController
     {
         
         // GET: Account
         
-        [Authorize]
+        
         public ActionResult Index()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
@@ -111,6 +111,7 @@ namespace Xedap.Controllers
         public ActionResult Invoice()
         {
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
+            
             var result = InvoiceRepo.GetInvoices(Context, userId);
             return View(result);
         }

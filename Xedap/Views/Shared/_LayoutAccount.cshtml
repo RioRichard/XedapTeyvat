@@ -134,7 +134,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a href="/Account/Index">Thông tin tài khoản</a></li>
-                    <li><a href="/Account/Logout">Đăng xuất</a></li>
+                    <li><a href="/Auth/Logout">Đăng xuất</a></li>
                 }
                 else
                 {
@@ -218,8 +218,9 @@
                     <a class="nav-header" href="">Chính sách</a>
                     <div class="border-nav"></div>
                     <div style="padding-bottom:20px"></div>
-                    <a class="navitem" href="">Chính sách bảo mật thông tin</a>
-                    <a class="navitem" href="">Chính sách dbrr</a>
+                    <a class="navitem" href="/home/policysecurity">Chính sách bảo mật</a>
+                    <a class="navitem" href="/home/policyrefund">Chính sách đổi trả</a>
+                    <a class="navitem" href="/home/ourpolicy">Chính sách nhóm Paimon</a>
                 </div>
             </div>
             <div class="footer-content">
@@ -228,8 +229,8 @@
                     <a class="nav-header" href="">Công ty</a>
                     <div class="border-nav"></div>
                     <div style="padding-bottom:20px"></div>
-                    <a class="navitem" href="">Giới thiệu</a>
-                    <a class="navitem" href="">Liên hệ</a>
+                    <a class="navitem" href="/home/About">Giới thiệu</a>
+                    <a class="navitem" href="/home/Contact">Liên hệ</a>
                 </div>
             </div>
             <div class="footer-content" style="padding-top:-30px">

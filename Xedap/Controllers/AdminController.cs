@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Services;
 using System.Web.Services;
+using Xedap.Helper;
 using Xedap.Models;
 using Xedap.Models.Repo;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using static Xedap.Helper.HelperAdd;
 using System.Web.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Web;
+using System;
 
 namespace Xedap.Controllers
 {
@@ -26,7 +28,14 @@ namespace Xedap.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
+
+            }
+            AdminInfo info = Session["Admin"] as AdminInfo;
+            var acc = Context.AccountStaffs.FirstOrDefault(p=>p.IDStaff==info.Id);
+            return View(acc);
         }
 
 
@@ -47,7 +56,11 @@ namespace Xedap.Controllers
         }
         public ActionResult DeletedProduct()
         {
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
 
+            }
             return View(context.Products.Where(p => p.IsDelete == true));
         }
         public ActionResult DeleteProduct(int pdID)
@@ -107,7 +120,11 @@ namespace Xedap.Controllers
         //CATEGORY
         public ActionResult Category()
         {
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
 
+            }
             ViewBag.Products = context.Products.ToList();
             ViewBag.Attributes = context.Attributes.ToList();
             return View(context.Categories.Where(p => p.Isdelete == false));
@@ -126,7 +143,11 @@ namespace Xedap.Controllers
         }
         public ActionResult DeletedCategory()
         {
+            if (Session["Admin"] == null)
+            {
+                return Redirect("/AdminAuth/SignIn");
 
+            }
             return View(context.Categories.Where(p => p.Isdelete == true));
         }
         [HttpPost]
@@ -238,25 +259,46 @@ namespace Xedap.Controllers
                 return Json(result);
             }
         public ActionResult DeletedAttribute()
+        {
+            if (Session["Admin"] == null)
             {
+                return Redirect("/AdminAuth/SignIn");
 
-                return View(context.Attributes.Where(p => p.IsDelete == true));
             }
-            public ActionResult DeleteAttribute(int attrID2)
+            return View(context.Attributes.Where(p => p.IsDelete == true));
+        }
+        public ActionResult DeleteAttribute(int attrID)
+        {
+            
+            var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
+            if (prod == null)
             {
-
-                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID2);
-                if (prod == null)
-                {
-                    return Json(false);
-                }
-                else
-                {
-                    prod.IsDelete = true;
-                    context.SaveChanges();
-                    return Json(true);
-                }
+                return Json(false);
             }
+            else
+            {
+                prod.IsDelete = true;
+                context.SaveChanges();
+                return Json(prod);
+            }
+        }
+       
+        //[HttpPost]
+        //    public ActionResult DeleteAttribute(int attrID2)
+        //    {
+
+        //        var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID2);
+        //        if (prod == null)
+        //        {
+        //            return Json(false);
+        //        }
+        //        else
+        //        {
+        //            prod.IsDelete = true;
+        //            context.SaveChanges();
+        //            return Json(true);
+        //        }
+        //    }
             public ActionResult Delete4everAttribute(int atrID)
             {
                 var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == atrID);
@@ -293,6 +335,21 @@ namespace Xedap.Controllers
         public ActionResult Setting()
         {
             return View();
+        }
+        public ActionResult Invoicedetail()
+        {
+            ViewBag.Status = context.Status.ToList();
+            var result = InvoiceRepo.GetAllInvoice(context);
+            return View(result);
+        }
+        [HttpPost]
+        public ActionResult EditInvoicedetail(int SelectStatus, Guid IdInvoice)
+        {
+
+            InvoiceRepo.EditInvoice(context, SelectStatus, IdInvoice);
+
+            return Json(true);
+
         }
 
         public ActionResult DashboardBar()

@@ -7,11 +7,11 @@
 <div class="login-box ">
     <div class="login-snip">
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-        <label for="tab-1" class="tab">Đăng nhập</label>
+        <label for="tab-1" class="tab">Đổi mật khẩu</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up" disabled style="display:none">
         <label for="tab-2" class="tab" style="display:none">Đăng kí</label>
         <div class="login-space">
-            <form id="reset">
+            <form id="ResetPass">
                 @Html.AntiForgeryToken()
                 <div class="login">
                     <input type="hidden" name="token" value="@ViewBag.Token" />
@@ -24,7 +24,7 @@
                         <input id="rePassSignIn" type="password" name="RePass" class="input" placeholder="Nhập lại mật khẩu">
                     </div>
                     <div class="group">
-                        <button class="button">Đăng nhập</button>
+                        <button class="button">Đổi mật khẩu</button>
                     </div>
                     <div class="hr"></div>
                     <div class="foot"> <a href="/Auth/SignAndReg">Đăng nhập/Đăng ký</a> </div>
@@ -41,14 +41,19 @@
 @section scripts{
 
     <script src="~/Scripts/jquery.validate.min.js"></script>
+    
     <script>
 
-         $().ready(function () {
-            alert("@Html.Raw(ViewBag.rs)");
-            window.location.href = "/";
+        $().ready(function () {
+            var check = "@Html.Raw(ViewBag.rs)";
+            if (check != "Null") {
+                alert(check);
+                window.location.href = "/";
+            }
+
         })
 
-        $('#reset').validate({
+        $('#ResetPass').validate({
             rules: {
 
                 Pass: {
@@ -80,12 +85,13 @@
 
             },
             submitHandler: function (form) {
-                //console.log('/Account/' + id);
-                $.post('/Auth/' + id, $(form).serialize(), (r) => {
+                
+                
+                $.post('/Auth/ResetPass', $(form).serialize(), (r) => {
                     /*console.log(r);*/
 
-                    alert(r.message);
-                    window.location.href = r.stringUrl;
+                    alert(r.msg);
+                    window.location.href = r.url;
 
 
                 })
