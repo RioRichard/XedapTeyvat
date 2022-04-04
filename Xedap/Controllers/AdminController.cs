@@ -294,5 +294,18 @@ namespace Xedap.Controllers
         {
             return View();
         }
+
+        public ActionResult DashboardBar()
+        {
+
+            var accounts = InvoiceRepo.TotalBuyFolowUser(context);
+            var result = accounts.OrderByDescending(p => p.TotalBought).Select(p => new { p.UserName, p.TotalBought });
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DashboardPie()
+        {
+            var result = CartRepo.GetTotalFollowProduct(context);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
     }
