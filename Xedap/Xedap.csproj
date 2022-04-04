@@ -211,7 +211,6 @@
     <Compile Include="Models\Repo\AccountRepo.cs" />
     <Compile Include="Models\Repo\AddressRepo.cs" />
     <Compile Include="Models\Repo\AttributeRepo.cs" />
-    
     <Compile Include="Models\Repo\CartRepo.cs" />
     <Compile Include="Models\Repo\CategoryRepo.cs" />
     <Compile Include="Models\Repo\InvoiceRepo.cs" />
@@ -372,9 +371,13 @@
     <Content Include="Views\Admin\Invoicedetail.cshtml" />
     <Content Include="Views\AdminAuth\SignIn.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\PolicyRefund.cshtml" />
+    <Content Include="Views\Home\PolicySecurity.cshtml" />
+    <Content Include="Views\Home\OurPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\imgofshop\" />
     <Folder Include="Views\Cart\" />
     <Folder Include="Views\Invoice\" />
     <Folder Include="Views\Test\" />
