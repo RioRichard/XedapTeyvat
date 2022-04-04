@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Xedap.Models.Product>
+﻿
+
+@model PagedList.IPagedList<Xedap.Models.Product>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Quản lý sản phẩm";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -56,7 +59,7 @@
                                 <p><h5 style="color:black;max-width:400px">@Html.Raw(item.Name)</h5></p>
                             </td>
                             <td>
-                                <p><h5 style="color:black">@String.Format("{0:0,0}", item.Price) VND</h5></p>
+                                <p><h5 style="color:black"> @String.Format("{0:0,0}", item.Price) VND</h5></p>
                             </td>
                             <td>
                                 <p><h5 style="color:black">@item.Stock</h5></p>
@@ -90,32 +93,22 @@
         </div>
     </div>
 </main>
+<br />
+
+<div class="paginationtest ">
+
+    <p class="text-center">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("Product",
+    new { page }), new PagedListRenderOptions
+    {
+        LiElementClasses = new string[] { "page-item", "page-link" },
+    })
+    </div>
+
+</div>
 
 
-<nav class="d-flex justify-content-center">
-    <ul class="pagination">
-        <li class="page-item "><a class="page-link" href="@(ViewBag.page - 1)">Previous</a></li>
-        @for (int i = 1; i <= ViewBag.count; i++)
-        {
-
-            if (i == ViewBag.page)
-            {
-                <li class="page-item active"><a class="page-link" href="/Admin/Product/@i">@i</a></li>
-
-            }
-            else
-            {
-                <li class="page-item"><a class="page-link" href="/Admin/Product/@i">@i</a></li>
-
-            }
-
-
-        }
-        <li class="page-item"><a class="page-link" href="/Admin/Product/@(ViewBag.page + 1)">Next</a></li>
-
-
-    </ul>
-</nav>
 @*MODAL*@
 <div id="editmodal" class="modal" style="position:fixed;top:0;bottom:0;right:0;left:0">
     <div class="modal-container">
@@ -218,7 +211,7 @@
             <i class="far fa-edit"></i>
             Thêm Sản Phẩm
         </header>
-        <form  id="addform">
+        <form id="addform">
             <div class="modal-body">
                 <div class="modal-product-name">
                     <label for="text-tickets" class="modal-label">
@@ -299,7 +292,7 @@
 </div>
 @section Scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
-    
+
     <script>
         const editBtns = document.querySelectorAll('.btn-edit');
         const modal = document.querySelector('.modal');
@@ -329,7 +322,7 @@
                     productPrice2: {
                         required: true,
                         minlength: 4,
-                        maxlength: 12,
+                        maxlength: 50,
                         digits: true,
                     },
                     productStock2: {
@@ -378,7 +371,7 @@
                 },
 
                 submitHandler: function (form) {
-                    
+
                     //var fileUpload = $('#imgUp').get(0);
                     //var files = fileUpload.files;
                     //var formData = new FormData(form);
@@ -456,7 +449,7 @@
                             productPrice: {
                                 required: true,
                                 minlength: 4,
-                                maxlength: 12,
+                                maxlength: 50,
                                 digits: true,
                             },
                             productStock: {

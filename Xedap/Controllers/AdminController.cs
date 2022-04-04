@@ -12,6 +12,8 @@ using System.Web.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Web;
 using System;
+using System.Collections.Generic;
+using PagedList;
 
 namespace Xedap.Controllers
 {
@@ -39,20 +41,19 @@ namespace Xedap.Controllers
         }
 
 
-        [Route("Product/{page?}")]
+       
         //PRODUCT
         public ActionResult Product(int? page)
         {
 
-            ViewBag.page = (page ?? 1);
-            var search = string.Empty;
-            int count = 0;
-            var result = ProductRepo.GetProducts(out count, (page ?? 1), search).Where(p => p.IsDelete == false);
-            ViewBag.count = count / 10;
             ViewBag.Attributes = context.Attributes.ToList();
             ViewBag.Categories = context.Categories.ToList();
-            return View(result);
-            //return View(DataContext.Products);
+            ViewBag.Product = context.Products.ToList();
+            if (page == null) page = 1;
+            var links = (from s in context.Products select s).Where(i => i.IsDelete==false).OrderBy(m => m.Name);
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            return View(links.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult DeletedProduct()
         {
