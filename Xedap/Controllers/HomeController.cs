@@ -24,15 +24,29 @@ namespace Xedap.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page." ;
+            
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            
 
+            return View();
+        }
+        public ActionResult PolicyRefund()
+        {
+            return View();
+        }
+
+        public ActionResult PolicySecurity()
+        {
+            return View();
+        }
+
+        public ActionResult OurPolicy()
+        {
             return View();
         }
     }

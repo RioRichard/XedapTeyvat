@@ -1,24 +1,21 @@
-﻿using System.IO;
+﻿using PagedList;
+using System;
 using System.Linq;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Script.Services;
 using System.Web.Services;
 using Xedap.Helper;
 using Xedap.Models;
 using Xedap.Models.Repo;
-using Newtonsoft.Json;
-using static Xedap.Helper.HelperAdd;
-using System.Web.Hosting;
-using Microsoft.Extensions.Configuration;
-using System.Web;
-using System;
 
 namespace Xedap.Controllers
 {
     [RoutePrefix("admin")]
     public class AdminController : BaseController
     {
-        DataContext context = new DataContext();
+        
 
 
 
@@ -34,7 +31,7 @@ namespace Xedap.Controllers
 
             }
             AdminInfo info = Session["Admin"] as AdminInfo;
-            var acc = Context.AccountStaffs.FirstOrDefault(p=>p.IDStaff==info.Id);
+            var acc = base.Context.AccountStaffs.FirstOrDefault(p => p.IDStaff == info.Id);
             return View(acc);
         }
         public ActionResult ChangePassword()
@@ -50,11 +47,11 @@ namespace Xedap.Controllers
         public ActionResult ChangePassword(string currentPass,string newPass)
         {
             var info = Session["Admin"] as AdminInfo;
-            var acc = Context.AccountStaffs.FirstOrDefault(p=>p.IDStaff == info.Id);
+            var acc = base.Context.AccountStaffs.FirstOrDefault(p => p.IDStaff == info.Id);
             if (acc.Password.SequenceEqual(HelperAdd.Hash(acc.IDStaff + currentPass)))
             {
                 acc.Password = HelperAdd.Hash(acc.IDStaff + newPass);
-                context.SaveChanges();
+                base.Context.SaveChanges();
                 ViewBag.Msg = "Đổi mật khẩu thành công!";
             }
             else
@@ -64,7 +61,6 @@ namespace Xedap.Controllers
         }
 
 
-        [Route("Product/{page?}")]
         //PRODUCT
         public ActionResult Product(int? page)
         {
@@ -72,16 +68,16 @@ namespace Xedap.Controllers
             {
                 return Redirect("/AdminAuth/SignIn");
 
+               
             }
-            ViewBag.page = (page ?? 1);
-            var search = string.Empty;
-            int count = 0;
-            var result = ProductRepo.GetProducts(out count, (page ?? 1), search).Where(p => p.IsDelete == false);
-            ViewBag.count = count / 10;
-            ViewBag.Attributes = context.Attributes.ToList();
-            ViewBag.Categories = context.Categories.ToList();
-            return View(result);
-            //return View(DataContext.Products);
+            ViewBag.Attributes = Context.Attributes.ToList();
+            ViewBag.Categories = Context.Categories.ToList();
+            ViewBag.Product = Context.Products.ToList();
+            if (page == null) page = 1;
+            var links = (from s in Context.Products select s).Where(i => i.IsDelete == false).OrderBy(m => m.Name);
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            return View(links.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult DeletedProduct()
         {
@@ -90,12 +86,12 @@ namespace Xedap.Controllers
                 return Redirect("/AdminAuth/SignIn");
 
             }
-            return View(context.Products.Where(p => p.IsDelete == true));
+            return View(Context.Products.Where(p => p.IsDelete == true));
         }
         public ActionResult DeleteProduct(int pdID)
         {
 
-            var prod = context.Products.FirstOrDefault(p => p.IDProduct == pdID);
+            var prod = Context.Products.FirstOrDefault(p => p.IDProduct == pdID);
             if (prod == null)
             {
                 return Json(false);
@@ -103,13 +99,13 @@ namespace Xedap.Controllers
             else
             {
                 prod.IsDelete = true;
-                context.SaveChanges();
+                Context.SaveChanges();
                 return Json(true);
             }
         }
         public ActionResult ReStoreProduct(int pdID)
         {
-            var prod = context.Products.FirstOrDefault(p => p.IDProduct == pdID);
+            var prod = Context.Products.FirstOrDefault(p => p.IDProduct == pdID);
             if (prod == null)
             {
                 return Json(false);
@@ -117,14 +113,14 @@ namespace Xedap.Controllers
             else
             {
                 prod.IsDelete = false;
-                context.SaveChanges();
+                Context.SaveChanges();
                 return Json(true);
             }
         }
         [HttpPost]
         public ActionResult EditProduct(int proID, string productName, int productPrice, int productStock, string productDes, int cttr, int[] attrID, string[] productAttr1, HttpPostedFileBase UploadEdit)
         {
-            var result = ProductRepo.EditProduct(context, proID, productName, productPrice, productStock, productDes, cttr, attrID, productAttr1, UploadEdit, productPath);
+            var result = ProductRepo.EditProduct(Context, proID, productName, productPrice, productStock, productDes, cttr, attrID, productAttr1, UploadEdit, productPath);
 
             return Json(true);
         }
@@ -132,7 +128,7 @@ namespace Xedap.Controllers
         public ActionResult AddProduct(string productName2, int productPrice2, int productStock2, string productDes2, int idCate, int[] attr, string[] attrValue, HttpPostedFileBase imgUp)
         {
 
-            ProductRepo.AddProduct(context, productName2, productPrice2, productStock2, productDes2, idCate, attr, attrValue, imgUp, productPath);
+            ProductRepo.AddProduct(Context, productName2, productPrice2, productStock2, productDes2, idCate, attr, attrValue, imgUp, productPath);
 
             return Json(true);
         }
@@ -142,7 +138,7 @@ namespace Xedap.Controllers
         [ScriptMethod(UseHttpGet = true)]
         public ActionResult getProductForm(int id)
         {
-            var result = ProductRepo.GetProductForm(context, id);
+            var result = ProductRepo.GetProductForm(Context, id);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -154,20 +150,20 @@ namespace Xedap.Controllers
                 return Redirect("/AdminAuth/SignIn");
 
             }
-            ViewBag.Products = context.Products.ToList();
-            ViewBag.Attributes = context.Attributes.ToList();
-            return View(context.Categories.Where(p => p.Isdelete == false));
+            ViewBag.Products = Context.Products.ToList();
+            ViewBag.Attributes = Context.Attributes.ToList();
+            return View(Context.Categories.Where(p => p.Isdelete == false));
         }
         [HttpPost]
         public ActionResult EditCategory(int IdCate, string categoryName)
         {
-            var result = CategoryRepo.EditCategory(context, IdCate, categoryName);
+            var result = CategoryRepo.EditCategory(Context, IdCate, categoryName);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult AddCategory(string categoryName2)
         {
-            CategoryRepo.AddCategory(context, categoryName2);
+            CategoryRepo.AddCategory(Context, categoryName2);
             return Json(true);
         }
         public ActionResult DeletedCategory()
@@ -177,13 +173,13 @@ namespace Xedap.Controllers
                 return Redirect("/AdminAuth/SignIn");
 
             }
-            return View(context.Categories.Where(p => p.Isdelete == true));
+            return View(Context.Categories.Where(p => p.Isdelete == true));
         }
         [HttpPost]
         public ActionResult DeleteCategory(int ctgrID2)
         {
 
-            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID2);
+            var prod = Context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID2);
             if (prod == null)
             {
                 return Json(false);
@@ -191,7 +187,7 @@ namespace Xedap.Controllers
             else
             {
                 prod.Isdelete = true;
-                context.SaveChanges();
+                Context.SaveChanges();
                 return Json(true);
             }
         }
@@ -241,22 +237,22 @@ namespace Xedap.Controllers
         [HttpPost]
         public ActionResult Delete4everCategory(int ctID)
         {
-            var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctID);
+            var prod = Context.Categories.FirstOrDefault(p => p.IDCategory == ctID);
             if (prod == null)
             {
                 return Json(false);
             }
             else
             {
-                context.Categories.Remove(prod);
-                context.SaveChanges();
+                Context.Categories.Remove(prod);
+                Context.SaveChanges();
                 return Json(true);
             }
         }
             public ActionResult RestoreCategory(int ctgrID)
             {
 
-                var prod = context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
+                var prod = Context.Categories.FirstOrDefault(p => p.IDCategory == ctgrID);
                 if (prod == null)
                 {
                     return Json(false);
@@ -264,7 +260,7 @@ namespace Xedap.Controllers
                 else
                 {
                     prod.Isdelete = false;
-                    context.SaveChanges();
+                    Context.SaveChanges();
                     return Json(true);
                 }
             }
@@ -272,19 +268,19 @@ namespace Xedap.Controllers
             public ActionResult Attribute()
             {
 
-                ViewBag.Categories = context.Categories.ToList();
-                return View(context.Attributes.Where(p => p.IsDelete == false));
+                ViewBag.Categories = Context.Categories.ToList();
+                return View(Context.Attributes.Where(p => p.IsDelete == false));
             }
             [HttpPost]
             public ActionResult AddAttribute (string attributeName2)
             {
-                AttributeRepo.AddAttribute(context, attributeName2);
+                AttributeRepo.AddAttribute(Context, attributeName2);
                 return Json(true);
             }
             [HttpPost]
             public ActionResult EditAttribute(int attrId, string attributeName)
             {
-                var result = AttributeRepo.EditAttribute(context, attrId, attributeName);
+                var result = AttributeRepo.EditAttribute(Context, attrId, attributeName);
                 return Json(result);
             }
         public ActionResult DeletedAttribute()
@@ -294,12 +290,29 @@ namespace Xedap.Controllers
                 return Redirect("/AdminAuth/SignIn");
 
             }
-            return View(context.Attributes.Where(p => p.IsDelete == true));
+            return View(Context.Attributes.Where(p => p.IsDelete == true));
         }
-        public ActionResult DeleteAttribute(int attrID)
-        {
+        //public ActionResult DeleteAttribute(int attrID)
+        //{
             
-            var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
+        //    var prod = Context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
+        //    if (prod == null)
+        //    {
+        //        return Json(false);
+        //    }
+        //    else
+        //    {
+        //        prod.IsDelete = true;
+        //        Context.SaveChanges();
+        //        return Json(prod);
+        //    }
+        //}
+
+        [HttpPost]
+        public ActionResult DeleteAttribute(int attrID2)
+        {
+
+            var prod = Context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID2);
             if (prod == null)
             {
                 return Json(false);
@@ -307,45 +320,28 @@ namespace Xedap.Controllers
             else
             {
                 prod.IsDelete = true;
-                context.SaveChanges();
-                return Json(prod);
+                Context.SaveChanges();
+                return Json(true);
             }
         }
-       
-        //[HttpPost]
-        //    public ActionResult DeleteAttribute(int attrID2)
-        //    {
-
-        //        var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID2);
-        //        if (prod == null)
-        //        {
-        //            return Json(false);
-        //        }
-        //        else
-        //        {
-        //            prod.IsDelete = true;
-        //            context.SaveChanges();
-        //            return Json(true);
-        //        }
-        //    }
-            public ActionResult Delete4everAttribute(int atrID)
+        public ActionResult Delete4everAttribute(int atrID)
             {
-                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == atrID);
+                var prod = Context.Attributes.FirstOrDefault(p => p.IDAttribute == atrID);
                 if (prod == null)
                 {
                     return Json(false);
                 }
                 else
                 {
-                    context.Attributes.Remove(prod);
-                    context.SaveChanges();
+                    Context.Attributes.Remove(prod);
+                    Context.SaveChanges();
                     return Json(true);
                 }
             }
         public ActionResult RestoreAttribute(int attrID)
             {
 
-                var prod = context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
+                var prod = Context.Attributes.FirstOrDefault(p => p.IDAttribute == attrID);
                 if (prod == null)
                 {
                     return Json(false);
@@ -353,7 +349,7 @@ namespace Xedap.Controllers
                 else
                 {
                     prod.IsDelete = false;
-                    context.SaveChanges();
+                    Context.SaveChanges();
                     return Json(true);
                 }
             }
@@ -361,36 +357,37 @@ namespace Xedap.Controllers
         {
             return View();
         }
-        public ActionResult DashboardBar()
-        {
-
-            var accounts = InvoiceRepo.TotalBuyFolowUser(context);
-            var result = accounts.OrderByDescending(p => p.TotalBought).Select(p => new { p.UserName, p.TotalBought });
-            return Json(result);
-        }
-        public ActionResult DashboardPie()
-        {
-            var result = CartRepo.GetTotalFollowProduct(context);
-            return Json(result);
-        }
         public ActionResult Setting()
         {
             return View();
         }
         public ActionResult Invoicedetail()
         {
-            ViewBag.Status = context.Status.ToList();
-            var result = InvoiceRepo.GetAllInvoice(context);
+            ViewBag.Status = Context.Status.ToList();
+            var result = InvoiceRepo.GetAllInvoice(Context);
             return View(result);
         }
         [HttpPost]
         public ActionResult EditInvoicedetail(int SelectStatus, Guid IdInvoice)
         {
 
-            InvoiceRepo.EditInvoice(context, SelectStatus, IdInvoice);
+            InvoiceRepo.EditInvoice(Context, SelectStatus, IdInvoice);
 
             return Json(true);
 
+        }
+
+        public ActionResult DashboardBar()
+        {
+
+            var accounts = InvoiceRepo.TotalBuyFolowUser(Context);
+            var result = accounts.OrderByDescending(p => p.TotalBought).Select(p => new { p.UserName, p.TotalBought });
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DashboardPie()
+        {
+            var result = CartRepo.GetTotalFollowProduct(Context);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
     }

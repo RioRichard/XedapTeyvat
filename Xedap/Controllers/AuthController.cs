@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Xedap.Models;
+using System.Web.Security;
 using Xedap.Helper;
 using Xedap.Models.Repo;
-using System.Web.Security;
 
 namespace Xedap.Controllers
 {
@@ -76,7 +75,7 @@ namespace Xedap.Controllers
             }
             if (account != null)
             {
-                if (DateTime.Compare(((DateTime)account.ExpiredTokenTime).AddMinutes(15), DateTime.Now) < 0)
+                if ((DateTime)account.ExpiredTokenTime< DateTime.Now)
                 {
                     account.Token = HelperAdd.GenerateToken(account.IDAccount);
                     account.ExpiredTokenTime = DateTime.Now.AddMinutes(15);
@@ -91,7 +90,7 @@ namespace Xedap.Controllers
             }
             account.IsConfirmed = true;
             account.Token = String.Empty;
-            account.ExpiredTokenTime = DateTime.MinValue;
+            account.ExpiredTokenTime = DateTime.Parse("01/01/1970");
             Context.SaveChanges();
             ViewBag.rs = "Xác nhận thành công";
             return View();

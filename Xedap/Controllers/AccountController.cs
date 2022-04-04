@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Security;
-using Xedap.Helper;
 using Xedap.Models;
 using Xedap.Models.Repo;
 

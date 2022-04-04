@@ -131,9 +131,8 @@
             <ul id="nav">
                 <li><a href="/"><img src="~/Content/Image/Free_Sample_By_Wix.jpg" style="width:70%" /></a></li>
                 <li><a href="/">Home</a></li>
-                <li><a href="">Band</a></li>
-                <li><a href="">Tour</a></li>
-                <li><a href="">Contact</a></li>
+                
+                <li><a href="/home/contact">Contact</a></li>
                 <li>
                     <a href="">
                         More
@@ -151,7 +150,7 @@
                 </li>
 
             </ul>
-            <a class="cart" href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            
         </div>
     </header>
     <div class="row" style="min-height:100vh">
@@ -171,10 +170,7 @@
                             </div>
                             Đổi mật khẩu
                         </a>
-                        <a class="nav-link" href="/admin/StaffManagement" style="font-size:18px">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Quản Lý Nhân Viên
-                        </a>
+                       
                         <a class="nav-link" href="/admin/product" style="font-size:18px">
                             <div class="sb-nav-link-icon"><i class="fas fa-archive"></i></div>
                             Sản Phẩm
@@ -195,10 +191,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>
                             Bảng Thống Kê
                         </a>
-                        <a class="nav-link" href="/admin/setting" style="font-size:18px">
-                            <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
-                            Thiết lập trang web
-                        </a>
+                       
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-trash-alt"></i></div>
                             Thùng Rác
@@ -207,7 +200,7 @@
 
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="/admin/bannedstaff">-Nhân Viên</a>
+                  
                                 <a class="nav-link" href="/admin/DeletedAttribute">-Thuộc Tính</a>
                                 <a class="nav-link" href="/admin/DeletedCategory">-Danh Mục</a>
                                 <a class="nav-link" href="/admin/deletedproduct">-Sản Phẩm</a>
@@ -232,8 +225,9 @@
                     <a class="nav-header" href="">Chính sách</a>
                     <div class="border-nav"></div>
                     <div style="padding-bottom:20px"></div>
-                    <a class="navitem" href="">Chính sách bảo mật thông tin</a>
-                    <a class="navitem" href="">Chính sách dbrr</a>
+                    <a class="navitem" href="/home/policysecurity">Chính sách bảo mật </a>
+                    <a class="navitem" href="/home/policyrefund">Chính sách đổi trả</a>
+                    <a class="navitem" href="/home/ourpolicy">Chính sách nhóm Paimon</a>
                 </div>
             </div>
             <div class="footer-content">
@@ -242,8 +236,8 @@
                     <a class="nav-header" href="">Công ty</a>
                     <div class="border-nav"></div>
                     <div style="padding-bottom:20px"></div>
-                    <a class="navitem" href="">Giới thiệu</a>
-                    <a class="navitem" href="">Liên hệ</a>
+                    <a class="navitem" href="/home/About">Giới thiệu</a>
+                    <a class="navitem" href="/home/Contact">Liên hệ</a>
                 </div>
             </div>
             <div class="footer-content" style="padding-top:-30px">
@@ -275,9 +269,8 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="~/Scripts/jquery-3.4.1.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
+
+
 
 
     @Scripts.Render("~/bundles/jquery")

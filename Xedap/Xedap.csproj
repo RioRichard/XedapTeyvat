@@ -208,7 +208,6 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductAttribute.cs" />
     <Compile Include="Models\ProductCart.cs" />
-    <Compile Include="Models\Repo\AccountRepo.cs" />
     <Compile Include="Models\Repo\AddressRepo.cs" />
     <Compile Include="Models\Repo\AttributeRepo.cs" />
     <Compile Include="Models\Repo\CartRepo.cs" />
@@ -236,13 +235,13 @@
     <Content Include="Content\Image\2105001124-Xe-Đạp-Đường-Phố-TOURING-MOMENTUM-INEED-STREET-BÁNH-700C-2021-Dark-Red_12211_4-600x600.jpg" />
     <Content Include="Content\Image\2105001324-Xe-Đạp-Đường-Phố-TOURING-MOMENTUM-INEED-STREET-BÁNH-700C-2021-Blue_12212_4-600x600.jpg" />
     <Content Include="Content\Image\2131390021-850-1-600x600.jpg" />
+    <Content Include="Content\Image\5u6zBYUQqYHpISSh2uIweU7xUQRSA0ce.jpg" />
     <Content Include="Content\Image\adore-fw-16-2022-plum-850-600x600.jpg" />
     <Content Include="Content\Image\Alight-2-dd-2021-Grayish-Blue.jpg" />
     <Content Include="Content\Image\alight-2-dd-disc-eucalyptus-my22-850-3-600x600.jpg" />
     <Content Include="Content\Image\alight-3-dd-disc-pistachio-2022-850-600x600.jpg" />
     <Content Include="Content\Image\ATX-2021-Vibrant-Blue-1-600x600.jpg" />
     <Content Include="Content\Image\banner.jpg" />
-    <Content Include="Content\Image\bg-laptop.jpg" />
     <Content Include="Content\Image\bg-xedap.jpg" />
     <Content Include="Content\Image\bg-xedap1.jpg" />
     <Content Include="Content\Image\Bike.jpg" />
@@ -260,6 +259,7 @@
     <Content Include="Content\Image\FORX26-7036-FORNIX-X26-XÁM-VÀNG-1-600x600.jpg" />
     <Content Include="Content\Image\Free_Sample_By_Wix.jpg" />
     <Content Include="Content\Image\latte-26-2022-green-600x600.jpg" />
+    <Content Include="Content\Image\LYmK7JFQPeqOIpv1GdivHCIDfkfWs81I.png" />
     <Content Include="Content\Image\MARWEA2633-5017-850-1.jpg" />
     <Content Include="Content\Image\propel-advanced-sl-1-disc-my22-limited-edition-850jpg-600x600.jpg" />
     <Content Include="Content\Image\roam-3-disc-2022-metal-600x600.jpg" />
@@ -270,6 +270,7 @@
     <Content Include="Content\Image\ROYRB16G4-3015-850-600x600.jpg" />
     <Content Include="Content\Image\Somings-lion-bird-red-SOMLB20-3020-600x600.jpg" />
     <Content Include="Content\Image\STIJY90316-7031-850-600x600.jpg" />
+    <Content Include="Content\Image\T7UZM7611ahx8BOkjJ6YQJTt1xNLTDdF.jpg" />
     <Content Include="Content\Image\talon-3-2021-black-850-1-1-600x600.jpg" />
     <Content Include="Content\Image\Talon-3-2022-amber-glow-850-600x600.jpg" />
     <Content Include="Content\Image\tcr-advanced-1-disc-pro-compact-2022-amber-glow-600x600.jpg" />
@@ -279,6 +280,7 @@
     <Content Include="Content\Image\TRILFB10-2009-850-600x600.jpg" />
     <Content Include="Content\Image\TRIM136-9023-́̀́850-1-600x600.jpg" />
     <Content Include="Content\Image\trinx-tx04-đen-xám-600x600.jpg" />
+    <Content Include="Content\Image\vHgJQgQDi5jF9C3dTzU7LSR04H3zsAMa.jpg" />
     <Content Include="Content\Image\Xe-Đạp-Đua-Đường-Trường-ROAD-GIANT-CONTEND-2-BÁNH-700C-2021_Contend_6351_4-600x600.jpeg" />
     <Content Include="Content\Image\Xe-Đạp-Đua-Đường-Trường-ROAD-GIANT-CONTEND-3-BÁNH-700C-2021_Xe-Đạp-Đua_6353_4-600x600.jpeg" />
     <Content Include="Content\Image\Xe-Đạp-Đua-Đường-Trường-ROAD-GIANT-PROPEL-ADVANCED-2-BÁNH-700C-2021_Propel_6360_4-600x600.jpg" />
@@ -288,11 +290,13 @@
     <Content Include="Content\Image\Xe-Đạp-Đường-Phố-TOURING-GIANT-FASTROAD-SL-3-PHANH-ĐĨA-BÁNH-700C-2021_FastRoad_6436_4-600x600.jpg" />
     <Content Include="Content\Image\Xe-Đạp-Địa-Hình-MTB-GIANT-TALON-4-PHANH-ĐĨA-BÁNH-27-600x600.jpg" />
     <Content Include="Content\Image\xtc-jr-20-2021-pure-red-600x600.jpg" />
+    <Content Include="Content\Image\XVGnM7Fccb7Bif3pwkNOu5R0PluaEqoA.jpg" />
     <Content Include="Content\Image\YB0458261-850-1.jpg" />
     <Content Include="Content\Image\YB046482-850-600x600.jpg" />
     <Content Include="Content\Image\YB0476501-850-600x600.jpg" />
     <Content Include="Content\Image\YB0476514-850-600x600.jpg" />
     <Content Include="Content\Image\YB0517281-850.jpg" />
+    <Content Include="Content\imgofshop\img1.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\StyleSheet.css" />
     <Content Include="Content\StyleSheet1.css" />
@@ -371,6 +375,9 @@
     <Content Include="Views\Admin\Invoicedetail.cshtml" />
     <Content Include="Views\AdminAuth\SignIn.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\PolicyRefund.cshtml" />
+    <Content Include="Views\Home\PolicySecurity.cshtml" />
+    <Content Include="Views\Home\OurPolicy.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>

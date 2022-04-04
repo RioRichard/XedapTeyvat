@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
 using Xedap.Helper;
 
@@ -22,7 +21,7 @@ namespace Xedap.Models.Repo
             var account = context.Accounts.ToList();
             if (account.FirstOrDefault(p => p.Email == Email || p.UserName == UserName) != null)
             {
-                return new { stringUrl = "/Auth/Register", message = "Trùng email hoặc UserName" };
+                return new { stringUrl = "/Auth/SignAndReg", message = "Trùng email hoặc UserName" };
             }
             else
             {
